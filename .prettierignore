@@ -1,0 +1,9 @@
+pnpm-lock.yaml
+docs/
+.next/
+dist/
+coverage/
+apps/api/target/
+.claude/
+.mcp.json
+skills-lock.json
