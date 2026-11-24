@@ -17,3 +17,6 @@ services:
       # Chuỗi "Session pooler" của Supabase (cổng 5432), xem apps/api/.env.example
       - key: DATABASE_URL
         sync: false
+      # Supabase → Project Settings → API → JWT Secret. Thiếu thì mọi request cần đăng nhập nhận 401.
+      - key: SUPABASE_JWT_SECRET
+        sync: false
