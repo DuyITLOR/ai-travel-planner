@@ -19,8 +19,10 @@ pub async fn health(State(state): State<AppState>) -> Json<HealthResponse> {
         status: "ok",
         uptime_sec: state.started_at.elapsed().as_secs(),
         commit: std::env::var("RENDER_GIT_COMMIT")
+            .ok()
+            .filter(|c| !c.trim().is_empty())
             .map(|c| c.chars().take(7).collect())
-            .unwrap_or_else(|_| "local".into()),
+            .unwrap_or_else(|| "local".into()),
         db: state.db.ping().await,
     })
 }

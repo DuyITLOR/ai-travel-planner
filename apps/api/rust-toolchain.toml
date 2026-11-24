@@ -1,0 +1,5 @@
+[toolchain]
+# Pinned so a re-run of the pa2 tag uses the same clippy and rustfmt as when it was tagged.
+channel = "1.100.0"
+components = ["clippy", "rustfmt"]
+profile = "minimal"

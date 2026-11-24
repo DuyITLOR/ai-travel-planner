@@ -13,19 +13,21 @@ pub struct Config {
 
 impl Config {
     pub fn from_env() -> anyhow::Result<Self> {
-        let port = match env::var("PORT") {
-            Ok(v) => v
+        // Một biến để trống (như khi chép từ .env.example) được coi như chưa đặt.
+        let var = |name: &str| env::var(name).ok().filter(|v| !v.trim().is_empty());
+        let port = match var("PORT") {
+            Some(v) => v
                 .parse()
                 .map_err(|_| anyhow::anyhow!("PORT không hợp lệ: {v}"))?,
-            Err(_) => 4000,
+            None => 4000,
         };
-        let web_origins = env::var("WEB_ORIGIN")
-            .unwrap_or_else(|_| "http://localhost:3000".into())
+        let web_origins = var("WEB_ORIGIN")
+            .unwrap_or_else(|| "http://localhost:3000".into())
             .split(',')
             .map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty())
             .collect();
-        let database_url = env::var("DATABASE_URL").ok().filter(|s| !s.is_empty());
+        let database_url = var("DATABASE_URL");
 
         Ok(Self {
             port,

@@ -5,11 +5,11 @@
   "description": "Rust (Axum) — file này chỉ để pnpm gọi cargo từ root.",
   "scripts": {
     "dev": "cargo run",
-    "build": "cargo build --release",
-    "typecheck": "cargo check --all-targets",
-    "lint": "cargo clippy --all-targets -- -D warnings",
+    "build": "cargo build --release --locked",
+    "typecheck": "cargo check --all-targets --locked",
+    "lint": "cargo clippy --all-targets --locked -- -D warnings",
     "format": "cargo fmt",
     "format:check": "cargo fmt --check",
-    "test": "cargo test"
+    "test": "cargo test --locked"
   }
 }
