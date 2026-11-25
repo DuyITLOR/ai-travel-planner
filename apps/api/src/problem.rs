@@ -75,7 +75,8 @@ impl ProblemType {
             Self::UnsupportedMediaType => StatusCode::UNSUPPORTED_MEDIA_TYPE,
             Self::MethodNotAllowed => StatusCode::METHOD_NOT_ALLOWED,
             Self::BodyTooLarge => StatusCode::PAYLOAD_TOO_LARGE,
-            Self::PlanRejected | Self::IdempotencyKeyReused => StatusCode::UNPROCESSABLE_ENTITY,
+            Self::PlanRejected => StatusCode::BAD_REQUEST,
+            Self::IdempotencyKeyReused => StatusCode::UNPROCESSABLE_ENTITY,
             Self::Internal => StatusCode::INTERNAL_SERVER_ERROR,
         }
     }
