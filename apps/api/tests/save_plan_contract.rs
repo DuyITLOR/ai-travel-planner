@@ -1279,7 +1279,7 @@ async fn s3_a_stored_plan_that_breaks_section_3_is_never_shown_or_saved() {
         stop.end = end.into();
         p.stops.push(stop);
     }
-    let broken: [(&str, Break); 8] = [
+    let broken: [(&str, Break); 13] = [
         ("quantity 0", |p| p.stops[0].items[0].quantity = 0),
         ("start 25:00", |p| p.stops[0].start = "25:00".into()),
         ("end 9:00", |p| p.stops[0].end = "9:00".into()),
@@ -1291,6 +1291,13 @@ async fn s3_a_stored_plan_that_breaks_section_3_is_never_shown_or_saved() {
         }),
         ("out of order", |p| {
             second_stop(p, "2026-12-05", "09:00", "10:00")
+        }),
+        ("start ' 9:00'", |p| p.stops[0].start = " 9:00".into()),
+        ("end '10: 5'", |p| p.stops[0].end = "10: 5".into()),
+        ("day '2026-12- 6'", |p| p.stops[0].day = "2026-12- 6".into()),
+        ("day '+999-12-06'", |p| p.stops[0].day = "+999-12-06".into()),
+        ("quantity 2^53", |p| {
+            p.stops[0].items[0].quantity = 9_007_199_254_740_992
         }),
     ];
     for (what, breaks) in broken {
