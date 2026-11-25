@@ -317,3 +317,21 @@ Kept, each with a test that fails first:
 Rejected: nothing. Its remaining deduction (criterion 4, PR #3's red commit staged from a fix
 of the day before) cannot be fixed after the fact; `PA2.md` states it.
 By hand: nothing in the code.
+
+## 2026-11-25 — review round 9
+
+Tool: Claude Code, a ninth grading agent, same setup. It marked 95/100.
+Kept:
+
+- Our stored-plan check parsed dates and times with chrono only, which accepts `" 9:00"`,
+  `"10: 5"`, `"2026-12- 6"` and `"+999-12-06"`. The check now requires the exact byte shape
+  (zero-padded digits, `:` and `-` in place) before the range. The four strings are in the
+  test; with the old check the test fails, with the new one it passes.
+- `quantity` had no upper bound while every other integer stops at 2⁵³−1 for JavaScript
+  clients. Contract, check and test now bound it.
+- `CLAUDE.md` Allowed tier now lists the `cargo` checks and branch-local `git` that
+  `settings.json` allows; `PA2.md` installs with `--frozen-lockfile`.
+
+Rejected: nothing. Still open: the deployed base URL in contract §1 (the team must confirm the
+Render URL) and criterion 4's staged red commit.
+By hand: nothing in the code.

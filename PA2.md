@@ -59,6 +59,6 @@ The PR was closed without merging; `main` never had the break.
 ```bash
 git clone https://github.com/DuyITLOR/ai-travel-planner && cd ai-travel-planner
 git checkout pa2
-pnpm install            # Node 20, pnpm 10, rustup (installs Rust 1.100.0 from rust-toolchain.toml)
+pnpm install --frozen-lockfile  # Node 20, pnpm 10, rustup (installs Rust 1.100.0 from rust-toolchain.toml)
 pnpm lint && pnpm format:check && pnpm typecheck && pnpm test
 ```
