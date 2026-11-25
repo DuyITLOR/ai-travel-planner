@@ -1,0 +1,1353 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ATP Task Board</title>
+    <!--
+      Board task của nhóm. Dữ liệu nằm ở docs/tasks.json (file này không chứa dữ liệu).
+      Chrome/Edge: bấm "Kết nối tasks.json", chọn docs/tasks.json, mọi thay đổi ghi thẳng vào file.
+      Trình duyệt khác: "Mở file", sửa, rồi "Tải tasks.json" và chép đè vào docs/.
+      Sau đó commit + push docs/tasks.json như code bình thường.
+    -->
+    <style>
+      :root {
+        --bg: #f6f7f9;
+        --panel: #ffffff;
+        --panel-2: #f0f2f5;
+        --text: #1b1f24;
+        --muted: #5d6673;
+        --border: #dde1e6;
+        --accent: #2563eb;
+        --ok: #15803d;
+        --warn: #b45309;
+        --err: #b91c1c;
+        --s-todo: #6b7280;
+        --s-in_progress: #2563eb;
+        --s-code_review: #7c3aed;
+        --s-testing: #d97706;
+        --s-done: #16a34a;
+        --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+        --radius: 10px;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+          --bg: #0f1216;
+          --panel: #171b21;
+          --panel-2: #1e232b;
+          --text: #e6e9ee;
+          --muted: #9aa4b2;
+          --border: #2b313a;
+          --accent: #60a5fa;
+          --ok: #4ade80;
+          --warn: #fbbf24;
+          --err: #f87171;
+          --s-todo: #9ca3af;
+          --s-in_progress: #60a5fa;
+          --s-code_review: #a78bfa;
+          --s-testing: #fbbf24;
+          --s-done: #4ade80;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme='dark'] {
+        --bg: #0f1216;
+        --panel: #171b21;
+        --panel-2: #1e232b;
+        --text: #e6e9ee;
+        --muted: #9aa4b2;
+        --border: #2b313a;
+        --accent: #60a5fa;
+        --ok: #4ade80;
+        --warn: #fbbf24;
+        --err: #f87171;
+        --s-todo: #9ca3af;
+        --s-in_progress: #60a5fa;
+        --s-code_review: #a78bfa;
+        --s-testing: #fbbf24;
+        --s-done: #4ade80;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font:
+          14px/1.45 -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          'Helvetica Neue',
+          Arial,
+          sans-serif;
+      }
+      button,
+      select,
+      input,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      .wrap {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+
+      /* Header */
+      .top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .brand h1 {
+        font-size: 20px;
+        margin: 0;
+        letter-spacing: -0.01em;
+      }
+      .brand .sub {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .btn {
+        border: 1px solid var(--border);
+        background: var(--panel);
+        border-radius: 8px;
+        padding: 6px 12px;
+        box-shadow: var(--shadow);
+      }
+      .btn:hover {
+        border-color: var(--accent);
+      }
+      .btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      .btn[disabled] {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .me {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        padding: 4px 4px 4px 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+      .me.need {
+        border-color: var(--err);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--err) 25%, transparent);
+      }
+      select,
+      input[type='search'],
+      input[type='url'] {
+        border: 1px solid var(--border);
+        background: var(--panel);
+        border-radius: 7px;
+        padding: 5px 8px;
+        max-width: 100%;
+      }
+
+      /* Banner */
+      .banner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        background: var(--panel);
+        margin-bottom: 12px;
+      }
+      .banner .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        flex: none;
+      }
+      .banner.ok .dot {
+        background: var(--ok);
+      }
+      .banner.warn .dot {
+        background: var(--warn);
+      }
+      .banner.err {
+        border-color: var(--err);
+      }
+      .banner.err .dot {
+        background: var(--err);
+      }
+      .banner .msg {
+        flex: 1 1 320px;
+      }
+      .banner code {
+        background: var(--panel-2);
+        padding: 1px 5px;
+        border-radius: 5px;
+      }
+      .saved {
+        color: var(--ok);
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .saved.show {
+        opacity: 1;
+      }
+
+      /* Toolbar */
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .seg {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--panel);
+      }
+      .seg button {
+        border: 0;
+        background: transparent;
+        padding: 6px 12px;
+      }
+      .seg button.on {
+        background: var(--accent);
+        color: #fff;
+      }
+      .bar input[type='search'] {
+        flex: 1 1 200px;
+        min-width: 0;
+      }
+
+      /* Summary */
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .pcard {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 10px 12px;
+        box-shadow: var(--shadow);
+      }
+      .pcard .name {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        font-weight: 600;
+      }
+      .pcard .name span {
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 12px;
+      }
+      .stack {
+        display: flex;
+        height: 8px;
+        border-radius: 99px;
+        overflow: hidden;
+        background: var(--panel-2);
+        margin: 8px 0 6px;
+      }
+      .stack i {
+        display: block;
+        height: 100%;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 10px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .legend b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .sw {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 2px;
+        margin-right: 4px;
+        vertical-align: 0;
+      }
+      details.plan {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 8px 12px;
+        margin-bottom: 14px;
+      }
+      details.plan summary {
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 8px 16px;
+        margin-top: 10px;
+      }
+      .plan-grid h4 {
+        margin: 4px 0;
+        font-size: 13px;
+      }
+      .plan-grid p {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+
+      /* Board */
+      .board {
+        display: grid;
+        gap: 12px;
+        align-items: start;
+      }
+      .board.kanban {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(270px, 1fr);
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      .board.people {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      .col {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 8px;
+        min-height: 120px;
+      }
+      .col.over {
+        outline: 2px dashed var(--accent);
+        outline-offset: -4px;
+      }
+      .col-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 4px 4px 8px;
+        font-weight: 600;
+      }
+      .col-head .count {
+        color: var(--muted);
+        font-weight: 400;
+        font-size: 12px;
+      }
+      .col-head .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .sub-head {
+        font-size: 11.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        margin: 10px 4px 6px;
+      }
+      .empty {
+        color: var(--muted);
+        font-size: 12.5px;
+        padding: 10px 6px;
+        text-align: center;
+      }
+
+      /* Card */
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-left: 4px solid var(--sc);
+        border-radius: 8px;
+        padding: 8px 10px;
+        margin-bottom: 8px;
+        box-shadow: var(--shadow);
+      }
+      .card.dragging {
+        opacity: 0.5;
+      }
+      .card[data-status='done'] .title {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+      .card-top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        font-size: 12px;
+      }
+      .tid {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-weight: 600;
+      }
+      .tag {
+        padding: 1px 7px;
+        border-radius: 99px;
+        background: color-mix(in srgb, var(--fc) 18%, transparent);
+        /* pha với màu chữ để đủ tương phản ở cả nền sáng lẫn tối */
+        color: color-mix(in srgb, var(--fc) 70%, var(--text));
+        font-weight: 600;
+        font-size: 11.5px;
+      }
+      .spr {
+        color: var(--muted);
+        margin-left: auto;
+      }
+      .title {
+        font-size: 13.5px;
+        font-weight: 600;
+        margin: 6px 0 8px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .row select {
+        flex: 1 1 120px;
+        font-size: 12.5px;
+        padding: 3px 6px;
+      }
+      .st-select {
+        border-color: var(--sc) !important;
+        color: var(--sc) !important;
+        font-weight: 600;
+      }
+      .note {
+        margin-top: 8px;
+        padding: 6px 8px;
+        border-radius: 6px;
+        background: color-mix(in srgb, var(--warn) 10%, var(--panel));
+        border: 1px solid color-mix(in srgb, var(--warn) 30%, var(--border));
+        white-space: pre-wrap;
+        font-size: 12.5px;
+        cursor: text;
+      }
+      .note textarea {
+        width: 100%;
+        min-height: 64px;
+        border: 0;
+        background: transparent;
+        resize: vertical;
+        outline: none;
+        padding: 0;
+      }
+      .note .hint {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .link {
+        border: 0;
+        background: none;
+        color: var(--accent);
+        padding: 0;
+        font-size: 12px;
+      }
+      .tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
+        align-items: center;
+      }
+      .pr-edit {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .pr-edit input {
+        flex: 1;
+        min-width: 0;
+        font-size: 12.5px;
+        padding: 3px 6px;
+      }
+      .pr a {
+        color: var(--accent);
+        font-size: 12px;
+        text-decoration: none;
+      }
+      details.more {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      details.more summary {
+        cursor: pointer;
+      }
+      details.more p {
+        margin: 6px 0;
+        color: var(--text);
+      }
+      details.more ol {
+        margin: 4px 0 0;
+        padding-left: 18px;
+      }
+      .last {
+        font-size: 11.5px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      /* Empty state */
+      .start {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        max-width: 720px;
+        margin: 40px auto;
+      }
+      .start h2 {
+        margin-top: 0;
+      }
+      .start li {
+        margin-bottom: 6px;
+      }
+      .start code {
+        background: var(--panel-2);
+        padding: 1px 5px;
+        border-radius: 5px;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        max-width: min(560px, calc(100vw - 32px));
+        background: var(--text);
+        color: var(--bg);
+        padding: 10px 14px;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        z-index: 10;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div class="brand">
+          <h1>AI Travel Planner · Task board</h1>
+          <div class="sub">Dữ liệu: <code>docs/tasks.json</code> · commit + push như code</div>
+        </div>
+        <div class="controls">
+          <label class="me" id="meBox"
+            >Tôi là
+            <select id="me"></select>
+          </label>
+          <button class="btn primary" id="connect" hidden>Kết nối tasks.json</button>
+          <button class="btn" id="pickOther" hidden>Chọn file khác</button>
+          <button class="btn" id="openFile">Mở file</button>
+          <button class="btn" id="download">Tải tasks.json</button>
+          <input type="file" id="fileInput" accept=".json,application/json" hidden />
+        </div>
+      </header>
+
+      <div id="banner"></div>
+      <div id="content"></div>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      'use strict';
+
+      // ---------- small helpers ----------
+      const $ = (s) => document.querySelector(s);
+      const esc = (s) =>
+        String(s ?? '').replace(
+          /[&<>"']/g,
+          (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+        );
+      const LS = {
+        get(k) {
+          try {
+            return localStorage.getItem(k);
+          } catch {
+            return null;
+          }
+        },
+        set(k, v) {
+          try {
+            localStorage.setItem(k, v);
+          } catch {
+            /* private mode: chỉ mất tiện ích nhớ lựa chọn */
+          }
+        },
+      };
+      const pad = (n) => String(n).padStart(2, '0');
+      const nowStamp = () => {
+        const d = new Date();
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      };
+      const hasFSA = 'showOpenFilePicker' in window;
+      const FEATURE_COLORS = ['#0891b2', '#8b5cf6', '#ea580c', '#0284c7', '#db2777', '#65a30d', '#64748b'];
+
+      let toastTimer;
+      function toast(msg, ms = 3500) {
+        const t = $('#toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), ms);
+      }
+
+      // ---------- IndexedDB: nhớ file handle để lần sau chỉ cần bấm "Cho phép" ----------
+      function idbOpen() {
+        return new Promise((res, rej) => {
+          const r = indexedDB.open('atp-task-board', 1);
+          r.onupgradeneeded = () => r.result.createObjectStore('kv');
+          r.onsuccess = () => res(r.result);
+          r.onerror = () => rej(r.error);
+        });
+      }
+      // IndexedDB có thể treo (profile bị khoá, chế độ riêng tư...): không để nó chặn việc mở board.
+      const withTimeout = (p, ms) =>
+        Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+      async function idbGet(k) {
+        const db = await idbOpen();
+        return new Promise((res, rej) => {
+          const q = db.transaction('kv').objectStore('kv').get(k);
+          q.onsuccess = () => res(q.result);
+          q.onerror = () => rej(q.error);
+        });
+      }
+      async function idbSet(k, v) {
+        const db = await idbOpen();
+        return new Promise((res, rej) => {
+          const tx = db.transaction('kv', 'readwrite');
+          tx.objectStore('kv').put(v, k);
+          tx.oncomplete = () => res();
+          tx.onerror = () => rej(tx.error);
+        });
+      }
+
+      // ---------- state ----------
+      const state = {
+        data: null,
+        mode: 'none', // 'fsa' = ghi thẳng file · 'memory' = chỉ trong trình duyệt · 'none'
+        handle: null,
+        savedHandle: null,
+        lastText: null,
+        dirty: 0,
+        error: '',
+        me: LS.get('atp.me') || '',
+        view: LS.get('atp.view') || 'kanban',
+        f: {
+          person: LS.get('atp.f.person') || '',
+          feature: LS.get('atp.f.feature') || '',
+          sprint: LS.get('atp.f.sprint') || '',
+          q: '',
+        },
+        editingNote: null,
+        noteDraft: '',
+        editingPr: null,
+      };
+      let writeChain = Promise.resolve();
+
+      // ---------- data in/out ----------
+      function parseData(text) {
+        if (/^(<{7}|={7}|>{7})/m.test(text)) {
+          throw new Error('tasks.json đang có conflict git (<<<<<<<). Sửa conflict rồi mở lại.');
+        }
+        let d;
+        try {
+          d = JSON.parse(text);
+        } catch (e) {
+          throw new Error('tasks.json không phải JSON hợp lệ: ' + e.message);
+        }
+        if (!d || !Array.isArray(d.tasks) || !Array.isArray(d.people) || !Array.isArray(d.statuses)) {
+          throw new Error('File không đúng cấu trúc tasks.json (thiếu tasks / people / statuses).');
+        }
+        return d;
+      }
+      // Cùng format với file trong repo: 2 dấu cách, xuống dòng cuối file -> diff git chỉ đổi đúng dòng.
+      const serialize = (d) => JSON.stringify(d, null, 2) + '\n';
+
+      async function readHandle(h) {
+        return (await h.getFile()).text();
+      }
+
+      async function useHandle(h) {
+        const text = await readHandle(h);
+        const d = parseData(text);
+        if (state.mode === 'memory' && state.dirty) {
+          toast('Đã đọc lại từ file; thay đổi chưa tải về trong trình duyệt bị bỏ.', 5000);
+        }
+        Object.assign(state, { handle: h, savedHandle: h, mode: 'fsa', lastText: text, data: d, dirty: 0, error: '' });
+        if (h.name !== 'tasks.json') toast(`Lưu ý: bạn đang mở "${h.name}", không phải tasks.json.`, 5000);
+        // không nhớ được handle thì lần sau chọn lại file, không ảnh hưởng việc ghi
+        withTimeout(idbSet('handle', h), 2000).catch(() => {});
+        render();
+      }
+
+      function loadMemory(text, source) {
+        try {
+          state.data = parseData(text);
+          Object.assign(state, { mode: 'memory', handle: null, lastText: text, dirty: 0, error: '' });
+          if (source) toast(source);
+        } catch (e) {
+          state.error = e.message;
+        }
+        render();
+      }
+
+      async function connect(pickNew) {
+        try {
+          const saved = state.savedHandle;
+          if (saved && !pickNew) {
+            if ((await saved.requestPermission({ mode: 'readwrite' })) === 'granted') {
+              await useHandle(saved);
+              return;
+            }
+          }
+          const opts = {
+            types: [{ description: 'tasks.json', accept: { 'application/json': ['.json'] } }],
+            excludeAcceptAllOption: false,
+          };
+          if (saved) opts.startIn = saved;
+          const [picked] = await window.showOpenFilePicker(opts);
+          if ((await picked.requestPermission({ mode: 'readwrite' })) !== 'granted') {
+            toast('Chưa được cấp quyền ghi vào file.');
+            return;
+          }
+          await useHandle(picked);
+        } catch (e) {
+          if (e.name !== 'AbortError') {
+            state.error = e.message;
+            render();
+          }
+        }
+      }
+
+      // Mọi thay đổi đi qua đây. Chế độ fsa: đọc file mới nhất -> áp thay đổi -> ghi.
+      // Nhờ đọc lại trước khi ghi, git pull trong lúc trang đang mở không bị ghi đè.
+      function mutate(fn) {
+        if (!state.me) {
+          $('#meBox').classList.add('need');
+          $('#me').focus();
+          toast('Chọn "Tôi là" trước để ghi đúng tên người thay đổi.');
+          return Promise.resolve(false);
+        }
+        if (state.mode !== 'fsa') {
+          fn(state.data);
+          state.dirty++;
+          render();
+          return Promise.resolve(true);
+        }
+        writeChain = writeChain.then(async () => {
+          try {
+            const fresh = await readHandle(state.handle);
+            let reloaded = false;
+            if (fresh !== state.lastText) {
+              state.data = parseData(fresh);
+              reloaded = true;
+            }
+            fn(state.data);
+            const out = serialize(state.data);
+            const w = await state.handle.createWritable();
+            await w.write(out);
+            await w.close();
+            state.lastText = out;
+            state.error = '';
+            if (reloaded) toast('tasks.json vừa đổi bên ngoài (git pull?). Đã đọc bản mới rồi mới ghi thay đổi của bạn.', 5000);
+            flashSaved();
+          } catch (e) {
+            state.error = 'Lưu thất bại: ' + e.message;
+          }
+          render();
+          return true;
+        });
+        return writeChain;
+      }
+
+      let savedTimer;
+      function flashSaved() {
+        const s = $('#savedFlag');
+        if (!s) return;
+        s.classList.add('show');
+        clearTimeout(savedTimer);
+        savedTimer = setTimeout(() => s.classList.remove('show'), 1500);
+      }
+
+      const findTask = (d, id) => d.tasks.find((t) => t.id === id);
+      function addHistory(t, change, from, to) {
+        if (!Array.isArray(t.history)) t.history = [];
+        t.history.push({ at: nowStamp(), by: state.me, change, from, to });
+      }
+      function setStatus(id, to) {
+        let opened = false;
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (!t || t.status === to) return;
+          addHistory(t, 'status', t.status, to);
+          t.status = to;
+          if (to === 'code_review' && !t.pr) opened = true;
+        }).then(() => {
+          if (opened) {
+            state.editingPr = id;
+            render();
+            const inp = document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`);
+            if (inp) inp.focus();
+          }
+        });
+      }
+      function setAssignee(id, to) {
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (!t || t.assignee === to) return;
+          addHistory(t, 'assignee', t.assignee, to);
+          t.assignee = to;
+        });
+      }
+      function setNote(id, text) {
+        const v = text.replace(/\s+$/, '');
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (t) t.note = v;
+        });
+      }
+      function setPr(id, url) {
+        const v = url.trim();
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (t) t.pr = v;
+        });
+      }
+
+      function download() {
+        if (!state.data) return;
+        const blob = new Blob([serialize(state.data)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'tasks.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        state.dirty = 0;
+        render();
+        toast('Đã tải tasks.json. Chép đè vào docs/ rồi commit.');
+      }
+
+      // ---------- lookups ----------
+      const person = (id) => state.data.people.find((p) => p.id === id);
+      const personName = (id) => person(id)?.short || id || '—';
+      const statusName = (id) => state.data.statuses.find((s) => s.id === id)?.name || id;
+      const feature = (id) => state.data.features?.find((f) => f.id === id);
+      function featureColor(id) {
+        const i = (state.data.features || []).findIndex((f) => f.id === id);
+        return FEATURE_COLORS[(i < 0 ? 0 : i) % FEATURE_COLORS.length];
+      }
+      const sprintOrder = (s) => (state.data.sprints || []).findIndex((x) => x.id === s);
+      const byOrder = (a, b) => sprintOrder(a.sprint) - sprintOrder(b.sprint) || a.id.localeCompare(b.id);
+
+      function visibleTasks() {
+        const q = state.f.q.trim().toLowerCase();
+        return state.data.tasks
+          .filter((t) => !state.f.person || t.assignee === state.f.person)
+          .filter((t) => !state.f.feature || t.feature === state.f.feature)
+          .filter((t) => !state.f.sprint || t.sprint === state.f.sprint)
+          .filter(
+            (t) => !q || [t.id, t.title, t.note, t.doneWhen].some((x) => (x || '').toLowerCase().includes(q)),
+          )
+          .sort(byOrder);
+      }
+
+      // ---------- render ----------
+      function renderControls() {
+        const meSel = $('#me');
+        const people = state.data?.people || [];
+        meSel.innerHTML =
+          '<option value="">— chọn —</option>' +
+          people.map((p) => `<option value="${esc(p.id)}">${esc(p.short)}</option>`).join('');
+        meSel.value = people.some((p) => p.id === state.me) ? state.me : '';
+        $('#meBox').classList.toggle('need', !!state.data && !meSel.value && state.mode !== 'none');
+
+        const c = $('#connect');
+        c.hidden = !hasFSA || state.mode === 'fsa';
+        c.textContent = state.savedHandle ? 'Cho phép ghi tasks.json' : 'Kết nối tasks.json';
+        $('#pickOther').hidden = !hasFSA || !state.savedHandle;
+        $('#download').disabled = !state.data;
+      }
+
+      function renderBanner() {
+        const b = $('#banner');
+        if (state.error) {
+          b.innerHTML = `<div class="banner err"><span class="dot"></span><span class="msg">${esc(state.error)}</span>
+            <button class="btn" data-act="dismiss">Đóng</button></div>`;
+          return;
+        }
+        if (state.mode === 'fsa') {
+          b.innerHTML = `<div class="banner ok"><span class="dot"></span><span class="msg">Đang ghi thẳng vào
+            <code>${esc(state.handle.name)}</code>. Xong việc nhớ <code>git add docs/tasks.json</code>, commit, push.
+            Trước khi sửa nên <code>git pull</code>.</span><span class="saved" id="savedFlag">Đã lưu ✓</span></div>`;
+        } else if (state.mode === 'memory') {
+          const unsaved = state.dirty ? ` <b>${state.dirty} thay đổi chưa lưu vào file.</b>` : '';
+          const how = hasFSA
+            ? 'Bấm <b>Kết nối tasks.json</b> để ghi thẳng vào file, hoặc sửa xong bấm <b>Tải tasks.json</b> rồi chép đè vào <code>docs/</code>.'
+            : 'Trình duyệt này không ghi file trực tiếp: sửa xong bấm <b>Tải tasks.json</b> rồi chép đè vào <code>docs/</code>. Chrome/Edge ghi thẳng được.';
+          b.innerHTML = `<div class="banner warn"><span class="dot"></span><span class="msg">Đang sửa trong trình duyệt. ${how}${unsaved}</span></div>`;
+        } else {
+          b.innerHTML = '';
+        }
+      }
+
+      function renderStart() {
+        const how = hasFSA
+          ? `<li>Bấm <b>Kết nối tasks.json</b> và chọn file <code>docs/tasks.json</code> trong repo. Các lần sau chỉ cần bấm <b>Cho phép</b>.</li>
+             <li>Mọi thay đổi (trạng thái, người làm, note, PR) được ghi ngay vào file đó.</li>`
+          : `<li>Trình duyệt này không ghi file trực tiếp. Bấm <b>Mở file</b>, chọn <code>docs/tasks.json</code>.</li>
+             <li>Sửa xong bấm <b>Tải tasks.json</b> và chép đè vào <code>docs/</code>. Dùng Chrome/Edge thì đỡ bước này.</li>`;
+        return `<section class="start">
+          <h2>Mở board</h2>
+          <ol>
+            <li><code>git pull</code> để có <code>docs/tasks.json</code> mới nhất.</li>
+            ${how}
+            <li>Chọn <b>Tôi là</b> ở góc trên để lịch sử ghi đúng tên.</li>
+            <li>Xong thì <code>git add docs/tasks.json</code>, commit, push. Người khác pull về là thấy.</li>
+          </ol>
+          <p style="color:var(--muted)">Chỉ muốn xem nhanh: chạy <code>npx serve docs</code> rồi mở <code>/tasks.html</code>, board tự đọc file.</p>
+          ${hasFSA ? '<button class="btn primary" data-act="connect">Kết nối tasks.json</button>' : '<button class="btn primary" data-act="open">Mở file</button>'}
+        </section>`;
+      }
+
+      function renderSummary() {
+        const d = state.data;
+        const st = d.statuses;
+        const cards = d.people
+          .map((p) => {
+            const mine = d.tasks.filter((t) => t.assignee === p.id);
+            const n = mine.length || 1;
+            const segs = st
+              .map((s) => {
+                const c = mine.filter((t) => t.status === s.id).length;
+                return c ? `<i style="width:${(c / n) * 100}%;background:var(--s-${s.id})" title="${esc(s.name)}: ${c}"></i>` : '';
+              })
+              .join('');
+            const legend = st
+              .map((s) => {
+                const c = mine.filter((t) => t.status === s.id).length;
+                return c ? `<span><span class="sw" style="background:var(--s-${s.id})"></span>${esc(s.name)} <b>${c}</b></span>` : '';
+              })
+              .join('');
+            const done = mine.filter((t) => t.status === 'done').length;
+            const feats = (d.features || [])
+              .filter((f) => f.owner === p.id && f.main)
+              .map((f) => f.name)
+              .join(', ');
+            return `<div class="pcard"><div class="name">${esc(p.short)} <span>${done}/${mine.length} done</span></div>
+              <div class="legend" style="margin-top:2px">${esc(feats)}</div>
+              <div class="stack">${segs}</div><div class="legend">${legend}</div></div>`;
+          })
+          .join('');
+
+        const sprints = (d.sprints || [])
+          .map((s) => {
+            const all = d.tasks.filter((t) => t.sprint === s.id);
+            const done = all.filter((t) => t.status === 'done').length;
+            const dates = s.start || s.end ? ` · ${esc(s.start)}–${esc(s.end)}` : '';
+            return `<div><h4>${esc(s.id)} · ${esc(s.name)} <span style="color:var(--muted);font-weight:400">${done}/${all.length}${dates}</span></h4><p>${esc(s.goal)}</p></div>`;
+          })
+          .join('');
+        const feats = (d.features || [])
+          .map(
+            (f) =>
+              `<div><h4><span class="tag" style="--fc:${featureColor(f.id)}">${esc(f.id)}</span> ${esc(f.name)} · ${esc(personName(f.owner))}${f.main ? '' : ' <span style="color:var(--muted);font-weight:400">(phụ)</span>'}</h4><p>${esc(f.description)}</p></div>`,
+          )
+          .join('');
+        return `<section class="summary">${cards}</section>
+          <details class="plan"><summary>Chặng và feature</summary>
+            <div class="plan-grid">${sprints}</div><hr style="border:0;border-top:1px solid var(--border);margin:8px 0">
+            <div class="plan-grid">${feats}</div></details>`;
+      }
+
+      function renderToolbar() {
+        const d = state.data;
+        const opt = (v, label, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(label)}</option>`;
+        return `<nav class="bar">
+          <div class="seg" role="tablist">
+            <button data-view="kanban" class="${state.view === 'kanban' ? 'on' : ''}">Kanban</button>
+            <button data-view="people" class="${state.view === 'people' ? 'on' : ''}">Theo người</button>
+          </div>
+          <select data-filter="person" aria-label="Lọc người">${opt('', 'Mọi người', state.f.person)}${d.people.map((p) => opt(p.id, p.short, state.f.person)).join('')}</select>
+          <select data-filter="feature" aria-label="Lọc feature">${opt('', 'Mọi feature', state.f.feature)}${(d.features || []).map((f) => opt(f.id, `${f.id} · ${f.name}`, state.f.feature)).join('')}</select>
+          <select data-filter="sprint" aria-label="Lọc chặng">${opt('', 'Mọi chặng', state.f.sprint)}${(d.sprints || []).map((s) => opt(s.id, `${s.id} · ${s.name}`, state.f.sprint)).join('')}</select>
+          <input type="search" data-filter="q" placeholder="Tìm mã, tên, note…" value="${esc(state.f.q)}" aria-label="Tìm" />
+        </nav>`;
+      }
+
+      function renderCard(t) {
+        const d = state.data;
+        const f = feature(t.feature);
+        const statusOpts = d.statuses
+          .map((s) => `<option value="${esc(s.id)}"${s.id === t.status ? ' selected' : ''}>${esc(s.name)}</option>`)
+          .join('');
+        const peopleOpts = d.people
+          .map((p) => `<option value="${esc(p.id)}"${p.id === t.assignee ? ' selected' : ''}>${esc(p.short)}</option>`)
+          .join('');
+
+        let note = '';
+        if (state.editingNote === t.id) {
+          note = `<div class="note"><textarea data-note-input="${esc(t.id)}" aria-label="Note ${esc(t.id)}">${esc(state.noteDraft)}</textarea>
+            <div class="hint">Bấm ra ngoài hoặc ⌘/Ctrl+Enter để lưu · Esc để huỷ</div></div>`;
+        } else if (t.note) {
+          note = `<div class="note" data-act="edit-note" data-id="${esc(t.id)}" title="Bấm để sửa">${esc(t.note)}</div>`;
+        }
+
+        let pr = '';
+        if (state.editingPr === t.id) {
+          pr = `<div class="pr-edit"><input type="url" data-pr-input="${esc(t.id)}" placeholder="https://github.com/…/pull/…" value="${esc(t.pr)}" />
+            <button class="btn" data-act="save-pr" data-id="${esc(t.id)}">Lưu</button></div>`;
+        }
+
+        const tools = [
+          !t.note && state.editingNote !== t.id ? `<button class="link" data-act="edit-note" data-id="${esc(t.id)}">+ Note</button>` : '',
+          t.pr && state.editingPr !== t.id
+            ? `<span class="pr"><a href="${esc(t.pr)}" target="_blank" rel="noopener">PR ↗</a></span> <button class="link" data-act="edit-pr" data-id="${esc(t.id)}">sửa PR</button>`
+            : state.editingPr !== t.id
+              ? `<button class="link" data-act="edit-pr" data-id="${esc(t.id)}">+ PR</button>`
+              : '',
+        ].join('');
+
+        const hist = (t.history || []).slice().reverse();
+        const describe = (h) =>
+          h.change === 'assignee'
+            ? `${esc(personName(h.by))} giao ${esc(personName(h.from))} → ${esc(personName(h.to))}`
+            : `${esc(personName(h.by))}: ${esc(statusName(h.from))} → ${esc(statusName(h.to))}`;
+        const last = hist[0] ? `<div class="last">${describe(hist[0])} · ${esc(hist[0].at)}</div>` : '';
+        const histList = hist.length
+          ? `<ol>${hist.map((h) => `<li>${esc(h.at)} · ${describe(h)}</li>`).join('')}</ol>`
+          : '<div>Chưa có thay đổi.</div>';
+
+        const draggable = state.editingNote === t.id || state.editingPr === t.id ? 'false' : 'true';
+        return `<article class="card" draggable="${draggable}" data-id="${esc(t.id)}" data-status="${esc(t.status)}" style="--sc:var(--s-${esc(t.status)})">
+          <div class="card-top"><span class="tid">${esc(t.id)}</span>
+            <span class="tag" style="--fc:${featureColor(t.feature)}">${esc(f?.name || t.feature)}</span>
+            <span class="spr">${esc(t.sprint)}</span></div>
+          <div class="title">${esc(t.title)}</div>
+          <div class="row">
+            <select class="st-select" data-act="status" data-id="${esc(t.id)}" aria-label="Trạng thái ${esc(t.id)}">${statusOpts}</select>
+            <select data-act="assignee" data-id="${esc(t.id)}" aria-label="Người làm ${esc(t.id)}">${peopleOpts}</select>
+          </div>
+          ${note}${pr}
+          <div class="tools">${tools}</div>
+          <details class="more"><summary>Đạt khi · lịch sử (${hist.length})</summary>
+            <p>${esc(t.doneWhen)}</p>${histList}</details>
+          ${last}
+        </article>`;
+      }
+
+      function renderBoard() {
+        const d = state.data;
+        const tasks = visibleTasks();
+        if (state.view === 'people') {
+          const cols = d.people
+            .filter((p) => !state.f.person || p.id === state.f.person)
+            .map((p) => {
+              const mine = tasks.filter((t) => t.assignee === p.id);
+              let body = '';
+              let cur = null;
+              for (const t of mine) {
+                if (t.sprint !== cur) {
+                  cur = t.sprint;
+                  const s = (d.sprints || []).find((x) => x.id === cur);
+                  body += `<div class="sub-head">${esc(cur)}${s ? ' · ' + esc(s.name) : ''}</div>`;
+                }
+                body += renderCard(t);
+              }
+              const done = mine.filter((t) => t.status === 'done').length;
+              return `<section class="col" data-drop-person="${esc(p.id)}">
+                <div class="col-head"><span>${esc(p.short)}</span><span class="count">${done}/${mine.length} done</span></div>
+                ${body || '<div class="empty">Không có task</div>'}</section>`;
+            })
+            .join('');
+          return `<main class="board people">${cols}</main>`;
+        }
+        const cols = d.statuses
+          .map((s) => {
+            const inCol = tasks.filter((t) => t.status === s.id);
+            return `<section class="col" data-drop-status="${esc(s.id)}">
+              <div class="col-head"><span class="pill"><span class="sw" style="background:var(--s-${esc(s.id)})"></span>${esc(s.name)}</span>
+              <span class="count">${inCol.length}</span></div>
+              ${inCol.map(renderCard).join('') || '<div class="empty">Kéo task vào đây</div>'}</section>`;
+          })
+          .join('');
+        return `<main class="board kanban">${cols}</main>`;
+      }
+
+      function render() {
+        // giữ nội dung note đang gõ dở nếu có render giữa chừng
+        const ta = document.querySelector('[data-note-input]');
+        if (ta) state.noteDraft = ta.value;
+        const hadSearchFocus = document.activeElement?.matches?.('input[data-filter="q"]');
+        const caret = hadSearchFocus ? document.activeElement.selectionStart : null;
+
+        renderControls();
+        renderBanner();
+        $('#content').innerHTML = state.data ? renderSummary() + renderToolbar() + renderBoard() : renderStart();
+
+        if (hadSearchFocus) {
+          const s = document.querySelector('input[data-filter="q"]');
+          s.focus();
+          s.setSelectionRange(caret, caret);
+        }
+        const nt = document.querySelector('[data-note-input]');
+        if (nt && document.activeElement !== nt) {
+          nt.focus();
+          nt.setSelectionRange(nt.value.length, nt.value.length);
+        }
+      }
+
+      // ---------- events ----------
+      $('#me').addEventListener('change', (e) => {
+        state.me = e.target.value;
+        LS.set('atp.me', state.me);
+        render();
+      });
+      $('#connect').addEventListener('click', () => connect(false));
+      $('#pickOther').addEventListener('click', () => connect(true));
+      $('#openFile').addEventListener('click', () => $('#fileInput').click());
+      $('#fileInput').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        e.target.value = '';
+        if (file) loadMemory(await file.text(), `Đã mở ${file.name} (chỉ trong trình duyệt).`);
+      });
+      $('#download').addEventListener('click', download);
+
+      document.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-act],[data-view]');
+        if (!el) return;
+        if (el.dataset.view) {
+          state.view = el.dataset.view;
+          LS.set('atp.view', state.view);
+          render();
+          return;
+        }
+        const id = el.dataset.id;
+        switch (el.dataset.act) {
+          case 'connect':
+            connect(false);
+            break;
+          case 'open':
+            $('#fileInput').click();
+            break;
+          case 'dismiss':
+            state.error = '';
+            render();
+            break;
+          case 'edit-note': {
+            if (state.editingNote === id) break;
+            state.editingNote = id;
+            state.noteDraft = findTask(state.data, id)?.note || '';
+            render();
+            break;
+          }
+          case 'edit-pr':
+            state.editingPr = id;
+            render();
+            document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`)?.focus();
+            break;
+          case 'save-pr': {
+            const inp = document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`);
+            state.editingPr = null;
+            setPr(id, inp ? inp.value : '');
+            break;
+          }
+        }
+      });
+
+      document.addEventListener('change', (e) => {
+        const el = e.target;
+        if (el.dataset.act === 'status') setStatus(el.dataset.id, el.value);
+        else if (el.dataset.act === 'assignee') setAssignee(el.dataset.id, el.value);
+        else if (el.dataset.filter && el.dataset.filter !== 'q') {
+          state.f[el.dataset.filter] = el.value;
+          LS.set('atp.f.' + el.dataset.filter, el.value);
+          render();
+        }
+      });
+      document.addEventListener('input', (e) => {
+        if (e.target.dataset.filter === 'q') {
+          state.f.q = e.target.value;
+          render();
+        }
+      });
+
+      function commitNote(ta, save) {
+        const id = ta.dataset.noteInput;
+        const value = ta.value;
+        state.editingNote = null;
+        state.noteDraft = '';
+        const old = findTask(state.data, id)?.note || '';
+        if (save && value.replace(/\s+$/, '') !== old) setNote(id, value);
+        else render();
+      }
+      document.addEventListener('focusout', (e) => {
+        if (e.target.matches?.('[data-note-input]') && state.editingNote) commitNote(e.target, true);
+      });
+      document.addEventListener('keydown', (e) => {
+        const t = e.target;
+        if (t.matches?.('[data-note-input]')) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            commitNote(t, false);
+          } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            commitNote(t, true);
+          }
+        } else if (t.matches?.('[data-pr-input]')) {
+          const id = t.dataset.prInput;
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            state.editingPr = null;
+            setPr(id, t.value);
+          } else if (e.key === 'Escape') {
+            state.editingPr = null;
+            render();
+          }
+        }
+      });
+
+      // kéo thả: Kanban đổi trạng thái, Theo người đổi người làm
+      document.addEventListener('dragstart', (e) => {
+        const card = e.target.closest?.('.card');
+        if (!card || e.target.closest('select,textarea,input,button,a,summary')) return;
+        e.dataTransfer.setData('text/plain', card.dataset.id);
+        e.dataTransfer.effectAllowed = 'move';
+        card.classList.add('dragging');
+      });
+      document.addEventListener('dragend', (e) => e.target.closest?.('.card')?.classList.remove('dragging'));
+      document.addEventListener('dragover', (e) => {
+        const col = e.target.closest?.('[data-drop-status],[data-drop-person]');
+        if (!col) return;
+        e.preventDefault();
+        document.querySelectorAll('.col.over').forEach((c) => c !== col && c.classList.remove('over'));
+        col.classList.add('over');
+      });
+      document.addEventListener('dragleave', (e) => {
+        const col = e.target.closest?.('.col');
+        if (col && !col.contains(e.relatedTarget)) col.classList.remove('over');
+      });
+      document.addEventListener('drop', (e) => {
+        const col = e.target.closest?.('[data-drop-status],[data-drop-person]');
+        if (!col) return;
+        e.preventDefault();
+        col.classList.remove('over');
+        const id = e.dataTransfer.getData('text/plain');
+        if (!id) return;
+        if (col.dataset.dropStatus) setStatus(id, col.dataset.dropStatus);
+        else if (col.dataset.dropPerson) setAssignee(id, col.dataset.dropPerson);
+      });
+
+      // quay lại tab (sau git pull, đổi nhánh...) thì đọc lại file
+      async function refreshFromDisk() {
+        if (state.mode !== 'fsa' || state.editingNote) return;
+        try {
+          const text = await readHandle(state.handle);
+          if (text === state.lastText) return;
+          state.data = parseData(text);
+          state.lastText = text;
+          state.error = '';
+          render();
+          toast('tasks.json vừa đổi trên đĩa, đã tải lại.');
+        } catch (e) {
+          state.error = e.message;
+          render();
+        }
+      }
+      window.addEventListener('focus', refreshFromDisk);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') refreshFromDisk();
+      });
+      window.addEventListener('beforeunload', (e) => {
+        if (state.mode === 'memory' && state.dirty) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
+      // ---------- start ----------
+      (async function init() {
+        render();
+        if (hasFSA) {
+          try {
+            const h = await withTimeout(idbGet('handle'), 1500);
+            if (h) {
+              state.savedHandle = h;
+              if ((await h.queryPermission({ mode: 'readwrite' })) === 'granted') {
+                await useHandle(h);
+                return;
+              }
+            }
+          } catch {
+            /* chưa từng kết nối hoặc trình duyệt không cho lưu handle */
+          }
+        }
+        // Mở qua http (npx serve docs): đọc được file để xem ngay.
+        if (location.protocol !== 'file:') {
+          try {
+            const r = await fetch('tasks.json', { cache: 'no-store' });
+            if (r.ok) {
+              loadMemory(await r.text());
+              return;
+            }
+          } catch {
+            /* không có server: chờ người dùng kết nối */
+          }
+        }
+        render();
+      })();
+    </script>
+  </body>
+</html>
