@@ -286,8 +286,8 @@ were merged and tagged. It marked 93/100.
 Kept, each with a test that fails first:
 
 - The contract said `quantity` ≥ 1 and times `00:00`–`23:59`, but a stored plan breaking them
-  was shown and saved as is. The contract now says such a plan is a server fault: `500
-internal` on read and save, nothing saved. Four broken plans tested.
+  was shown and saved as is. The contract now says such a plan is a server fault
+  (`500 internal` on read and save), and nothing is saved. Four broken plans tested.
 - Contract sentences with no test: `HEAD` like `GET`, and "steps 8 to 14 are atomic". Added
   a `HEAD` test and eight concurrent saves that must share the plan once (same `savedAt`).
 - `amountVnd`/`limitVnd` are now stated as present on every violation, so a typed client
@@ -298,4 +298,22 @@ internal` on read and save, nothing saved. Four broken plans tested.
 Changed: our self-assessment, which was below what two graders gave on criteria 2 and 7; it now
 claims 95, with criterion 4 at 17 because PR #3's red commit was staged.
 Rejected: staging another red PR to look "organic". It would be the same thing again.
+By hand: nothing in the code.
+
+## 2026-11-25 — review round 8
+
+Tool: Claude Code, an eighth grading agent, same setup as round 7. It marked 96/100.
+Kept, each with a test that fails first:
+
+- The contract promised `500` for a stored plan breaking section 3, but the check ignored
+  `version`, and a stored `version` of 0 reached the `409` step first. The check now covers
+  `version` and runs right after ownership (before the key), and the contract says where.
+- "Stops in schedule order" had no definition. It now means: by `day`, then `start`; `end`
+  after `start`; on one day, no overlap (touching is fine). Four more broken plans tested,
+  and one valid plan whose stops touch and span two days.
+- Tests for two sentences that had none: a server without its JWT secret answers `401`, and
+  the key is trimmed of spaces and compared case-sensitively.
+
+Rejected: nothing. Its remaining deduction (criterion 4, PR #3's red commit staged from a fix
+of the day before) cannot be fixed after the fact; `PA2.md` states it.
 By hand: nothing in the code.
