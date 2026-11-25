@@ -22,20 +22,39 @@ pub struct Member {
 
 impl Plan {
     /// The rules of the Plan table in contract section 3 that hold for stored data:
-    /// `version` 1 to 2^53 - 1, `quantity` at least 1, `day` a real `YYYY-MM-DD` date,
+    /// `version` and `quantity` 1 to 2^53 - 1, `day` a real `YYYY-MM-DD` date,
     /// `start`/`end` a real `HH:MM`, `end` after `start`, stops in schedule order without
     /// overlap.
     /// The edit endpoints never store a plan that breaks them; if one is found anyway it is
     /// a server fault (`500 internal`), never shown or saved.
     pub fn is_well_formed(&self) -> bool {
-        let time = |t: &str| t.len() == 5 && chrono::NaiveTime::parse_from_str(t, "%H:%M").is_ok();
+        // The exact shape first (chrono alone accepts " 9:00" or "+999-12-06"), then the range.
+        let shape = |s: &str, seps: &[(usize, u8)]| {
+            s.bytes()
+                .enumerate()
+                .all(|(i, b)| match seps.iter().find(|(at, _)| *at == i) {
+                    Some((_, sep)) => b == *sep,
+                    None => b.is_ascii_digit(),
+                })
+        };
+        let time = |t: &str| {
+            t.len() == 5
+                && shape(t, &[(2, b':')])
+                && chrono::NaiveTime::parse_from_str(t, "%H:%M").is_ok()
+        };
+        let date = |d: &str| {
+            d.len() == 10
+                && shape(d, &[(4, b'-'), (7, b'-')])
+                && chrono::NaiveDate::parse_from_str(d, "%Y-%m-%d").is_ok()
+        };
         let each = self.stops.iter().all(|s| {
-            s.day.len() == 10
-                && chrono::NaiveDate::parse_from_str(&s.day, "%Y-%m-%d").is_ok()
+            date(&s.day)
                 && time(&s.start)
                 && time(&s.end)
                 && s.end > s.start
-                && s.items.iter().all(|i| i.quantity >= 1)
+                && s.items
+                    .iter()
+                    .all(|i| (1..=super::validator::MAX_VND).contains(&i.quantity))
         });
         // `YYYY-MM-DD` and `HH:MM` compare as strings in time order.
         let in_order = self
