@@ -1427,3 +1427,66 @@ async fn s3_a_lower_budget_sends_a_saved_plan_back_to_draft_and_the_validator_de
     assert_problem(&res, ProblemType::PlanRejected);
     assert_eq!(res.json["violations"][0]["rule"], "over-trip-budget");
 }
+
+#[tokio::test]
+async fn s3_a_total_of_2_pow_53_minus_1_is_rejected_whatever_the_budget() {
+    let s = InMemoryPlanStore::default();
+    s.insert_trip(Trip {
+        id: TRIP_A,
+        budget_vnd: i64::MAX,
+        members: vec![Member {
+            user_id: CREATOR,
+            cap_vnd: None,
+        }],
+    });
+    s.insert_plan(plan(
+        HUGE_PLAN,
+        TRIP_A,
+        CREATOR,
+        1,
+        vec![item("bad-price", i64::MAX / 2, 3)],
+    ));
+    let app = app_with(Arc::new(s));
+    let res = send(&app, Req::new(HUGE_PLAN).version(1)).await;
+    assert_problem(&res, ProblemType::PlanRejected);
+    assert_eq!(res.json["violations"][0]["rule"], "over-trip-budget");
+}
+
+#[tokio::test]
+async fn s3_a_member_joining_or_a_cap_changing_also_reopens_a_saved_plan() {
+    let store = store();
+    let app = app_with(store.clone());
+    assert_eq!(send(&app, Req::new(OK_PLAN)).await.status, StatusCode::OK);
+    let mut more = members();
+    more.push(Member {
+        user_id: Uuid::from_u128(0x5e),
+        cap_vnd: None,
+    });
+    store.insert_trip(Trip {
+        id: TRIP_A,
+        budget_vnd: 4_000_000,
+        members: more,
+    });
+    let p = store.plan(OK_PLAN).unwrap();
+    assert_eq!(
+        (p.status, p.version),
+        (PlanStatus::Draft, 4),
+        "member joined"
+    );
+    assert_eq!(
+        send(&app, Req::new(OK_PLAN).version(4)).await.status,
+        StatusCode::OK
+    );
+    let mut lower = members();
+    lower[2].cap_vnd = Some(100_000); // MEMBER's cap: 400 000 -> 100 000
+    store.insert_trip(Trip {
+        id: TRIP_A,
+        budget_vnd: 4_000_000,
+        members: lower,
+    });
+    let p = store.plan(OK_PLAN).unwrap();
+    assert_eq!((p.status, p.version), (PlanStatus::Draft, 5), "cap changed");
+    let res = send(&app, Req::new(OK_PLAN).version(5)).await;
+    assert_problem(&res, ProblemType::PlanRejected);
+    assert_eq!(res.json["violations"][0]["rule"], "over-member-cap");
+}
