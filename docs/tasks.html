@@ -7,8 +7,9 @@
     <!--
       Board task của nhóm. Một file duy nhất: giao diện ở trên, dữ liệu ở khối
       <script id="tasks-data"> cuối file. Mở bằng trình duyệt là thấy ngay.
-      Chrome/Edge: lần sửa đầu tiên chọn chính file này và bấm Cho phép, board tự ghi
-      thay đổi vào khối dữ liệu. Sau đó git add docs/tasks.html, commit, push.
+      Sửa: chạy `pnpm board` (docs/board-server.mjs), board mở ở localhost và tự ghi
+      vào file. Mở thẳng file trong Chrome/Edge thì lần sửa đầu phải chọn chính file
+      này và bấm Cho phép. Sau đó git add docs/tasks.html, commit, push.
       Có thể sửa tay khối dữ liệu, giữ đúng JSON.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -802,8 +803,9 @@
       <div id="banner"></div>
       <div id="content"></div>
       <footer>
+        Mở board bằng <code>pnpm board</code> để sửa là tự lưu, không phải chọn file.<br />
         Sửa xong: <code>git add docs/tasks.html</code> → commit → push. Người khác
-        <code>git pull</code> rồi mở lại file (hoặc F5) là thấy.
+        <code>git pull</code> rồi F5 là thấy.
       </footer>
       <input type="file" id="fileInput" accept=".html,text/html" hidden />
     </div>
@@ -956,6 +958,42 @@
       let writeChain = Promise.resolve();
       const readHandle = async (h) => (await h.getFile()).text();
 
+      // Mở qua `pnpm board` (docs/board-server.mjs): đọc và ghi file qua server, không cần chọn file.
+      // Cùng giao diện với FileSystemFileHandle nên save() và refreshFromDisk() dùng chung.
+      const SOURCE_URL = '/__board/source';
+      const NO_SERVER = 'Không kết nối được board server. Chạy lại "pnpm board" rồi bấm Lưu vào file.';
+      const serverHandle = {
+        name: 'tasks.html',
+        async getFile() {
+          let r;
+          try {
+            r = await fetch(SOURCE_URL, { cache: 'no-store' });
+          } catch {
+            throw new Error(NO_SERVER);
+          }
+          if (!r.ok) throw new Error(`Server trả ${r.status}: ${await r.text()}`);
+          const text = await r.text();
+          return { text: async () => text };
+        },
+        async createWritable() {
+          let buf = '';
+          return {
+            async write(s) {
+              buf += s;
+            },
+            async close() {
+              let r;
+              try {
+                r = await fetch(SOURCE_URL, { method: 'PUT', body: buf, headers: { 'content-type': 'text/plain' } });
+              } catch {
+                throw new Error(NO_SERVER);
+              }
+              if (!r.ok) throw new Error(`Server trả ${r.status}: ${await r.text()}`);
+            },
+          };
+        },
+      };
+
       async function adopt(h) {
         splitSource(await readHandle(h)); // đúng là file board mới nhận
         state.handle = h;
@@ -977,7 +1015,7 @@
             if ((await saved.requestPermission({ mode: 'readwrite' })) === 'granted') return await adopt(saved);
             return false;
           }
-          toast(`Chọn chính file ${pageFileName()} này (trong docs/) để board lưu thay đổi.`, 6000);
+          toast(`Chọn chính file ${pageFileName()} (trong docs/) để lưu. Muốn khỏi chọn file: chạy "pnpm board".`, 7000);
           const [picked] = await window.showOpenFilePicker({
             types: [{ description: 'Task board', accept: { 'text/html': ['.html'] } }],
           });
@@ -1037,7 +1075,7 @@
         fn(state.data);
         state.pending.push(fn);
         render();
-        return hasFSA ? save() : Promise.resolve(true);
+        return hasFSA || state.handle ? save() : Promise.resolve(true);
       }
 
       // Trình duyệt không ghi file trực tiếp: ghép dữ liệu mới vào mã nguồn rồi tải về.
@@ -1223,8 +1261,9 @@
         const n = state.pending.length;
         let html;
         if (n) {
+          const canWrite = hasFSA || state.handle;
           html = `<span class="pill pending"><span class="dot"></span>${n} thay đổi chưa lưu</span>
-            <button class="btn primary" data-act="${hasFSA ? 'save' : 'download'}">${hasFSA ? 'Lưu vào file' : 'Tải ' + esc(pageFileName())}</button>`;
+            <button class="btn primary" data-act="${canWrite ? 'save' : 'download'}">${canWrite ? 'Lưu vào file' : 'Tải ' + esc(pageFileName())}</button>`;
         } else if (state.handle) {
           html = `<span class="pill ok"><span class="dot"></span>Tự lưu vào ${esc(state.handle.name)}
             <span class="saved" id="savedFlag">✓</span></span>`;
@@ -1760,6 +1799,17 @@
           state.error = e.message;
         }
         render();
+        if (location.protocol.startsWith('http')) {
+          try {
+            splitSource(await readHandle(serverHandle));
+            state.handle = serverHandle;
+            await refreshFromDisk(true);
+            render();
+            return;
+          } catch {
+            /* trang không chạy qua board server: dùng cách chọn file hoặc tải về */
+          }
+        }
         if (!hasFSA) return;
         try {
           const h = await withTimeout(idbGet(HANDLE_KEY), 1500);
