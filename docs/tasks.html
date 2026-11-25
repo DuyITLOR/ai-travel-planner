@@ -5,70 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ATP Task Board</title>
     <!--
-      Board task của nhóm. Dữ liệu nằm ở docs/tasks.json (file này không chứa dữ liệu).
-      Chrome/Edge: bấm "Kết nối tasks.json", chọn docs/tasks.json, mọi thay đổi ghi thẳng vào file.
-      Trình duyệt khác: "Mở file", sửa, rồi "Tải tasks.json" và chép đè vào docs/.
-      Sau đó commit + push docs/tasks.json như code bình thường.
+      Board task của nhóm. Một file duy nhất: giao diện ở trên, dữ liệu ở khối
+      <script id="tasks-data"> cuối file. Mở bằng trình duyệt là thấy ngay.
+      Chrome/Edge: lần sửa đầu tiên chọn chính file này và bấm Cho phép, board tự ghi
+      thay đổi vào khối dữ liệu. Sau đó git add docs/tasks.html, commit, push.
+      Có thể sửa tay khối dữ liệu, giữ đúng JSON.
     -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
-        --bg: #f6f7f9;
-        --panel: #ffffff;
-        --panel-2: #f0f2f5;
-        --text: #1b1f24;
-        --muted: #5d6673;
-        --border: #dde1e6;
-        --accent: #2563eb;
-        --ok: #15803d;
-        --warn: #b45309;
-        --err: #b91c1c;
-        --s-todo: #6b7280;
-        --s-in_progress: #2563eb;
-        --s-code_review: #7c3aed;
-        --s-testing: #d97706;
-        --s-done: #16a34a;
-        --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
-        --radius: 10px;
+        --bg: #faf9f5;
+        --surface: #ffffff;
+        --surface-2: #f0eee6;
+        --surface-3: #e8e6dc;
+        --text: #141413;
+        --text-2: #3d3d3a;
+        --muted: #73726c;
+        --border: #e3e1d7;
+        --border-strong: #d1cfc5;
+        --accent: #c6613f;
+        --accent-hover: #b4532f;
+        --accent-tint: #f6e9e2;
+        --on-accent: #faf9f5;
+        --ok: #5e7a3c;
+        --warn: #a8702f;
+        --err: #b5422f;
+        --s-todo: #87867f;
+        --s-in_progress: #5b8bc4;
+        --s-code_review: #8e76bf;
+        --s-testing: #c08a55;
+        --s-done: #6b8e47;
+        --shadow: 0 1px 2px rgba(20, 20, 19, 0.04), 0 2px 8px rgba(20, 20, 19, 0.04);
+        --serif: 'Source Serif 4', 'Noto Serif', Georgia, 'Times New Roman', serif;
+        --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         color-scheme: light;
       }
       @media (prefers-color-scheme: dark) {
         :root:not([data-theme='light']) {
-          --bg: #0f1216;
-          --panel: #171b21;
-          --panel-2: #1e232b;
-          --text: #e6e9ee;
-          --muted: #9aa4b2;
-          --border: #2b313a;
-          --accent: #60a5fa;
-          --ok: #4ade80;
-          --warn: #fbbf24;
-          --err: #f87171;
-          --s-todo: #9ca3af;
-          --s-in_progress: #60a5fa;
-          --s-code_review: #a78bfa;
-          --s-testing: #fbbf24;
-          --s-done: #4ade80;
-          --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+          --bg: #262624;
+          --surface: #30302e;
+          --surface-2: #1f1e1d;
+          --surface-3: #3a3a37;
+          --text: #faf9f5;
+          --text-2: #e5e4df;
+          --muted: #a6a39a;
+          --border: #3e3d39;
+          --border-strong: #4d4c47;
+          --accent: #d97757;
+          --accent-hover: #e08a6d;
+          --accent-tint: rgba(217, 119, 87, 0.16);
+          --on-accent: #1f1e1d;
+          --ok: #9dbb7a;
+          --warn: #ddb07f;
+          --err: #e5826b;
+          --s-todo: #a6a39a;
+          --s-in_progress: #8ab4e0;
+          --s-code_review: #b3a1dd;
+          --s-testing: #ddb07f;
+          --s-done: #9dbb7a;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
           color-scheme: dark;
         }
       }
       :root[data-theme='dark'] {
-        --bg: #0f1216;
-        --panel: #171b21;
-        --panel-2: #1e232b;
-        --text: #e6e9ee;
-        --muted: #9aa4b2;
-        --border: #2b313a;
-        --accent: #60a5fa;
-        --ok: #4ade80;
-        --warn: #fbbf24;
-        --err: #f87171;
-        --s-todo: #9ca3af;
-        --s-in_progress: #60a5fa;
-        --s-code_review: #a78bfa;
-        --s-testing: #fbbf24;
-        --s-done: #4ade80;
-        --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        --bg: #262624;
+        --surface: #30302e;
+        --surface-2: #1f1e1d;
+        --surface-3: #3a3a37;
+        --text: #faf9f5;
+        --text-2: #e5e4df;
+        --muted: #a6a39a;
+        --border: #3e3d39;
+        --border-strong: #4d4c47;
+        --accent: #d97757;
+        --accent-hover: #e08a6d;
+        --accent-tint: rgba(217, 119, 87, 0.16);
+        --on-accent: #1f1e1d;
+        --ok: #9dbb7a;
+        --warn: #ddb07f;
+        --err: #e5826b;
+        --s-todo: #a6a39a;
+        --s-in_progress: #8ab4e0;
+        --s-code_review: #b3a1dd;
+        --s-testing: #ddb07f;
+        --s-done: #9dbb7a;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         color-scheme: dark;
       }
 
@@ -80,14 +107,8 @@
         margin: 0;
         background: var(--bg);
         color: var(--text);
-        font:
-          14px/1.45 -apple-system,
-          BlinkMacSystemFont,
-          'Segoe UI',
-          Roboto,
-          'Helvetica Neue',
-          Arial,
-          sans-serif;
+        font: 14px/1.5 var(--sans);
+        -webkit-font-smoothing: antialiased;
       }
       button,
       select,
@@ -99,29 +120,41 @@
       button {
         cursor: pointer;
       }
+      code {
+        font-family: var(--mono);
+        font-size: 0.92em;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        padding: 0 5px;
+        border-radius: 5px;
+      }
       .wrap {
-        max-width: 1500px;
+        max-width: 1520px;
         margin: 0 auto;
-        padding: 16px;
+        padding: 24px 16px 40px;
       }
 
-      /* Header */
+      /* ---------- header ---------- */
       .top {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        align-items: center;
+        gap: 16px;
+        align-items: flex-end;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: 20px;
       }
-      .brand h1 {
-        font-size: 20px;
-        margin: 0;
-        letter-spacing: -0.01em;
-      }
-      .brand .sub {
+      .eyebrow {
         color: var(--muted);
-        font-size: 13px;
+        font-size: 12.5px;
+        letter-spacing: 0.02em;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        margin: 2px 0 0;
       }
       .controls {
         display: flex;
@@ -130,156 +163,172 @@
         align-items: center;
       }
       .btn {
-        border: 1px solid var(--border);
-        background: var(--panel);
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
         border-radius: 8px;
         padding: 6px 12px;
-        box-shadow: var(--shadow);
+        font-weight: 500;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
       }
       .btn:hover {
-        border-color: var(--accent);
+        background: var(--surface-2);
       }
       .btn.primary {
         background: var(--accent);
         border-color: var(--accent);
-        color: #fff;
+        color: var(--on-accent);
       }
-      .btn[disabled] {
-        opacity: 0.5;
-        cursor: default;
+      .btn.primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
       }
-      .me {
-        display: flex;
-        gap: 6px;
+      .pill {
+        display: inline-flex;
         align-items: center;
-        padding: 4px 4px 4px 10px;
+        gap: 7px;
+        padding: 5px 11px;
+        border-radius: 99px;
         border: 1px solid var(--border);
-        border-radius: 8px;
-        background: var(--panel);
+        background: var(--surface);
+        font-size: 12.5px;
+        color: var(--text-2);
+        white-space: nowrap;
       }
-      .me.need {
-        border-color: var(--err);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--err) 25%, transparent);
-      }
-      select,
-      input[type='search'],
-      input[type='url'] {
-        border: 1px solid var(--border);
-        background: var(--panel);
-        border-radius: 7px;
-        padding: 5px 8px;
-        max-width: 100%;
-      }
-
-      /* Banner */
-      .banner {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 16px;
-        align-items: center;
-        padding: 10px 14px;
-        border-radius: var(--radius);
-        border: 1px solid var(--border);
-        background: var(--panel);
-        margin-bottom: 12px;
-      }
-      .banner .dot {
-        width: 9px;
-        height: 9px;
+      .dot {
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
+        background: var(--muted);
         flex: none;
       }
-      .banner.ok .dot {
+      .pill.ok .dot {
         background: var(--ok);
       }
-      .banner.warn .dot {
+      .pill.warn .dot {
         background: var(--warn);
       }
-      .banner.err {
-        border-color: var(--err);
+      .pill.pending {
+        border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+        background: var(--accent-tint);
       }
-      .banner.err .dot {
-        background: var(--err);
-      }
-      .banner .msg {
-        flex: 1 1 320px;
-      }
-      .banner code {
-        background: var(--panel-2);
-        padding: 1px 5px;
-        border-radius: 5px;
+      .pill.pending .dot {
+        background: var(--accent);
       }
       .saved {
         color: var(--ok);
-        font-size: 12px;
+        font-weight: 600;
         opacity: 0;
         transition: opacity 0.3s;
       }
       .saved.show {
         opacity: 1;
       }
-
-      /* Toolbar */
-      .bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-        margin-bottom: 12px;
-      }
-      .seg {
+      .me {
         display: inline-flex;
-        border: 1px solid var(--border);
+        gap: 6px;
+        align-items: center;
+        padding: 3px 3px 3px 11px;
+        border: 1px solid var(--border-strong);
         border-radius: 8px;
-        overflow: hidden;
-        background: var(--panel);
+        background: var(--surface);
+        color: var(--muted);
+        font-size: 13px;
       }
-      .seg button {
+      .me select {
         border: 0;
         background: transparent;
-        padding: 6px 12px;
+        color: var(--text);
+        font-weight: 600;
+        padding: 3px 4px;
       }
-      .seg button.on {
-        background: var(--accent);
-        color: #fff;
+      .me.need {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-tint);
       }
-      .bar input[type='search'] {
-        flex: 1 1 200px;
-        min-width: 0;
+      select,
+      input[type='search'],
+      input[type='url'] {
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 6px 9px;
+        max-width: 100%;
+        outline: none;
+      }
+      select:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      .btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
       }
 
-      /* Summary */
+      /* ---------- banner ---------- */
+      .banner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        margin-bottom: 16px;
+      }
+      .banner.err {
+        border-color: color-mix(in srgb, var(--err) 50%, var(--border));
+        background: color-mix(in srgb, var(--err) 8%, var(--surface));
+      }
+      .banner.pending {
+        border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+        background: var(--accent-tint);
+      }
+      .banner .msg {
+        flex: 1 1 320px;
+      }
+
+      /* ---------- summary ---------- */
       .summary {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 10px;
-        margin-bottom: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+        margin-bottom: 12px;
       }
       .pcard {
-        background: var(--panel);
+        background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 10px 12px;
+        border-radius: 14px;
+        padding: 14px 16px;
         box-shadow: var(--shadow);
       }
-      .pcard .name {
+      .pcard .head {
         display: flex;
+        align-items: baseline;
         justify-content: space-between;
         gap: 8px;
-        font-weight: 600;
       }
-      .pcard .name span {
+      .pcard .name {
+        font-family: var(--serif);
+        font-size: 19px;
+        font-weight: 500;
+      }
+      .pcard .ratio {
         color: var(--muted);
-        font-weight: 400;
-        font-size: 12px;
+        font-size: 12.5px;
+      }
+      .pcard .feat {
+        color: var(--muted);
+        font-size: 12.5px;
       }
       .stack {
         display: flex;
-        height: 8px;
+        height: 6px;
         border-radius: 99px;
         overflow: hidden;
-        background: var(--panel-2);
-        margin: 8px 0 6px;
+        background: var(--surface-3);
+        margin: 10px 0 8px;
       }
       .stack i {
         display: block;
@@ -288,7 +337,7 @@
       .legend {
         display: flex;
         flex-wrap: wrap;
-        gap: 4px 10px;
+        gap: 2px 12px;
         font-size: 12px;
         color: var(--muted);
       }
@@ -298,40 +347,82 @@
       }
       .sw {
         display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 2px;
-        margin-right: 4px;
-        vertical-align: 0;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        margin-right: 5px;
+        vertical-align: 1px;
       }
       details.plan {
-        background: var(--panel);
+        background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 8px 12px;
-        margin-bottom: 14px;
+        border-radius: 14px;
+        padding: 10px 16px;
+        margin-bottom: 20px;
       }
       details.plan summary {
         cursor: pointer;
-        font-weight: 600;
+        font-family: var(--serif);
+        font-size: 16px;
+        font-weight: 500;
       }
       .plan-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 8px 16px;
-        margin-top: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 6px 20px;
+        margin-top: 12px;
       }
       .plan-grid h4 {
-        margin: 4px 0;
+        margin: 4px 0 2px;
         font-size: 13px;
+        font-weight: 600;
       }
       .plan-grid p {
         margin: 0 0 8px;
         color: var(--muted);
         font-size: 12.5px;
       }
+      .plan hr {
+        border: 0;
+        border-top: 1px solid var(--border);
+        margin: 8px 0;
+      }
 
-      /* Board */
+      /* ---------- toolbar ---------- */
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .seg {
+        display: inline-flex;
+        padding: 3px;
+        gap: 2px;
+        border-radius: 10px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+      }
+      .seg button {
+        border: 0;
+        background: transparent;
+        padding: 5px 12px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .seg button.on {
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: var(--shadow);
+      }
+      .bar input[type='search'] {
+        flex: 1 1 200px;
+        min-width: 0;
+      }
+
+      /* ---------- board ---------- */
       .board {
         display: grid;
         gap: 12px;
@@ -339,7 +430,7 @@
       }
       .board.kanban {
         grid-auto-flow: column;
-        grid-auto-columns: minmax(270px, 1fr);
+        grid-auto-columns: minmax(272px, 1fr);
         overflow-x: auto;
         padding-bottom: 8px;
       }
@@ -347,64 +438,74 @@
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       }
       .col {
-        background: var(--panel-2);
+        background: var(--surface-2);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 8px;
-        min-height: 120px;
+        border-radius: 14px;
+        padding: 10px;
+        min-height: 140px;
       }
       .col.over {
         outline: 2px dashed var(--accent);
-        outline-offset: -4px;
+        outline-offset: -5px;
       }
       .col-head {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-        padding: 4px 4px 8px;
-        font-weight: 600;
+        padding: 2px 4px 10px;
+      }
+      .col-head .label {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        font-family: var(--serif);
+        font-size: 16px;
+        font-weight: 500;
       }
       .col-head .count {
         color: var(--muted);
-        font-weight: 400;
         font-size: 12px;
-      }
-      .col-head .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 99px;
+        padding: 0 8px;
       }
       .sub-head {
         font-size: 11.5px;
-        text-transform: uppercase;
+        font-weight: 600;
         letter-spacing: 0.04em;
+        text-transform: uppercase;
         color: var(--muted);
-        margin: 10px 4px 6px;
+        margin: 12px 4px 6px;
       }
       .empty {
         color: var(--muted);
         font-size: 12.5px;
-        padding: 10px 6px;
+        padding: 14px 6px;
         text-align: center;
       }
 
-      /* Card */
+      /* ---------- card ---------- */
       .card {
-        background: var(--panel);
+        background: var(--surface);
         border: 1px solid var(--border);
-        border-left: 4px solid var(--sc);
-        border-radius: 8px;
-        padding: 8px 10px;
+        border-radius: 12px;
+        padding: 10px 12px;
         margin-bottom: 8px;
         box-shadow: var(--shadow);
+        transition: border-color 0.15s;
+      }
+      .card:hover {
+        border-color: var(--border-strong);
       }
       .card.dragging {
-        opacity: 0.5;
+        opacity: 0.45;
       }
       .card[data-status='done'] .title {
-        text-decoration: line-through;
         color: var(--muted);
+        text-decoration: line-through;
+        text-decoration-color: var(--border-strong);
       }
       .card-top {
         display: flex;
@@ -414,26 +515,29 @@
         font-size: 12px;
       }
       .tid {
-        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-family: var(--mono);
+        font-size: 11.5px;
         font-weight: 600;
+        color: var(--text-2);
       }
       .tag {
-        padding: 1px 7px;
+        padding: 1px 8px;
         border-radius: 99px;
-        background: color-mix(in srgb, var(--fc) 18%, transparent);
-        /* pha với màu chữ để đủ tương phản ở cả nền sáng lẫn tối */
-        color: color-mix(in srgb, var(--fc) 70%, var(--text));
+        background: color-mix(in srgb, var(--fc) 15%, transparent);
+        color: color-mix(in srgb, var(--fc) 72%, var(--text));
         font-weight: 600;
         font-size: 11.5px;
       }
       .spr {
-        color: var(--muted);
         margin-left: auto;
+        color: var(--muted);
+        font-size: 11.5px;
       }
       .title {
         font-size: 13.5px;
-        font-weight: 600;
-        margin: 6px 0 8px;
+        font-weight: 500;
+        color: var(--text);
+        margin: 7px 0 9px;
       }
       .row {
         display: flex;
@@ -443,21 +547,25 @@
       .row select {
         flex: 1 1 120px;
         font-size: 12.5px;
-        padding: 3px 6px;
+        padding: 4px 7px;
+        border-radius: 7px;
       }
       .st-select {
-        border-color: var(--sc) !important;
-        color: var(--sc) !important;
+        border-color: color-mix(in srgb, var(--sc) 45%, var(--border)) !important;
+        background: color-mix(in srgb, var(--sc) 12%, var(--surface)) !important;
+        color: color-mix(in srgb, var(--sc) 70%, var(--text)) !important;
         font-weight: 600;
       }
       .note {
-        margin-top: 8px;
-        padding: 6px 8px;
-        border-radius: 6px;
-        background: color-mix(in srgb, var(--warn) 10%, var(--panel));
-        border: 1px solid color-mix(in srgb, var(--warn) 30%, var(--border));
+        margin-top: 9px;
+        padding: 7px 9px;
+        border-radius: 8px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
         white-space: pre-wrap;
         font-size: 12.5px;
+        color: var(--text-2);
         cursor: text;
       }
       .note textarea {
@@ -473,19 +581,29 @@
         font-size: 11px;
         color: var(--muted);
       }
-      .link {
-        border: 0;
-        background: none;
-        color: var(--accent);
-        padding: 0;
-        font-size: 12px;
-      }
       .tools {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 8px;
         align-items: center;
+        margin-top: 8px;
+      }
+      .link {
+        border: 0;
+        background: none;
+        padding: 0;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .link:hover {
+        text-decoration: underline;
+      }
+      .pr a {
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
       }
       .pr-edit {
         display: flex;
@@ -496,15 +614,10 @@
         flex: 1;
         min-width: 0;
         font-size: 12.5px;
-        padding: 3px 6px;
-      }
-      .pr a {
-        color: var(--accent);
-        font-size: 12px;
-        text-decoration: none;
+        padding: 4px 7px;
       }
       details.more {
-        margin-top: 6px;
+        margin-top: 7px;
         font-size: 12px;
         color: var(--muted);
       }
@@ -513,50 +626,35 @@
       }
       details.more p {
         margin: 6px 0;
-        color: var(--text);
+        color: var(--text-2);
       }
       details.more ol {
         margin: 4px 0 0;
         padding-left: 18px;
       }
       .last {
+        margin-top: 6px;
         font-size: 11.5px;
         color: var(--muted);
-        margin-top: 6px;
       }
-
-      /* Empty state */
-      .start {
-        background: var(--panel);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 24px;
-        max-width: 720px;
-        margin: 40px auto;
-      }
-      .start h2 {
-        margin-top: 0;
-      }
-      .start li {
-        margin-bottom: 6px;
-      }
-      .start code {
-        background: var(--panel-2);
-        padding: 1px 5px;
-        border-radius: 5px;
+      footer {
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 12.5px;
+        text-align: center;
       }
 
       .toast {
         position: fixed;
         left: 50%;
-        bottom: 20px;
+        bottom: 22px;
         transform: translateX(-50%);
         max-width: min(560px, calc(100vw - 32px));
         background: var(--text);
         color: var(--bg);
-        padding: 10px 14px;
-        border-radius: 8px;
-        box-shadow: var(--shadow);
+        padding: 10px 16px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.2s;
@@ -565,44 +663,37 @@
       .toast.show {
         opacity: 1;
       }
-      .sr {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-      }
     </style>
   </head>
   <body>
     <div class="wrap">
       <header class="top">
-        <div class="brand">
-          <h1>AI Travel Planner · Task board</h1>
-          <div class="sub">Dữ liệu: <code>docs/tasks.json</code> · commit + push như code</div>
+        <div>
+          <div class="eyebrow">AI Travel Planner · CSC13114</div>
+          <h1>Task board</h1>
         </div>
         <div class="controls">
+          <span id="saveState"></span>
           <label class="me" id="meBox"
             >Tôi là
-            <select id="me"></select>
+            <select id="me" aria-label="Tôi là"></select>
           </label>
-          <button class="btn primary" id="connect" hidden>Kết nối tasks.json</button>
-          <button class="btn" id="pickOther" hidden>Chọn file khác</button>
-          <button class="btn" id="openFile">Mở file</button>
-          <button class="btn" id="download">Tải tasks.json</button>
-          <input type="file" id="fileInput" accept=".json,application/json" hidden />
         </div>
       </header>
-
       <div id="banner"></div>
       <div id="content"></div>
+      <footer>
+        Sửa xong: <code>git add docs/tasks.html</code> → commit → push. Người khác
+        <code>git pull</code> rồi mở lại file (hoặc F5) là thấy.
+      </footer>
+      <input type="file" id="fileInput" accept=".html,text/html" hidden />
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
       'use strict';
 
-      // ---------- small helpers ----------
+      // ---------- helpers ----------
       const $ = (s) => document.querySelector(s);
       const esc = (s) =>
         String(s ?? '').replace(
@@ -621,7 +712,7 @@
           try {
             localStorage.setItem(k, v);
           } catch {
-            /* private mode: chỉ mất tiện ích nhớ lựa chọn */
+            /* chế độ riêng tư: chỉ mất tiện ích nhớ lựa chọn */
           }
         },
       };
@@ -631,10 +722,11 @@
         return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
       };
       const hasFSA = 'showOpenFilePicker' in window;
-      const FEATURE_COLORS = ['#0891b2', '#8b5cf6', '#ea580c', '#0284c7', '#db2777', '#65a30d', '#64748b'];
+      const pageFileName = () => decodeURIComponent(location.pathname.split('/').pop() || '') || 'tasks.html';
+      const FEATURE_COLORS = ['#cc785c', '#5b8bc4', '#6b8e47', '#c46686', '#c08a55', '#8e76bf', '#87867f'];
 
       let toastTimer;
-      function toast(msg, ms = 3500) {
+      function toast(msg, ms = 3800) {
         const t = $('#toast');
         t.textContent = msg;
         t.classList.add('show');
@@ -642,16 +734,50 @@
         toastTimer = setTimeout(() => t.classList.remove('show'), ms);
       }
 
-      // ---------- IndexedDB: nhớ file handle để lần sau chỉ cần bấm "Cho phép" ----------
+      // ---------- khối dữ liệu trong chính file này ----------
+      // Ghép chuỗi để thẻ mở không xuất hiện nguyên văn trong code (tìm bằng lastIndexOf).
+      const DATA_OPEN = '<script type="application/json" id="tasks' + '-data">';
+      const DATA_CLOSE = '<' + '/script>';
+
+      function splitSource(src) {
+        if (/^(<{7}|>{7})( |$)/m.test(src)) {
+          throw new Error('File đang có conflict git (<<<<<<<). Sửa conflict rồi mở lại.');
+        }
+        const i = src.lastIndexOf(DATA_OPEN);
+        if (i < 0) throw new Error('File này không phải board tasks.html (không thấy khối dữ liệu).');
+        const start = i + DATA_OPEN.length;
+        const end = src.indexOf(DATA_CLOSE, start);
+        if (end < 0) throw new Error('Khối dữ liệu không có thẻ đóng.');
+        return { head: src.slice(0, start), json: src.slice(start, end), tail: src.slice(end) };
+      }
+      function parseData(text) {
+        let d;
+        try {
+          d = JSON.parse(text);
+        } catch (e) {
+          throw new Error('Dữ liệu task không phải JSON hợp lệ: ' + e.message);
+        }
+        if (!d || !Array.isArray(d.tasks) || !Array.isArray(d.people) || !Array.isArray(d.statuses)) {
+          throw new Error('Dữ liệu thiếu tasks / people / statuses.');
+        }
+        return d;
+      }
+      // 2 dấu cách, mỗi trường một dòng: git diff chỉ đổi đúng dòng bị sửa.
+      // Thoát "</" và "<!--" để chuỗi trong note không đóng được thẻ script.
+      const serialize = (d) =>
+        '\n' + JSON.stringify(d, null, 2).replace(/<\//g, '<\\/').replace(/<!-{2}/g, '<\\u0021--') + '\n';
+
+      // ---------- IndexedDB: nhớ file đã cấp quyền ----------
       function idbOpen() {
         return new Promise((res, rej) => {
-          const r = indexedDB.open('atp-task-board', 1);
-          r.onupgradeneeded = () => r.result.createObjectStore('kv');
+          const r = indexedDB.open('atp-task-board', 2);
+          r.onupgradeneeded = () => {
+            if (!r.result.objectStoreNames.contains('kv')) r.result.createObjectStore('kv');
+          };
           r.onsuccess = () => res(r.result);
           r.onerror = () => rej(r.error);
         });
       }
-      // IndexedDB có thể treo (profile bị khoá, chế độ riêng tư...): không để nó chặn việc mở board.
       const withTimeout = (p, ms) =>
         Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
       async function idbGet(k) {
@@ -671,15 +797,15 @@
           tx.onerror = () => rej(tx.error);
         });
       }
+      const HANDLE_KEY = 'html:' + location.pathname;
 
       // ---------- state ----------
       const state = {
         data: null,
-        mode: 'none', // 'fsa' = ghi thẳng file · 'memory' = chỉ trong trình duyệt · 'none'
-        handle: null,
+        srcJson: '', // khối JSON trên đĩa lần cuối board thấy
+        handle: null, // file đã được cấp quyền ghi
         savedHandle: null,
-        lastText: null,
-        dirty: 0,
+        pending: [], // thay đổi chưa ghi xuống file
         error: '',
         me: LS.get('atp.me') || '',
         view: LS.get('atp.view') || 'kanban',
@@ -694,121 +820,127 @@
         editingPr: null,
       };
       let writeChain = Promise.resolve();
+      const readHandle = async (h) => (await h.getFile()).text();
 
-      // ---------- data in/out ----------
-      function parseData(text) {
-        if (/^(<{7}|={7}|>{7})/m.test(text)) {
-          throw new Error('tasks.json đang có conflict git (<<<<<<<). Sửa conflict rồi mở lại.');
+      async function adopt(h) {
+        splitSource(await readHandle(h)); // đúng là file board mới nhận
+        state.handle = h;
+        state.savedHandle = h;
+        withTimeout(idbSet(HANDLE_KEY, h), 2000).catch(() => {});
+        if (h.name !== pageFileName()) {
+          toast(`Lưu ý: đang lưu vào "${h.name}", khác file đang mở (${pageFileName()}).`, 6000);
         }
-        let d;
+        return true;
+      }
+
+      // Xin quyền ghi. Gọi trong lúc người dùng vừa thao tác (Chrome yêu cầu).
+      async function ensureWritable() {
+        if (state.handle) return true;
+        if (!hasFSA) return false;
         try {
-          d = JSON.parse(text);
+          const saved = state.savedHandle;
+          if (saved) {
+            if ((await saved.requestPermission({ mode: 'readwrite' })) === 'granted') return await adopt(saved);
+            return false;
+          }
+          toast(`Chọn chính file ${pageFileName()} này (trong docs/) để board lưu thay đổi.`, 6000);
+          const [picked] = await window.showOpenFilePicker({
+            types: [{ description: 'Task board', accept: { 'text/html': ['.html'] } }],
+          });
+          if ((await picked.requestPermission({ mode: 'readwrite' })) !== 'granted') return false;
+          return await adopt(picked);
         } catch (e) {
-          throw new Error('tasks.json không phải JSON hợp lệ: ' + e.message);
+          if (e.name !== 'AbortError') state.error = 'Chưa cấp được quyền lưu: ' + e.message;
+          return false;
         }
-        if (!d || !Array.isArray(d.tasks) || !Array.isArray(d.people) || !Array.isArray(d.statuses)) {
-          throw new Error('File không đúng cấu trúc tasks.json (thiếu tasks / people / statuses).');
-        }
-        return d;
-      }
-      // Cùng format với file trong repo: 2 dấu cách, xuống dòng cuối file -> diff git chỉ đổi đúng dòng.
-      const serialize = (d) => JSON.stringify(d, null, 2) + '\n';
-
-      async function readHandle(h) {
-        return (await h.getFile()).text();
       }
 
-      async function useHandle(h) {
-        const text = await readHandle(h);
-        const d = parseData(text);
-        if (state.mode === 'memory' && state.dirty) {
-          toast('Đã đọc lại từ file; thay đổi chưa tải về trong trình duyệt bị bỏ.', 5000);
+      // Ghi các thay đổi đang chờ. Luôn đọc file mới nhất trước khi ghi:
+      // nếu file vừa đổi (git pull, đổi nhánh) thì áp lại thay đổi lên bản mới, không ghi đè.
+      function save() {
+        writeChain = writeChain.then(async () => {
+          if (!state.pending.length) return;
+          if (!state.handle && !(await ensureWritable())) {
+            render();
+            return;
+          }
+          try {
+            const parts = splitSource(await readHandle(state.handle));
+            let reloaded = false;
+            if (parts.json !== state.srcJson) {
+              const fresh = parseData(parts.json);
+              for (const fn of state.pending) fn(fresh);
+              state.data = fresh;
+              reloaded = true;
+            }
+            const json = serialize(state.data);
+            const w = await state.handle.createWritable();
+            await w.write(parts.head + json + parts.tail);
+            await w.close();
+            state.srcJson = json;
+            state.pending = [];
+            state.error = '';
+            if (reloaded) toast('File vừa đổi bên ngoài (git pull?). Đã lấy bản mới rồi mới ghi thay đổi của bạn.', 5500);
+            flashSaved();
+          } catch (e) {
+            state.error = 'Chưa lưu được: ' + e.message;
+          }
+          render();
+        });
+        return writeChain;
+      }
+
+      function mutate(fn) {
+        if (!state.me) {
+          $('#meBox').classList.add('need');
+          $('#me').focus();
+          toast('Chọn "Tôi là" trước để lịch sử ghi đúng tên.');
+          return Promise.resolve(false);
         }
-        Object.assign(state, { handle: h, savedHandle: h, mode: 'fsa', lastText: text, data: d, dirty: 0, error: '' });
-        if (h.name !== 'tasks.json') toast(`Lưu ý: bạn đang mở "${h.name}", không phải tasks.json.`, 5000);
-        // không nhớ được handle thì lần sau chọn lại file, không ảnh hưởng việc ghi
-        withTimeout(idbSet('handle', h), 2000).catch(() => {});
+        fn(state.data);
+        state.pending.push(fn);
         render();
+        return hasFSA ? save() : Promise.resolve(true);
       }
 
-      function loadMemory(text, source) {
+      // Trình duyệt không ghi file trực tiếp: ghép dữ liệu mới vào mã nguồn rồi tải về.
+      async function downloadUpdated(src) {
         try {
-          state.data = parseData(text);
-          Object.assign(state, { mode: 'memory', handle: null, lastText: text, dirty: 0, error: '' });
-          if (source) toast(source);
+          const parts = splitSource(src);
+          if (parts.json !== state.srcJson) {
+            const fresh = parseData(parts.json);
+            for (const fn of state.pending) fn(fresh);
+            state.data = fresh;
+          }
+          const json = serialize(state.data);
+          const blob = new Blob([parts.head + json + parts.tail], { type: 'text/html' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = pageFileName();
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+          state.srcJson = json;
+          state.pending = [];
+          state.error = '';
+          toast(`Đã tải ${pageFileName()} mới. Chép đè vào docs/ rồi commit.`, 5000);
         } catch (e) {
           state.error = e.message;
         }
         render();
       }
-
-      async function connect(pickNew) {
-        try {
-          const saved = state.savedHandle;
-          if (saved && !pickNew) {
-            if ((await saved.requestPermission({ mode: 'readwrite' })) === 'granted') {
-              await useHandle(saved);
-              return;
-            }
-          }
-          const opts = {
-            types: [{ description: 'tasks.json', accept: { 'application/json': ['.json'] } }],
-            excludeAcceptAllOption: false,
-          };
-          if (saved) opts.startIn = saved;
-          const [picked] = await window.showOpenFilePicker(opts);
-          if ((await picked.requestPermission({ mode: 'readwrite' })) !== 'granted') {
-            toast('Chưa được cấp quyền ghi vào file.');
-            return;
-          }
-          await useHandle(picked);
-        } catch (e) {
-          if (e.name !== 'AbortError') {
-            state.error = e.message;
-            render();
-          }
-        }
-      }
-
-      // Mọi thay đổi đi qua đây. Chế độ fsa: đọc file mới nhất -> áp thay đổi -> ghi.
-      // Nhờ đọc lại trước khi ghi, git pull trong lúc trang đang mở không bị ghi đè.
-      function mutate(fn) {
-        if (!state.me) {
-          $('#meBox').classList.add('need');
-          $('#me').focus();
-          toast('Chọn "Tôi là" trước để ghi đúng tên người thay đổi.');
-          return Promise.resolve(false);
-        }
-        if (state.mode !== 'fsa') {
-          fn(state.data);
-          state.dirty++;
-          render();
-          return Promise.resolve(true);
-        }
-        writeChain = writeChain.then(async () => {
+      async function startDownload() {
+        if (location.protocol.startsWith('http')) {
           try {
-            const fresh = await readHandle(state.handle);
-            let reloaded = false;
-            if (fresh !== state.lastText) {
-              state.data = parseData(fresh);
-              reloaded = true;
-            }
-            fn(state.data);
-            const out = serialize(state.data);
-            const w = await state.handle.createWritable();
-            await w.write(out);
-            await w.close();
-            state.lastText = out;
-            state.error = '';
-            if (reloaded) toast('tasks.json vừa đổi bên ngoài (git pull?). Đã đọc bản mới rồi mới ghi thay đổi của bạn.', 5000);
-            flashSaved();
-          } catch (e) {
-            state.error = 'Lưu thất bại: ' + e.message;
+            const r = await fetch(location.href, { cache: 'no-store' });
+            if (r.ok) return downloadUpdated(await r.text());
+          } catch {
+            /* rơi xuống chọn file */
           }
-          render();
-          return true;
-        });
-        return writeChain;
+        }
+        toast(`Chọn file ${pageFileName()} hiện tại để ghép dữ liệu mới vào.`);
+        $('#fileInput').click();
       }
 
       let savedTimer;
@@ -817,36 +949,42 @@
         if (!s) return;
         s.classList.add('show');
         clearTimeout(savedTimer);
-        savedTimer = setTimeout(() => s.classList.remove('show'), 1500);
+        savedTimer = setTimeout(() => s.classList.remove('show'), 1600);
       }
 
+      // ---------- thao tác trên task ----------
       const findTask = (d, id) => d.tasks.find((t) => t.id === id);
       function addHistory(t, change, from, to) {
         if (!Array.isArray(t.history)) t.history = [];
         t.history.push({ at: nowStamp(), by: state.me, change, from, to });
       }
       function setStatus(id, to) {
-        let opened = false;
-        return mutate((d) => {
+        const t0 = findTask(state.data, id);
+        const askPr = to === 'code_review' && t0 && !t0.pr && t0.status !== to;
+        const at = nowStamp();
+        const by = state.me;
+        const p = mutate((d) => {
           const t = findTask(d, id);
           if (!t || t.status === to) return;
-          addHistory(t, 'status', t.status, to);
+          if (!Array.isArray(t.history)) t.history = [];
+          t.history.push({ at, by, change: 'status', from: t.status, to });
           t.status = to;
-          if (to === 'code_review' && !t.pr) opened = true;
-        }).then(() => {
-          if (opened) {
-            state.editingPr = id;
-            render();
-            const inp = document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`);
-            if (inp) inp.focus();
-          }
         });
+        if (askPr && state.me) {
+          state.editingPr = id;
+          render();
+          document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`)?.focus();
+        }
+        return p;
       }
       function setAssignee(id, to) {
+        const at = nowStamp();
+        const by = state.me;
         return mutate((d) => {
           const t = findTask(d, id);
           if (!t || t.assignee === to) return;
-          addHistory(t, 'assignee', t.assignee, to);
+          if (!Array.isArray(t.history)) t.history = [];
+          t.history.push({ at, by, change: 'assignee', from: t.assignee, to });
           t.assignee = to;
         });
       }
@@ -865,26 +1003,10 @@
         });
       }
 
-      function download() {
-        if (!state.data) return;
-        const blob = new Blob([serialize(state.data)], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'tasks.json';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-        state.dirty = 0;
-        render();
-        toast('Đã tải tasks.json. Chép đè vào docs/ rồi commit.');
-      }
-
       // ---------- lookups ----------
-      const person = (id) => state.data.people.find((p) => p.id === id);
-      const personName = (id) => person(id)?.short || id || '—';
+      const personName = (id) => state.data.people.find((p) => p.id === id)?.short || id || '—';
       const statusName = (id) => state.data.statuses.find((s) => s.id === id)?.name || id;
-      const feature = (id) => state.data.features?.find((f) => f.id === id);
+      const feature = (id) => (state.data.features || []).find((f) => f.id === id);
       function featureColor(id) {
         const i = (state.data.features || []).findIndex((f) => f.id === id);
         return FEATURE_COLORS[(i < 0 ? 0 : i) % FEATURE_COLORS.length];
@@ -898,9 +1020,7 @@
           .filter((t) => !state.f.person || t.assignee === state.f.person)
           .filter((t) => !state.f.feature || t.feature === state.f.feature)
           .filter((t) => !state.f.sprint || t.sprint === state.f.sprint)
-          .filter(
-            (t) => !q || [t.id, t.title, t.note, t.doneWhen].some((x) => (x || '').toLowerCase().includes(q)),
-          )
+          .filter((t) => !q || [t.id, t.title, t.note, t.doneWhen].some((x) => (x || '').toLowerCase().includes(q)))
           .sort(byOrder);
       }
 
@@ -912,86 +1032,61 @@
           '<option value="">— chọn —</option>' +
           people.map((p) => `<option value="${esc(p.id)}">${esc(p.short)}</option>`).join('');
         meSel.value = people.some((p) => p.id === state.me) ? state.me : '';
-        $('#meBox').classList.toggle('need', !!state.data && !meSel.value && state.mode !== 'none');
+        $('#meBox').classList.toggle('need', !!state.data && !meSel.value);
 
-        const c = $('#connect');
-        c.hidden = !hasFSA || state.mode === 'fsa';
-        c.textContent = state.savedHandle ? 'Cho phép ghi tasks.json' : 'Kết nối tasks.json';
-        $('#pickOther').hidden = !hasFSA || !state.savedHandle;
-        $('#download').disabled = !state.data;
+        const n = state.pending.length;
+        let html;
+        if (n) {
+          html = `<span class="pill pending"><span class="dot"></span>${n} thay đổi chưa lưu</span>
+            <button class="btn primary" data-act="${hasFSA ? 'save' : 'download'}">${hasFSA ? 'Lưu vào file' : 'Tải ' + esc(pageFileName())}</button>`;
+        } else if (state.handle) {
+          html = `<span class="pill ok"><span class="dot"></span>Tự lưu vào ${esc(state.handle.name)}
+            <span class="saved" id="savedFlag">✓</span></span>`;
+        } else if (hasFSA) {
+          html = `<span class="pill"><span class="dot"></span>Chưa cấp quyền lưu</span>
+            <button class="btn" data-act="grant">Cấp quyền</button>`;
+        } else {
+          html = `<span class="pill warn"><span class="dot"></span>Trình duyệt này không tự lưu được</span>`;
+        }
+        $('#saveState').innerHTML = `<span class="controls">${html}</span>`;
       }
 
       function renderBanner() {
         const b = $('#banner');
         if (state.error) {
-          b.innerHTML = `<div class="banner err"><span class="dot"></span><span class="msg">${esc(state.error)}</span>
+          b.innerHTML = `<div class="banner err"><span class="msg">${esc(state.error)}</span>
             <button class="btn" data-act="dismiss">Đóng</button></div>`;
-          return;
-        }
-        if (state.mode === 'fsa') {
-          b.innerHTML = `<div class="banner ok"><span class="dot"></span><span class="msg">Đang ghi thẳng vào
-            <code>${esc(state.handle.name)}</code>. Xong việc nhớ <code>git add docs/tasks.json</code>, commit, push.
-            Trước khi sửa nên <code>git pull</code>.</span><span class="saved" id="savedFlag">Đã lưu ✓</span></div>`;
-        } else if (state.mode === 'memory') {
-          const unsaved = state.dirty ? ` <b>${state.dirty} thay đổi chưa lưu vào file.</b>` : '';
+        } else if (state.pending.length && !state.handle) {
           const how = hasFSA
-            ? 'Bấm <b>Kết nối tasks.json</b> để ghi thẳng vào file, hoặc sửa xong bấm <b>Tải tasks.json</b> rồi chép đè vào <code>docs/</code>.'
-            : 'Trình duyệt này không ghi file trực tiếp: sửa xong bấm <b>Tải tasks.json</b> rồi chép đè vào <code>docs/</code>. Chrome/Edge ghi thẳng được.';
-          b.innerHTML = `<div class="banner warn"><span class="dot"></span><span class="msg">Đang sửa trong trình duyệt. ${how}${unsaved}</span></div>`;
+            ? 'Bấm <b>Lưu vào file</b> và cho phép Chrome sửa file này.'
+            : `Safari/Firefox không ghi file trực tiếp: bấm <b>Tải ${esc(pageFileName())}</b> rồi chép đè vào <code>docs/</code>. Chrome/Edge thì tự lưu.`;
+          b.innerHTML = `<div class="banner pending"><span class="msg">Thay đổi mới chỉ nằm trong trình duyệt. ${how}</span></div>`;
         } else {
           b.innerHTML = '';
         }
       }
 
-      function renderStart() {
-        const how = hasFSA
-          ? `<li>Bấm <b>Kết nối tasks.json</b> và chọn file <code>docs/tasks.json</code> trong repo. Các lần sau chỉ cần bấm <b>Cho phép</b>.</li>
-             <li>Mọi thay đổi (trạng thái, người làm, note, PR) được ghi ngay vào file đó.</li>`
-          : `<li>Trình duyệt này không ghi file trực tiếp. Bấm <b>Mở file</b>, chọn <code>docs/tasks.json</code>.</li>
-             <li>Sửa xong bấm <b>Tải tasks.json</b> và chép đè vào <code>docs/</code>. Dùng Chrome/Edge thì đỡ bước này.</li>`;
-        return `<section class="start">
-          <h2>Mở board</h2>
-          <ol>
-            <li><code>git pull</code> để có <code>docs/tasks.json</code> mới nhất.</li>
-            ${how}
-            <li>Chọn <b>Tôi là</b> ở góc trên để lịch sử ghi đúng tên.</li>
-            <li>Xong thì <code>git add docs/tasks.json</code>, commit, push. Người khác pull về là thấy.</li>
-          </ol>
-          <p style="color:var(--muted)">Chỉ muốn xem nhanh: chạy <code>npx serve docs</code> rồi mở <code>/tasks.html</code>, board tự đọc file.</p>
-          ${hasFSA ? '<button class="btn primary" data-act="connect">Kết nối tasks.json</button>' : '<button class="btn primary" data-act="open">Mở file</button>'}
-        </section>`;
-      }
-
       function renderSummary() {
         const d = state.data;
-        const st = d.statuses;
         const cards = d.people
           .map((p) => {
             const mine = d.tasks.filter((t) => t.assignee === p.id);
             const n = mine.length || 1;
-            const segs = st
-              .map((s) => {
-                const c = mine.filter((t) => t.status === s.id).length;
-                return c ? `<i style="width:${(c / n) * 100}%;background:var(--s-${s.id})" title="${esc(s.name)}: ${c}"></i>` : '';
-              })
+            const counts = d.statuses.map((s) => [s, mine.filter((t) => t.status === s.id).length]);
+            const segs = counts
+              .map(([s, c]) => (c ? `<i style="width:${(c / n) * 100}%;background:var(--s-${s.id})" title="${esc(s.name)}: ${c}"></i>` : ''))
               .join('');
-            const legend = st
-              .map((s) => {
-                const c = mine.filter((t) => t.status === s.id).length;
-                return c ? `<span><span class="sw" style="background:var(--s-${s.id})"></span>${esc(s.name)} <b>${c}</b></span>` : '';
-              })
+            const legend = counts
+              .map(([s, c]) => (c ? `<span><span class="sw" style="background:var(--s-${s.id})"></span>${esc(s.name)} <b>${c}</b></span>` : ''))
               .join('');
             const done = mine.filter((t) => t.status === 'done').length;
-            const feats = (d.features || [])
-              .filter((f) => f.owner === p.id && f.main)
-              .map((f) => f.name)
-              .join(', ');
-            return `<div class="pcard"><div class="name">${esc(p.short)} <span>${done}/${mine.length} done</span></div>
-              <div class="legend" style="margin-top:2px">${esc(feats)}</div>
+            const feats = (d.features || []).filter((f) => f.owner === p.id && f.main).map((f) => f.name).join(', ');
+            return `<div class="pcard"><div class="head"><span class="name">${esc(p.short)}</span>
+              <span class="ratio">${done}/${mine.length} done</span></div>
+              <div class="feat">${esc(feats)}</div>
               <div class="stack">${segs}</div><div class="legend">${legend}</div></div>`;
           })
           .join('');
-
         const sprints = (d.sprints || [])
           .map((s) => {
             const all = d.tasks.filter((t) => t.sprint === s.id);
@@ -1008,15 +1103,14 @@
           .join('');
         return `<section class="summary">${cards}</section>
           <details class="plan"><summary>Chặng và feature</summary>
-            <div class="plan-grid">${sprints}</div><hr style="border:0;border-top:1px solid var(--border);margin:8px 0">
-            <div class="plan-grid">${feats}</div></details>`;
+            <div class="plan-grid">${sprints}</div><hr /><div class="plan-grid">${feats}</div></details>`;
       }
 
       function renderToolbar() {
         const d = state.data;
         const opt = (v, label, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(label)}</option>`;
         return `<nav class="bar">
-          <div class="seg" role="tablist">
+          <div class="seg">
             <button data-view="kanban" class="${state.view === 'kanban' ? 'on' : ''}">Kanban</button>
             <button data-view="people" class="${state.view === 'people' ? 'on' : ''}">Theo người</button>
           </div>
@@ -1044,20 +1138,18 @@
         } else if (t.note) {
           note = `<div class="note" data-act="edit-note" data-id="${esc(t.id)}" title="Bấm để sửa">${esc(t.note)}</div>`;
         }
-
-        let pr = '';
-        if (state.editingPr === t.id) {
-          pr = `<div class="pr-edit"><input type="url" data-pr-input="${esc(t.id)}" placeholder="https://github.com/…/pull/…" value="${esc(t.pr)}" />
-            <button class="btn" data-act="save-pr" data-id="${esc(t.id)}">Lưu</button></div>`;
-        }
-
+        const pr =
+          state.editingPr === t.id
+            ? `<div class="pr-edit"><input type="url" data-pr-input="${esc(t.id)}" placeholder="https://github.com/…/pull/…" value="${esc(t.pr)}" />
+               <button class="btn" data-act="save-pr" data-id="${esc(t.id)}">Lưu</button></div>`
+            : '';
         const tools = [
           !t.note && state.editingNote !== t.id ? `<button class="link" data-act="edit-note" data-id="${esc(t.id)}">+ Note</button>` : '',
-          t.pr && state.editingPr !== t.id
-            ? `<span class="pr"><a href="${esc(t.pr)}" target="_blank" rel="noopener">PR ↗</a></span> <button class="link" data-act="edit-pr" data-id="${esc(t.id)}">sửa PR</button>`
-            : state.editingPr !== t.id
-              ? `<button class="link" data-act="edit-pr" data-id="${esc(t.id)}">+ PR</button>`
-              : '',
+          state.editingPr === t.id
+            ? ''
+            : t.pr
+              ? `<span class="pr"><a href="${esc(t.pr)}" target="_blank" rel="noopener">PR ↗</a></span><button class="link" data-act="edit-pr" data-id="${esc(t.id)}">sửa PR</button>`
+              : `<button class="link" data-act="edit-pr" data-id="${esc(t.id)}">+ PR</button>`,
         ].join('');
 
         const hist = (t.history || []).slice().reverse();
@@ -1069,8 +1161,8 @@
         const histList = hist.length
           ? `<ol>${hist.map((h) => `<li>${esc(h.at)} · ${describe(h)}</li>`).join('')}</ol>`
           : '<div>Chưa có thay đổi.</div>';
-
         const draggable = state.editingNote === t.id || state.editingPr === t.id ? 'false' : 'true';
+
         return `<article class="card" draggable="${draggable}" data-id="${esc(t.id)}" data-status="${esc(t.status)}" style="--sc:var(--s-${esc(t.status)})">
           <div class="card-top"><span class="tid">${esc(t.id)}</span>
             <span class="tag" style="--fc:${featureColor(t.feature)}">${esc(f?.name || t.feature)}</span>
@@ -1108,7 +1200,7 @@
               }
               const done = mine.filter((t) => t.status === 'done').length;
               return `<section class="col" data-drop-person="${esc(p.id)}">
-                <div class="col-head"><span>${esc(p.short)}</span><span class="count">${done}/${mine.length} done</span></div>
+                <div class="col-head"><span class="label">${esc(p.short)}</span><span class="count">${done}/${mine.length}</span></div>
                 ${body || '<div class="empty">Không có task</div>'}</section>`;
             })
             .join('');
@@ -1118,7 +1210,7 @@
           .map((s) => {
             const inCol = tasks.filter((t) => t.status === s.id);
             return `<section class="col" data-drop-status="${esc(s.id)}">
-              <div class="col-head"><span class="pill"><span class="sw" style="background:var(--s-${esc(s.id)})"></span>${esc(s.name)}</span>
+              <div class="col-head"><span class="label"><span class="sw" style="background:var(--s-${esc(s.id)})"></span>${esc(s.name)}</span>
               <span class="count">${inCol.length}</span></div>
               ${inCol.map(renderCard).join('') || '<div class="empty">Kéo task vào đây</div>'}</section>`;
           })
@@ -1127,17 +1219,16 @@
       }
 
       function render() {
-        // giữ nội dung note đang gõ dở nếu có render giữa chừng
         const ta = document.querySelector('[data-note-input]');
         if (ta) state.noteDraft = ta.value;
-        const hadSearchFocus = document.activeElement?.matches?.('input[data-filter="q"]');
-        const caret = hadSearchFocus ? document.activeElement.selectionStart : null;
+        const searchFocused = document.activeElement?.matches?.('input[data-filter="q"]');
+        const caret = searchFocused ? document.activeElement.selectionStart : null;
 
         renderControls();
         renderBanner();
-        $('#content').innerHTML = state.data ? renderSummary() + renderToolbar() + renderBoard() : renderStart();
+        $('#content').innerHTML = state.data ? renderSummary() + renderToolbar() + renderBoard() : '';
 
-        if (hadSearchFocus) {
+        if (searchFocused) {
           const s = document.querySelector('input[data-filter="q"]');
           s.focus();
           s.setSelectionRange(caret, caret);
@@ -1155,15 +1246,11 @@
         LS.set('atp.me', state.me);
         render();
       });
-      $('#connect').addEventListener('click', () => connect(false));
-      $('#pickOther').addEventListener('click', () => connect(true));
-      $('#openFile').addEventListener('click', () => $('#fileInput').click());
       $('#fileInput').addEventListener('change', async (e) => {
         const file = e.target.files[0];
         e.target.value = '';
-        if (file) loadMemory(await file.text(), `Đã mở ${file.name} (chỉ trong trình duyệt).`);
+        if (file) downloadUpdated(await file.text());
       });
-      $('#download').addEventListener('click', download);
 
       document.addEventListener('click', (e) => {
         const el = e.target.closest('[data-act],[data-view]');
@@ -1176,23 +1263,28 @@
         }
         const id = el.dataset.id;
         switch (el.dataset.act) {
-          case 'connect':
-            connect(false);
+          case 'save':
+            save();
             break;
-          case 'open':
-            $('#fileInput').click();
+          case 'grant':
+            ensureWritable().then((ok) => {
+              if (ok) refreshFromDisk(true);
+              render();
+            });
+            break;
+          case 'download':
+            startDownload();
             break;
           case 'dismiss':
             state.error = '';
             render();
             break;
-          case 'edit-note': {
+          case 'edit-note':
             if (state.editingNote === id) break;
             state.editingNote = id;
             state.noteDraft = findTask(state.data, id)?.note || '';
             render();
             break;
-          }
           case 'edit-pr':
             state.editingPr = id;
             render();
@@ -1224,13 +1316,13 @@
         }
       });
 
-      function commitNote(ta, save) {
+      function commitNote(ta, keep) {
         const id = ta.dataset.noteInput;
         const value = ta.value;
         state.editingNote = null;
         state.noteDraft = '';
         const old = findTask(state.data, id)?.note || '';
-        if (save && value.replace(/\s+$/, '') !== old) setNote(id, value);
+        if (keep && value.replace(/\s+$/, '') !== old) setNote(id, value);
         else render();
       }
       document.addEventListener('focusout', (e) => {
@@ -1247,11 +1339,10 @@
             commitNote(t, true);
           }
         } else if (t.matches?.('[data-pr-input]')) {
-          const id = t.dataset.prInput;
           if (e.key === 'Enter') {
             e.preventDefault();
             state.editingPr = null;
-            setPr(id, t.value);
+            setPr(t.dataset.prInput, t.value);
           } else if (e.key === 'Escape') {
             state.editingPr = null;
             render();
@@ -1259,10 +1350,10 @@
         }
       });
 
-      // kéo thả: Kanban đổi trạng thái, Theo người đổi người làm
+      // kéo thả: Kanban đổi trạng thái, "Theo người" đổi người làm
       document.addEventListener('dragstart', (e) => {
         const card = e.target.closest?.('.card');
-        if (!card || e.target.closest('select,textarea,input,button,a,summary')) return;
+        if (!card) return;
         e.dataTransfer.setData('text/plain', card.dataset.id);
         e.dataTransfer.effectAllowed = 'move';
         card.classList.add('dragging');
@@ -1287,67 +1378,819 @@
         const id = e.dataTransfer.getData('text/plain');
         if (!id) return;
         if (col.dataset.dropStatus) setStatus(id, col.dataset.dropStatus);
-        else if (col.dataset.dropPerson) setAssignee(id, col.dataset.dropPerson);
+        else setAssignee(id, col.dataset.dropPerson);
       });
 
-      // quay lại tab (sau git pull, đổi nhánh...) thì đọc lại file
-      async function refreshFromDisk() {
-        if (state.mode !== 'fsa' || state.editingNote) return;
+      // Đã có quyền đọc file: quay lại tab (sau git pull, đổi nhánh) thì lấy bản mới trên đĩa.
+      async function refreshFromDisk(quiet) {
+        if (!state.handle || state.pending.length || state.editingNote) return;
         try {
-          const text = await readHandle(state.handle);
-          if (text === state.lastText) return;
-          state.data = parseData(text);
-          state.lastText = text;
+          const parts = splitSource(await readHandle(state.handle));
+          if (parts.json === state.srcJson) return;
+          state.data = parseData(parts.json);
+          state.srcJson = parts.json;
           state.error = '';
           render();
-          toast('tasks.json vừa đổi trên đĩa, đã tải lại.');
+          if (!quiet) toast('File vừa đổi trên đĩa, đã tải bản mới.');
         } catch (e) {
           state.error = e.message;
           render();
         }
       }
-      window.addEventListener('focus', refreshFromDisk);
+      window.addEventListener('focus', () => refreshFromDisk(false));
       document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') refreshFromDisk();
+        if (document.visibilityState === 'visible') refreshFromDisk(false);
       });
       window.addEventListener('beforeunload', (e) => {
-        if (state.mode === 'memory' && state.dirty) {
+        if (state.pending.length) {
           e.preventDefault();
           e.returnValue = '';
         }
       });
 
-      // ---------- start ----------
-      (async function init() {
-        render();
-        if (hasFSA) {
-          try {
-            const h = await withTimeout(idbGet('handle'), 1500);
-            if (h) {
-              state.savedHandle = h;
-              if ((await h.queryPermission({ mode: 'readwrite' })) === 'granted') {
-                await useHandle(h);
-                return;
-              }
-            }
-          } catch {
-            /* chưa từng kết nối hoặc trình duyệt không cho lưu handle */
-          }
-        }
-        // Mở qua http (npx serve docs): đọc được file để xem ngay.
-        if (location.protocol !== 'file:') {
-          try {
-            const r = await fetch('tasks.json', { cache: 'no-store' });
-            if (r.ok) {
-              loadMemory(await r.text());
-              return;
-            }
-          } catch {
-            /* không có server: chờ người dùng kết nối */
-          }
+      // ---------- start: đọc dữ liệu nằm sẵn trong file ----------
+      document.addEventListener('DOMContentLoaded', async () => {
+        const el = document.getElementById('tasks-data');
+        try {
+          state.srcJson = el.textContent;
+          state.data = parseData(state.srcJson);
+        } catch (e) {
+          state.error = e.message;
         }
         render();
-      })();
+        if (!hasFSA) return;
+        try {
+          const h = await withTimeout(idbGet(HANDLE_KEY), 1500);
+          if (h) {
+            state.savedHandle = h;
+            if ((await h.queryPermission({ mode: 'readwrite' })) === 'granted') {
+              await adopt(h);
+              await refreshFromDisk(true);
+              render();
+            }
+          }
+        } catch {
+          /* chưa từng cấp quyền: lần sửa đầu tiên sẽ hỏi */
+        }
+      });
     </script>
+
+    <!-- ======== DỮ LIỆU TASK: board tự ghi phần dưới đây, có thể sửa tay (giữ đúng JSON) ======== -->
+    <script type="application/json" id="tasks-data">
+{
+  "project": "AI Travel Planner",
+  "people": [
+    {
+      "id": "duy",
+      "name": "Lê Nhựt Duy",
+      "short": "Duy",
+      "mssv": "23127178",
+      "github": "DuyITLOR"
+    },
+    {
+      "id": "dang",
+      "name": "Nguyễn Thành Dâng",
+      "short": "Dâng",
+      "mssv": "23127334",
+      "github": "ThanhDang-Vn"
+    },
+    {
+      "id": "dat",
+      "name": "Trương Thành Đạt",
+      "short": "Đạt",
+      "mssv": "23127344",
+      "github": "trwng-thdat"
+    }
+  ],
+  "statuses": [
+    {
+      "id": "todo",
+      "name": "Todo"
+    },
+    {
+      "id": "in_progress",
+      "name": "In progress"
+    },
+    {
+      "id": "code_review",
+      "name": "Code review"
+    },
+    {
+      "id": "testing",
+      "name": "Testing"
+    },
+    {
+      "id": "done",
+      "name": "Done"
+    }
+  ],
+  "features": [
+    {
+      "id": "PLC",
+      "name": "Địa điểm",
+      "owner": "duy",
+      "main": true,
+      "description": "Dữ liệu 150 điểm và menu, ma trận xe máy, thời tiết, tìm kiếm, trang chi tiết, sổ địa điểm, check-in, review."
+    },
+    {
+      "id": "AGT",
+      "name": "Agent lập lịch",
+      "owner": "dat",
+      "main": true,
+      "description": "7 tool, validator, compute_cost, vòng gọi tool qua Ollama và Gemini, tự sửa 2 vòng, log, màn hình chạy Agent."
+    },
+    {
+      "id": "TRP",
+      "name": "Nhóm, lịch trình & chi tiêu",
+      "owner": "dang",
+      "main": true,
+      "description": "Khung giao diện, đăng nhập, hồ sơ sở thích, nhóm và trần chi, xem/sửa/lưu lịch, chế độ thủ công, nhóm cùng sửa."
+    },
+    {
+      "id": "EVL",
+      "name": "Đo chất lượng Agent",
+      "owner": "duy",
+      "main": false,
+      "description": "Bộ 30 ca mẫu, script đo, so sánh thủ công với Agent, báo cáo chất lượng."
+    },
+    {
+      "id": "CMP",
+      "name": "Bạn đồng hành",
+      "owner": "duy",
+      "main": false,
+      "description": "Hồ sơ công khai, chặn, báo cáo, AI chấm độ hợp nhau. Cắt trước nếu thiếu thời gian."
+    },
+    {
+      "id": "PST",
+      "name": "Bài đăng",
+      "owner": "dang",
+      "main": false,
+      "description": "Bài đăng khoảnh khắc, like, bình luận, bài quảng bá có admin duyệt."
+    },
+    {
+      "id": "OPS",
+      "name": "Hạ tầng & vận hành",
+      "owner": "dat",
+      "main": false,
+      "description": "Repo, CI, deploy, CODEOWNERS, báo lỗi điểm, dashboard log, kiểm thử E2E, demo và báo cáo."
+    }
+  ],
+  "sprints": [
+    {
+      "id": "S1",
+      "name": "Nền và dữ liệu",
+      "goal": "DB có 150 điểm kèm giờ mở và nguồn; đăng nhập chạy trên bản deploy; có số đo spike LLM.",
+      "start": "",
+      "end": ""
+    },
+    {
+      "id": "S2",
+      "name": "Tra cứu, nhóm và spec Agent",
+      "goal": "Ma trận đủ 22.350 cặp; lọc được theo 4 tiêu chí; mời nhóm bằng link; spec Agent đã chốt.",
+      "start": "",
+      "end": ""
+    },
+    {
+      "id": "S3",
+      "name": "Agent",
+      "goal": "Agent chạy đủ 30 ca, không lịch nào vượt trần chi sau validator; có tỷ lệ tool đúng, vi phạm, p90.",
+      "start": "",
+      "end": ""
+    },
+    {
+      "id": "S4",
+      "name": "Mạng xã hội và sửa chung",
+      "goal": "Hai tài khoản sửa cùng lịch không ghi đè; có số liệu thủ công với Agent trên 10 ca.",
+      "start": "",
+      "end": ""
+    },
+    {
+      "id": "S5",
+      "name": "Hoàn thiện và demo",
+      "goal": "Kịch bản demo chạy trọn 2 lần trên bản deploy; có bản local và video dự phòng.",
+      "start": "",
+      "end": ""
+    }
+  ],
+  "tasks": [
+    {
+      "id": "PLC-01",
+      "feature": "PLC",
+      "sprint": "S1",
+      "title": "Script nạp ứng viên từ Geoapify và Wikivoyage ra Google Sheet",
+      "doneWhen": "Sheet có ít nhất 300 ứng viên với tên, toạ độ, loại, quận, nguồn.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-02",
+      "feature": "PLC",
+      "sprint": "S1",
+      "title": "Chọn 150 điểm, kiểm tra tay giờ mở theo thứ, giá vé, trong nhà hay ngoài trời",
+      "doneWhen": "150 dòng có giờ mở, giá, nguồn (website hoặc fanpage chính thức) và ngày kiểm tra.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "Mỗi người kiểm tra 50 điểm: Duy 1–50, Đạt 51–100, Dâng 101–150. Duy điều phối.",
+      "history": []
+    },
+    {
+      "id": "PLC-03",
+      "feature": "PLC",
+      "sprint": "S1",
+      "title": "Migration places, opening_hours và script seed từ Sheet vào Supabase",
+      "doneWhen": "supabase db reset nạp đủ 150 điểm; bảng web đọc trực tiếp có bật RLS.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-04",
+      "feature": "PLC",
+      "sprint": "S2",
+      "title": "Menu 3–8 món hoặc vé có giá cho mỗi điểm",
+      "doneWhen": "Mọi điểm có ít nhất 3 mục menu, giá là VND nguyên, có nguồn và ngày kiểm tra.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-05",
+      "feature": "PLC",
+      "sprint": "S2",
+      "title": "Ma trận thời gian xe máy Valhalla 150×150, OSRM dự phòng",
+      "doneWhen": "Bảng travel_times đủ 22.350 cặp.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "Đường găng: Agent (AGT-05) chờ bảng này.",
+      "history": []
+    },
+    {
+      "id": "PLC-06",
+      "feature": "PLC",
+      "sprint": "S2",
+      "title": "Thời tiết Open-Meteo và ngày lễ Nager.Date, có cache",
+      "doneWhen": "Endpoint trả mưa theo giờ 7 ngày và ngày lễ VN; có contract và contract test.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-07",
+      "feature": "PLC",
+      "sprint": "S2",
+      "title": "API tìm kiếm GET /places theo loại, quận, đang mở, mức giá",
+      "doneWhen": "Contract trong docs/contract; contract test xanh; lọc được theo cả 4 tiêu chí.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-08",
+      "feature": "PLC",
+      "sprint": "S2",
+      "title": "Trang tìm kiếm và bản đồ MapLibre hiện kết quả",
+      "doneWhen": "Lọc được theo 4 tiêu chí trên bản deploy; tile OpenFreeMap đi qua backend.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-09",
+      "feature": "PLC",
+      "sprint": "S3",
+      "title": "Trang chi tiết địa điểm: Wikipedia, ảnh Commons, bản đồ, menu",
+      "doneWhen": "Cả 150 trang mở không lỗi; ảnh có ghi nguồn.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-10",
+      "feature": "PLC",
+      "sprint": "S3",
+      "title": "Sổ địa điểm: muốn đi, đã đi qua check-in, bản đồ đã đi",
+      "doneWhen": "Thêm/bỏ điểm muốn đi, check-in được; bản đồ hiện các điểm đã đi.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PLC-11",
+      "feature": "PLC",
+      "sprint": "S3",
+      "title": "Review 1–5 sao chỉ sau check-in",
+      "doneWhen": "Chưa check-in thì api trả problem type trong contract; có test cho trường hợp này.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-01",
+      "feature": "AGT",
+      "sprint": "S1",
+      "title": "Spike 10 ca trên Qwen 2.5 7B, Qwen3 8B và Gemini trên máy demo",
+      "doneWhen": "Bảng tỷ lệ gọi tool đúng, tỷ lệ vi phạm, thời gian cho 3 model; chốt model chính (rủi ro R2).",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-02",
+      "feature": "AGT",
+      "sprint": "S2",
+      "title": "Spec Agent: schema 7 tool, JSON lịch trình, luật validator",
+      "doneWhen": "Spec nằm trong docs/contract và được cả 3 người duyệt. Chưa chốt thì S3 không bắt đầu.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-03",
+      "feature": "AGT",
+      "sprint": "S2",
+      "title": "Validator bằng Rust thuần: tồn tại, giờ mở, di chuyển, ngân sách và trần chi, mưa trên 60%",
+      "doneWhen": "Mỗi luật có unit test với một lịch cố ý sai.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-04",
+      "feature": "AGT",
+      "sprint": "S2",
+      "title": "compute_cost: chi mỗi người và tổng nhóm (VND i64)",
+      "doneWhen": "Test với nhóm có trần chi khác nhau; không dùng số thực.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-05",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "7 tool backend: get_profile, search_places, get_menu, get_travel_time, get_weather, compute_cost, validate_plan",
+      "doneWhen": "Mỗi tool có test với store giả qua AppState, không gọi mạng.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-06",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "Vòng Agent qua Ollama, Gemini dự phòng; giới hạn 12 lần gọi tool và 90 giây",
+      "doneWhen": "Một yêu cầu mẫu ra lịch hợp lệ; quá giới hạn thì trả bản nháp tốt nhất kèm cảnh báo đỏ.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-07",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "Chấm độ phù hợp 0–10 theo từng thành viên, đề xuất 8–12 điểm và khung ngày",
+      "doneWhen": "Mỗi điểm có điểm số và một câu lý do chỉ dựa trên dữ liệu có thật.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-08",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "Tự sửa tối đa 2 vòng khi validator báo vi phạm; log từng lượt chạy",
+      "doneWhen": "Bảng agent_runs ghi tool đã gọi, số vòng sửa, vi phạm bị chặn.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-09",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "Cloudflare Tunnel từ máy demo tới api, có token chặn dùng ké",
+      "doneWhen": "Api trên Render gọi được Ollama qua URL HTTPS cố định; thiếu token thì bị từ chối.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-10",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "Màn hình chạy Agent: nhập yêu cầu, bỏ hoặc ghim điểm (bước xác nhận 1)",
+      "doneWhen": "Người dùng bỏ/ghim điểm rồi xác nhận; lịch dựng xong chuyển sang màn hình lịch trình (TRP-07).",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "AGT-11",
+      "feature": "AGT",
+      "sprint": "S3",
+      "title": "Phương án B: kiến trúc lai (code gọi tool cố định, LLM chỉ chấm điểm, tham lam xếp giờ)",
+      "doneWhen": "Chỉ làm nếu tool đúng dưới 80% hoặc vi phạm trên 30%; bộ 30 ca chạy lại đạt ngưỡng.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "Có điều kiện, phụ thuộc kết quả AGT-01 và EVL-01.",
+      "history": []
+    },
+    {
+      "id": "TRP-01",
+      "feature": "TRP",
+      "sprint": "S1",
+      "title": "Khung giao diện chung: layout, điều hướng, màu và chữ dùng chung",
+      "doneWhen": "Mọi trang dùng chung layout; có trang chủ khi đã đăng nhập.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-02",
+      "feature": "TRP",
+      "sprint": "S1",
+      "title": "Đăng nhập Supabase Auth trên web và AuthUser ở api",
+      "doneWhen": "Đăng nhập chạy trên bản deploy; thiếu token thì api trả 401 problem.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-03",
+      "feature": "TRP",
+      "sprint": "S1",
+      "title": "Hồ sơ sở thích: loại điểm thích, mức chi, điểm đã đi",
+      "doneWhen": "Lưu và đọc lại được; get_profile (AGT-05) dùng được dữ liệu này.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-04",
+      "feature": "TRP",
+      "sprint": "S2",
+      "title": "Nhóm: tạo nhóm, link mời, tổng tiền nhóm, trần chi từng người",
+      "doneWhen": "Mời được bằng link; tiền lưu VND nguyên; có contract test.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-05",
+      "feature": "TRP",
+      "sprint": "S2",
+      "title": "Trang nhóm: thành viên, ngân sách, trần chi, rời hoặc xoá thành viên",
+      "doneWhen": "Chủ nhóm xoá được thành viên; người bị xoá mất quyền xem lịch của nhóm.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-06",
+      "feature": "TRP",
+      "sprint": "S3",
+      "title": "API lịch trình: tạo, đọc, lưu; chỉ thành viên nhóm truy cập",
+      "doneWhen": "Contract test cho người ngoài nhóm và người đã bị xoá; kiểm tra thành viên trước khi trả kết quả idempotent.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-07",
+      "feature": "TRP",
+      "sprint": "S3",
+      "title": "Màn hình lịch trình theo ngày và kế hoạch chi tiêu mỗi người",
+      "doneWhen": "Hiện điểm, giờ, món đã chọn, chi mỗi người; vi phạm hiện cảnh báo đỏ.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-08",
+      "feature": "TRP",
+      "sprint": "S3",
+      "title": "Chế độ thủ công: tự chọn điểm, kéo thả, chọn món",
+      "doneWhen": "Dùng chung dữ liệu và validator với Agent.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-09",
+      "feature": "TRP",
+      "sprint": "S3",
+      "title": "Bấm Lưu: validator chạy lần cuối ở backend rồi mới chia sẻ cho nhóm",
+      "doneWhen": "Lịch bị validator từ chối không lưu và không chia sẻ được; có test.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "TRP-10",
+      "feature": "TRP",
+      "sprint": "S4",
+      "title": "Nhóm cùng sửa một lịch: Supabase Realtime và cột version chặn ghi đè",
+      "doneWhen": "Hai tài khoản sửa cùng lịch không ghi đè nhau.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "Thứ 3 trong thứ tự cắt nếu thiếu thời gian.",
+      "history": []
+    },
+    {
+      "id": "EVL-01",
+      "feature": "EVL",
+      "sprint": "S3",
+      "title": "Bộ 30 yêu cầu mẫu có ràng buộc biết trước và script đo",
+      "doneWhen": "Script xuất tỷ lệ tool đúng, vi phạm, p90 trên cả Ollama và Gemini.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "Dùng lại cho PA#4.",
+      "history": []
+    },
+    {
+      "id": "EVL-02",
+      "feature": "EVL",
+      "sprint": "S4",
+      "title": "Phiếu đo thủ công với Agent: 10 ca, mỗi ca 3 người làm tay",
+      "doneWhen": "Có thời gian tới lịch không lỗi, số vi phạm, % ngân sách dùng, điểm phù hợp 1–5.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "EVL-03",
+      "feature": "EVL",
+      "sprint": "S4",
+      "title": "Báo cáo đo chất lượng Agent",
+      "doneWhen": "So với mục tiêu: tool đúng từ 80%, 0 lịch vượt trần chi, p90 dưới 60 giây, thời gian giảm ít nhất một nửa.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "CMP-01",
+      "feature": "CMP",
+      "sprint": "S4",
+      "title": "Hồ sơ bạn đồng hành công khai (tự bật), chặn và báo cáo",
+      "doneWhen": "Chỉ người bật công khai mới hiện; chặn rồi thì không thấy nhau.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "CMP-02",
+      "feature": "CMP",
+      "sprint": "S4",
+      "title": "AI chấm độ hợp nhau giữa các bạn đồng hành",
+      "doneWhen": "Mỗi gợi ý có điểm và lý do; dùng chung hạ tầng LLM với Agent.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "Thứ 2 trong thứ tự cắt nếu thiếu thời gian.",
+      "history": []
+    },
+    {
+      "id": "PST-01",
+      "feature": "PST",
+      "sprint": "S4",
+      "title": "Bài đăng khoảnh khắc kèm ảnh",
+      "doneWhen": "Đăng được bài có ảnh; DB chỉ lưu URL ảnh.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PST-02",
+      "feature": "PST",
+      "sprint": "S4",
+      "title": "Like và bình luận",
+      "doneWhen": "Like/bỏ like, bình luận, xoá bình luận của mình.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "PST-03",
+      "feature": "PST",
+      "sprint": "S4",
+      "title": "Bài quảng bá của tài khoản doanh nghiệp, admin duyệt",
+      "doneWhen": "Bài chưa duyệt không hiện; không ảnh hưởng lịch của Agent.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "Cắt đầu tiên nếu thiếu thời gian.",
+      "history": []
+    },
+    {
+      "id": "OPS-01",
+      "feature": "OPS",
+      "sprint": "S1",
+      "title": "Khung repo: pnpm workspace, Next.js, Axum, Supabase config, CI",
+      "doneWhen": "pnpm dev chạy web và api; CI xanh.",
+      "assignee": "dang",
+      "status": "done",
+      "pr": "",
+      "note": "",
+      "history": [
+        {
+          "at": "2026-11-22 20:03",
+          "by": "dang",
+          "change": "status",
+          "from": "todo",
+          "to": "done"
+        }
+      ]
+    },
+    {
+      "id": "OPS-02",
+      "feature": "OPS",
+      "sprint": "S1",
+      "title": "Quality gate: CLAUDE.md, permissions, CI chạy đúng lệnh README, branch protection",
+      "doneWhen": "PR #2 merge; main không push thẳng được.",
+      "assignee": "dat",
+      "status": "done",
+      "pr": "https://github.com/DuyITLOR/ai-travel-planner/pull/2",
+      "note": "",
+      "history": [
+        {
+          "at": "2026-11-24 16:27",
+          "by": "dat",
+          "change": "status",
+          "from": "todo",
+          "to": "done"
+        }
+      ]
+    },
+    {
+      "id": "OPS-03",
+      "feature": "OPS",
+      "sprint": "S1",
+      "title": "Deploy web lên Vercel, api lên Render, nối Supabase cloud",
+      "doneWhen": "GET /health trên Render trả db: connected; web trên Vercel gọi được api.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-04",
+      "feature": "OPS",
+      "sprint": "S1",
+      "title": "CODEOWNERS theo feature và board task (file này)",
+      "doneWhen": "Mỗi thư mục feature có code owner; PR cần code owner duyệt.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-05",
+      "feature": "OPS",
+      "sprint": "S4",
+      "title": "Nút \"Điểm này có vấn đề\": đóng cửa, sai giá, quá xa, không hợp",
+      "doneWhen": "Báo cáo lưu vào DB, gắn với điểm và lượt chạy Agent.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-06",
+      "feature": "OPS",
+      "sprint": "S4",
+      "title": "Dashboard log lượt chạy Agent",
+      "doneWhen": "Xem được số lượt, tỷ lệ vi phạm, thời gian, báo lỗi điểm.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-07",
+      "feature": "OPS",
+      "sprint": "S5",
+      "title": "Kiểm thử end-to-end kịch bản demo",
+      "doneWhen": "Kịch bản đăng nhập → tạo nhóm → chạy Agent → lưu lịch chạy tự động không lỗi.",
+      "assignee": "duy",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-08",
+      "feature": "OPS",
+      "sprint": "S5",
+      "title": "Ghi nguồn OSM, Wikimedia, Open-Meteo; hoàn thiện UI",
+      "doneWhen": "Trang ghi nguồn đủ giấy phép CC BY-SA, CC BY 4.0, ODbL.",
+      "assignee": "dang",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-09",
+      "feature": "OPS",
+      "sprint": "S5",
+      "title": "Demo: chạy trọn 2 lần trên bản deploy, bản local và video dự phòng",
+      "doneWhen": "Có video demo và bản local chạy không cần mạng ngoài trừ LLM.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    },
+    {
+      "id": "OPS-10",
+      "feature": "OPS",
+      "sprint": "S5",
+      "title": "Báo cáo cuối kỳ",
+      "doneWhen": "Nộp đúng hạn môn.",
+      "assignee": "dat",
+      "status": "todo",
+      "pr": "",
+      "note": "",
+      "history": []
+    }
+  ]
+}
+</script>
   </body>
 </html>
