@@ -51,6 +51,9 @@ pub enum SaveFailure {
 
 pub trait PlanStore: Send + Sync {
     fn save(&self, cmd: SaveCommand) -> Result<SaveOutcome, SaveFailure>;
+    /// `GET /plans/{planId}`: the plan as `user` may see it now. Only `NotFound`,
+    /// `NotOwner` (a draft read by a member who did not create it) and `Internal` occur.
+    fn read(&self, user: Uuid, plan_id: Uuid) -> Result<Value, SaveFailure>;
 }
 
 struct StoredKey {
@@ -117,6 +120,29 @@ impl InMemoryPlanStore {
 }
 
 impl PlanStore for InMemoryPlanStore {
+    fn read(&self, user: Uuid, plan_id: Uuid) -> Result<Value, SaveFailure> {
+        let state = self.lock();
+        let plan = state.plans.get(&plan_id).ok_or(SaveFailure::NotFound)?;
+        let trip = state
+            .trips
+            .get(&plan.trip_id)
+            .ok_or(SaveFailure::NotFound)?;
+        if !trip.is_member(user) {
+            return Err(SaveFailure::NotFound);
+        }
+        // A draft is the creator's own until it is saved.
+        if plan.status == PlanStatus::Draft && plan.created_by != user {
+            return Err(SaveFailure::NotOwner);
+        }
+        if !plan.is_well_formed() {
+            return Err(SaveFailure::Internal(format!(
+                "stored plan {plan_id} is malformed"
+            )));
+        }
+        serde_json::to_value(PlanView::new(plan, trip))
+            .map_err(|e| SaveFailure::Internal(e.to_string()))
+    }
+
     fn save(&self, cmd: SaveCommand) -> Result<SaveOutcome, SaveFailure> {
         let mut state = self.lock();
         let now = (self.clock)();
@@ -140,6 +166,14 @@ impl PlanStore for InMemoryPlanStore {
         // 2. Only the member who created the plan saves it.
         if plan.created_by != cmd.user {
             return Err(SaveFailure::NotOwner);
+        }
+
+        // A stored plan that breaks contract section 3 is never shown or saved.
+        if !plan.is_well_formed() {
+            return Err(SaveFailure::Internal(format!(
+                "stored plan {} is malformed",
+                cmd.plan_id
+            )));
         }
 
         // 3. A key already used by this caller within 24 hours: replay or refuse.

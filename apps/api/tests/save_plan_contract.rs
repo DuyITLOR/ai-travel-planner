@@ -1,4 +1,5 @@
-//! Contract tests for `POST /plans/{planId}/save`, following docs/contract/save-plan.md.
+//! Contract tests for `POST /plans/{planId}/save` and `GET /plans/{planId}`, following
+//! docs/contract/save-plan.md.
 //! Section numbers in the test names point at that file. These tests never call a model.
 
 use std::sync::{
@@ -720,6 +721,11 @@ impl PlanStore for BrokenStore {
             "error returned from database: relation \"plans\" does not exist".into(),
         ))
     }
+    fn read(&self, _: Uuid, _: Uuid) -> Result<Value, SaveFailure> {
+        Err(SaveFailure::Internal(
+            "error returned from database: relation \"plans\" does not exist".into(),
+        ))
+    }
 }
 
 #[tokio::test]
@@ -1113,4 +1119,269 @@ async fn s3_saved_at_and_saved_by_are_always_present() {
     // milliseconds and Z: 2026-12-05T02:15:00.000Z
     assert_eq!(saved_at.len(), 24, "{saved_at}");
     assert_eq!(&saved_at[19..20], ".");
+}
+
+// ---------- 4.8 GET /plans/{planId} ----------
+
+async fn get(app: &Router, plan: &str, user: Option<Uuid>) -> Res {
+    let mut b = Request::get(format!("/plans/{plan}"));
+    if let Some(u) = user {
+        b = b.header("authorization", format!("Bearer {}", token(u)));
+    }
+    send_raw(app, b.body(Body::empty()).unwrap()).await
+}
+
+#[tokio::test]
+async fn s4_8_a_saved_plan_is_read_by_every_member_as_saved() {
+    let app = app_with(store());
+    let saved = send(&app, Req::new(OK_PLAN)).await;
+    assert_eq!(saved.status, StatusCode::OK, "{}", saved.json);
+    for user in [CREATOR, MEMBER] {
+        let res = get(&app, &OK_PLAN.to_string(), Some(user)).await;
+        assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+        assert_eq!(res.headers["content-type"], "application/json");
+        assert_eq!(res.json, saved.json, "GET returns what the save returned");
+    }
+}
+
+#[tokio::test]
+async fn s4_8_a_draft_is_seen_only_by_its_creator() {
+    let app = app_with(store());
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+    assert_eq!(res.json["status"], "draft");
+    assert_eq!(res.json["version"], 3);
+    assert!(res.json["savedAt"].is_null() && res.json["savedBy"].is_null());
+    let res = get(&app, &OK_PLAN.to_string(), Some(MEMBER)).await;
+    assert_problem(&res, ProblemType::NotPlanOwner);
+}
+
+#[tokio::test]
+async fn s4_8_404_for_a_stranger_an_unknown_or_a_malformed_id() {
+    let app = app_with(store());
+    for (plan, user) in [
+        (OK_PLAN.to_string(), STRANGER),
+        (Uuid::from_u128(0xdead).to_string(), CREATOR),
+        ("not-a-uuid".to_string(), CREATOR),
+        (OK_PLAN.simple().to_string(), CREATOR),
+        ("%FF".to_string(), CREATOR),
+    ] {
+        assert_problem(
+            &get(&app, &plan, Some(user)).await,
+            ProblemType::PlanNotFound,
+        );
+    }
+}
+
+#[tokio::test]
+async fn s4_8_401_before_the_id_is_looked_at() {
+    let app = app_with(store());
+    for plan in [OK_PLAN.to_string(), "not-a-uuid".to_string()] {
+        let res = get(&app, &plan, None).await;
+        assert_problem(&res, ProblemType::Unauthenticated);
+        assert_eq!(res.headers["www-authenticate"], "Bearer");
+    }
+}
+
+#[tokio::test]
+async fn s4_8_405_for_any_other_method_without_a_token() {
+    let app = app_with(store());
+    for method in ["POST", "PUT", "PATCH", "DELETE"] {
+        let req = Request::builder()
+            .method(method)
+            .uri(format!("/plans/{OK_PLAN}"))
+            .body(Body::empty())
+            .unwrap();
+        let res = send_raw(&app, req).await;
+        assert_problem(&res, ProblemType::MethodNotAllowed);
+        assert_eq!(res.headers["allow"], "GET, HEAD");
+    }
+}
+
+#[tokio::test]
+async fn s4_8_500_internal_never_leaks_the_cause() {
+    let app = app_with(Arc::new(BrokenStore));
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_problem(&res, ProblemType::Internal);
+    assert!(!res.json.to_string().contains("relation"));
+}
+
+#[tokio::test]
+async fn s3_stored_amounts_are_reported_within_0_and_2_pow_53_minus_1() {
+    let app = app_with(store());
+    let res = get(&app, &HUGE_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+    let stop = &res.json["stops"][0];
+    assert_eq!(stop["items"][0]["unitPriceVnd"], 9_007_199_254_740_991_i64);
+    assert_eq!(stop["costPerPersonVnd"], 9_007_199_254_740_991_i64);
+    assert_eq!(res.json["cost"]["totalVnd"], 9_007_199_254_740_991_i64);
+}
+
+#[tokio::test]
+async fn s3_a_budget_past_2_pow_53_minus_1_is_reported_as_2_pow_53_minus_1() {
+    let s = InMemoryPlanStore::default();
+    s.insert_trip(Trip {
+        id: TRIP_A,
+        budget_vnd: i64::MAX,
+        members: vec![Member {
+            user_id: CREATOR,
+            cap_vnd: Some(-5),
+        }],
+    });
+    s.insert_plan(plan(OK_PLAN, TRIP_A, CREATOR, 1, vec![item("t", 1, 1)]));
+    let app = app_with(Arc::new(s));
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(res.json["cost"]["budgetVnd"], 9_007_199_254_740_991_i64);
+    // a cap below 0 counts as 0: any cost over it breaks over-member-cap with limitVnd 0
+    let res = send(&app, Req::new(OK_PLAN).version(1)).await;
+    assert_problem(&res, ProblemType::PlanRejected);
+    assert_eq!(res.json["violations"][0]["limitVnd"], 0);
+}
+
+#[tokio::test]
+async fn s4_5_a_replay_after_an_edit_returns_the_stored_response() {
+    let store = store();
+    let app = app_with(store.clone());
+    let first = send(&app, Req::new(OK_PLAN).key("k-edit")).await;
+    assert_eq!(first.status, StatusCode::OK, "{}", first.json);
+    // someone edits the plan: version 4, a draft again
+    store.insert_plan(plan(OK_PLAN, TRIP_A, CREATOR, 4, vec![item("t", 1, 1)]));
+    let replay = send(&app, Req::new(OK_PLAN).key("k-edit")).await;
+    assert_eq!(replay.status, StatusCode::OK);
+    assert_eq!(replay.headers["idempotent-replayed"], "true");
+    assert_eq!(replay.json, first.json, "the stored body, version 3");
+    let now = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(now.json["version"], 4);
+    assert_eq!(now.json["status"], "draft");
+}
+
+#[tokio::test]
+async fn s4_8_head_is_answered_like_get_without_a_body() {
+    let app = app_with(store());
+    let req = Request::head(format!("/plans/{OK_PLAN}"))
+        .header("authorization", format!("Bearer {}", token(CREATOR)))
+        .body(Body::empty())
+        .unwrap();
+    let res = app.clone().oneshot(req).await.unwrap();
+    assert_eq!(res.status(), StatusCode::OK);
+    assert_eq!(res.headers()["content-type"], "application/json");
+    let bytes = res.into_body().collect().await.unwrap().to_bytes();
+    assert!(bytes.is_empty());
+}
+
+#[tokio::test]
+async fn s3_a_stored_plan_that_breaks_section_3_is_never_shown_or_saved() {
+    type Break = fn(&mut Plan);
+    fn second_stop(p: &mut Plan, day: &str, start: &str, end: &str) {
+        let mut stop = p.stops[0].clone();
+        stop.day = day.into();
+        stop.start = start.into();
+        stop.end = end.into();
+        p.stops.push(stop);
+    }
+    let broken: [(&str, Break); 8] = [
+        ("quantity 0", |p| p.stops[0].items[0].quantity = 0),
+        ("start 25:00", |p| p.stops[0].start = "25:00".into()),
+        ("end 9:00", |p| p.stops[0].end = "9:00".into()),
+        ("day 2026-13-01", |p| p.stops[0].day = "2026-13-01".into()),
+        ("version 0", |p| p.version = 0),
+        ("end before start", |p| p.stops[0].end = "08:00".into()),
+        ("overlap", |p| {
+            second_stop(p, "2026-12-06", "10:00", "11:00")
+        }),
+        ("out of order", |p| {
+            second_stop(p, "2026-12-05", "09:00", "10:00")
+        }),
+    ];
+    for (what, breaks) in broken {
+        let store = store();
+        let mut p = plan(OK_PLAN, TRIP_A, CREATOR, 3, vec![item("t", 1_000, 1)]);
+        breaks(&mut p);
+        store.insert_plan(p);
+        let app = app_with(store.clone());
+        let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+        assert_problem(&res, ProblemType::Internal);
+        let res = send(&app, Req::new(OK_PLAN)).await;
+        assert_problem(&res, ProblemType::Internal);
+        assert_eq!(
+            store.plan(OK_PLAN).unwrap().status,
+            PlanStatus::Draft,
+            "{what}"
+        );
+    }
+}
+
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn s4_3_two_saves_at_the_same_time_share_the_plan_once() {
+    let store = store();
+    let app = app_with(store.clone());
+    let tasks: Vec<_> = (0..8)
+        .map(|_| {
+            let app = app.clone();
+            tokio::spawn(async move { send(&app, Req::new(OK_PLAN)).await })
+        })
+        .collect();
+    let mut saved_at = Vec::new();
+    for t in tasks {
+        let res = t.await.unwrap();
+        assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+        saved_at.push(res.json["savedAt"].clone());
+    }
+    // one save happened; every other request saw it already saved (step 12)
+    assert!(saved_at.windows(2).all(|w| w[0] == w[1]), "{saved_at:?}");
+    let stored = store.plan(OK_PLAN).unwrap();
+    assert_eq!(stored.status, PlanStatus::Saved);
+    assert_eq!(
+        stored
+            .saved_at
+            .unwrap()
+            .to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        saved_at[0].as_str().unwrap()
+    );
+}
+
+#[tokio::test]
+async fn s3_stops_may_touch_and_span_days() {
+    let store = store();
+    let mut p = plan(OK_PLAN, TRIP_A, CREATOR, 3, vec![item("t", 1_000, 1)]);
+    let mut next = p.stops[0].clone();
+    next.start = "10:30".into(); // the first one ends at 10:30
+    next.end = "11:00".into();
+    let mut tomorrow = p.stops[0].clone();
+    tomorrow.day = "2026-12-07".into();
+    tomorrow.start = "08:00".into();
+    tomorrow.end = "08:30".into();
+    p.stops.extend([next, tomorrow]);
+    store.insert_plan(p);
+    let app = app_with(store);
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+    assert_eq!(send(&app, Req::new(OK_PLAN)).await.status, StatusCode::OK);
+}
+
+#[tokio::test]
+async fn s4_1_a_server_without_its_jwt_secret_answers_401_to_every_token() {
+    let config = Config {
+        port: 0,
+        web_origins: vec!["http://localhost:3000".into()],
+        database_url: None,
+    };
+    let app = build_app(&config, AppState::new(Db::disabled()).with_plans(store()));
+    let res = send(&app, Req::new(OK_PLAN)).await;
+    assert_problem(&res, ProblemType::Unauthenticated);
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_problem(&res, ProblemType::Unauthenticated);
+}
+
+#[tokio::test]
+async fn s4_2_the_key_is_trimmed_of_spaces_and_compared_case_sensitively() {
+    let app = app_with(store());
+    let first = send(&app, Req::new(OK_PLAN).key("k-Case")).await;
+    assert_eq!(first.status, StatusCode::OK, "{}", first.json);
+    let trimmed = send(&app, Req::new(OK_PLAN).key("  k-Case  ")).await;
+    assert_eq!(trimmed.headers["idempotent-replayed"], "true");
+    // another case is another key: saved already at this version (step 12), not a replay
+    let other = send(&app, Req::new(OK_PLAN).key("K-CASE")).await;
+    assert_eq!(other.status, StatusCode::OK);
+    assert!(other.headers.get("idempotent-replayed").is_none());
 }

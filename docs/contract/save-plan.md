@@ -1,5 +1,8 @@
 # `POST /plans/{planId}/save` — contract, version 1
 
+With its companion `GET /plans/{planId}` (section 4.8), which a client needs to get the
+`version` it saves.
+
 AI Travel Planner api (`apps/api`) · frozen for PA#2, 26 Nov 2026
 
 Saving is the step that shares a schedule with the group (brief, section 3, step 6).
@@ -15,7 +18,8 @@ is wrong, change it in its own commit that says why, before changing the code.
 
 ## 1. Conventions
 
-- Base URL: the api origin, e.g. `http://localhost:4000` locally.
+- Base URL: the api origin: `http://localhost:4000` locally; the deployed api on Render
+  has its own origin, which the web app reads from `NEXT_PUBLIC_API_URL`.
 - Requests and responses are JSON, UTF-8. Field names are `camelCase`.
 - **Money is an integer number of dong (VND)**, in fields ending in `Vnd`. Never a
   float, never thousands of dong. The server computes every amount; the client
@@ -33,8 +37,8 @@ is wrong, change it in its own commit that says why, before changing the code.
 
 ## 2. Errors
 
-Every 4xx and 5xx response to a request for the path `/plans/{planId}/save`
-(with a non-empty `planId` segment), whatever its method, is a **problem details**
+Every 4xx and 5xx response to a request for the path `/plans/{planId}/save` or
+`/plans/{planId}` (with a non-empty `planId` segment), whatever its method, is a **problem details**
 object (RFC 9457) with `Content-Type: application/problem+json`:
 
 ```http
@@ -72,9 +76,9 @@ Content-Type: application/problem+json
 | `validation`              | 400    | Invalid request                | the body breaks a rule of section 4.2                                                                                                  | `errors`: one `{ "pointer", "detail" }` per broken field; `pointer` is a JSON Pointer, `""` = the body |
 | `idempotency-key-missing` | 400    | Idempotency-Key required       | no `Idempotency-Key` header, or one that breaks the rule of section 4.2 (empty, longer than 255, or a character outside printable ASCII) |                                                                                                        |
 | `unauthenticated`         | 401    | Authentication required        | no `Authorization: Bearer` token, or one that is invalid, expired or not for this project. The response also has `WWW-Authenticate: Bearer` |                                                                                                        |
-| `not-plan-owner`          | 403    | Not the plan's creator         | the caller is a member of the plan's trip but did not create the plan                                                                 |                                                                                                        |
+| `not-plan-owner`          | 403    | Not the plan's creator         | the caller is a member of the plan's trip but did not create the plan: on a save (4.1), or on reading a plan that is still a draft (4.8) |                                                                                                        |
 | `plan-not-found`          | 404    | Plan not found                 | no plan with that id, `planId` is not a UUID, **or the plan belongs to a trip the caller is not a member of**                          |                                                                                                        |
-| `method-not-allowed`      | 405    | Method not allowed             | any method other than `POST`. The response also has `Allow: POST`                                                                      |                                                                                                        |
+| `method-not-allowed`      | 405    | Method not allowed             | a method the path does not accept: anything but `POST` on `/save` (`Allow: POST`), anything but `GET`/`HEAD` on `/plans/{planId}` (`Allow: GET, HEAD`) |                                                                                                        |
 | `version-conflict`        | 409    | Plan changed since review      | `expectedVersion` is not the plan's current `version`: someone edited it after the caller reviewed it                                  | `currentVersion`: integer                                                                              |
 | `body-too-large`          | 413    | Request body too large         | the body is larger than 16 KiB (16384 bytes)                                                                                           |                                                                                                        |
 | `unsupported-media-type`  | 415    | Unsupported media type         | `Content-Type` is missing or is not `application/json` (parameters such as `; charset=utf-8` are allowed)                              |                                                                                                        |
@@ -115,11 +119,11 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 
 | Field                      | Rule                                                                                                        |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `status`                   | `"draft"` or `"saved"`. Every `200` of this endpoint has `"saved"`                                          |
+| `status`                   | `"draft"` or `"saved"`. Every `200` of the save has `"saved"`; `GET` (4.8) shows a draft to its creator     |
 | `version`                  | integer from 1 to 2⁵³−1. Goes up by one on every edit of the plan. **Saving does not change it**            |
 | `createdBy`                | the member who created the plan, the only one who may save it                                               |
 | `savedAt`, `savedBy`       | always present. `null` while `draft`; set by the save that shares this `version`, never changed by a repeat. `savedAt` has milliseconds and ends in `Z` |
-| `stops`                    | in schedule order. May be empty                                                                             |
+| `stops`                    | in schedule order: by `day`, then `start`. Each stop's `end` is later than its `start`, and on the same day a stop starts no earlier than the previous one ends (they may touch, never overlap). May be empty |
 | `items[].quantity`         | integer ≥ 1, **per person**: every member follows the same schedule                                         |
 | `items[].unitPriceVnd`     | the price in the shared place data when the item was put in the plan                                        |
 | `costPerPersonVnd`         | sum of `unitPriceVnd × quantity` over the stop's items                                                      |
@@ -127,16 +131,24 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | `cost.memberCount`         | number of members of the trip (1 for an individual trip)                                                    |
 | `cost.totalVnd`            | `perPersonVnd × memberCount`                                                                                |
 | `cost.budgetVnd`           | the trip budget: the group total, or the one person's amount for an individual trip                         |
-| every `…Vnd` field         | integer from 0 to 2⁵³−1. A computed amount that would be larger is reported as 9007199254740991, which is over any budget, so such a plan is always rejected |
+| every `…Vnd` field         | integer from 0 to 2⁵³−1, whether stored (`unitPriceVnd`, `budgetVnd`, a member's cap) or computed. A stored amount outside that range is reported, and validated, as the nearest end (below 0 as 0); a computed amount that would be larger is reported as 9007199254740991, which is over any budget, so such a plan is always rejected |
 | `start`, `end`             | `00:00` to `23:59`                                                                                          |
+
+**A stored plan that breaks a rule of this table.** The endpoints that edit plans
+never store one. If one is found anyway (a `version` outside its range, a
+`quantity` below 1, a `day`, `start` or `end` that is not a valid date or time in
+the format above, or stops out of order or overlapping), the api answers
+`500 internal` to a read (4.8, after step 4) and to a save (4.3, after step 9,
+before the key is looked up), and nothing is saved: the plan cannot be shown or
+shared as it is.
 
 **Editing after a save.** Plans are edited through endpoints outside this contract
 (they come with the agent in PA#3). Every edit, of a draft or of a saved plan, adds
 one to `version` and sets `status` back to `"draft"`, `savedAt` and `savedBy` back
 to `null`: the group keeps seeing nothing new until the creator saves the new
-version with this endpoint. Until a read endpoint exists, the only way to get a
-plan's current content is from those endpoints; after a `409` the client must
-fetch the plan again and show it to the user before saving.
+version with this endpoint. The current content and `version` are read with
+`GET /plans/{planId}` (section 4.8); after a `409` the client reads the plan again
+and shows it to the user before saving.
 
 **Violation** (inside `plan-rejected`)
 
@@ -145,8 +157,8 @@ fetch the plan again and show it to the user before saving.
 | `rule`      | a rule code from section 4.4. **Clients must accept codes they do not know** (section 5)      |
 | `message`   | one sentence for the user, in English                                                         |
 | `userId`    | present only on `over-member-cap` (absent, not `null`, on every other rule): the member whose cap is the lowest |
-| `amountVnd` | `over-member-cap`: `cost.perPersonVnd`. `over-trip-budget`: `cost.totalVnd`                   |
-| `limitVnd`  | `over-member-cap`: that member's cap. `over-trip-budget`: `cost.budgetVnd`                    |
+| `amountVnd` | present on **every** violation, whatever its `rule`. `over-member-cap`: `cost.perPersonVnd`. `over-trip-budget`: `cost.totalVnd` |
+| `limitVnd`  | present on **every** violation, whatever its `rule`. `over-member-cap`: that member's cap. `over-trip-budget`: `cost.budgetVnd` |
 
 ## 4. The endpoint
 
@@ -258,6 +270,9 @@ same request again with the same key. That retry must not save twice or share tw
   client may fix the problem and send it again with the same key.
 - A key is kept for exactly 24 hours from the save that stored it: a request
   23:59:59 later still replays, one 24:00:00 later or more is handled as new.
+- A replay is the response **as stored at the save**, even if the plan was edited
+  since: it says the save of that version happened, not what the plan is now. The
+  current plan is read with `GET /plans/{planId}` (section 4.8).
 - Independently of keys, saving is safe to repeat: a new key on a plan already
   saved at that version returns `200` with the plan unchanged (step 12).
 
@@ -281,11 +296,42 @@ exactly once, at `savedAt`. Show "Saved" either way.
 | `401 unauthenticated`                    | yes, after refreshing the Supabase session; same key | if refreshing fails, send the user to sign in                                    |
 | `403 not-plan-owner`                     | no                                       | tell the user only the plan's creator can save it                                              |
 | `404 plan-not-found`                     | no                                       | the plan is gone or the user left the trip; go back to the trip                                |
-| `409 version-conflict`                   | after the user reviews again, **new key**, `expectedVersion` = `currentVersion` | fetch the plan, show what changed, ask the user to confirm again    |
+| `409 version-conflict`                   | after the user reviews again, **new key**, `expectedVersion` = `currentVersion` | read the plan (`GET /plans/{planId}`), show what changed, ask the user to confirm again |
 | `422 plan-rejected`                      | no                                       | show each violation's `message`; the user edits the plan (which is a new version)              |
 | `422 idempotency-key-reused`             | with a **new key**                       | a client bug: one key was used for two different saves                                        |
 | `400` (any type), `405`, `413`, `415`    | no                                       | a client bug; fix the request                                                                  |
 | `500 internal`                           | yes, same key, with backoff (1 s, 2 s, 4 s…) | nothing was saved; after 3 failures tell the user to try later                             |
+
+### 4.8 Reading a plan: `GET /plans/{planId}`
+
+What a client calls to show a plan and to learn the `version` it will send as
+`expectedVersion`.
+
+```http
+GET /plans/0b6f8a4e-1c2d-4e5f-8a9b-0c1d2e3f4a5b HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+```
+
+No body, no `Idempotency-Key`: reading changes nothing and is always safe to retry.
+`HEAD` is answered like `GET`, without a body. Checks, in this order:
+
+0. The method is `GET` or `HEAD`, else `405 method-not-allowed` with
+   `Allow: GET, HEAD` (no token needed). `OPTIONS` is the CORS layer's, as in 4.3.
+1. Bearer token valid (as in 4.1), else `401 unauthenticated`.
+2. `planId` is a UUID in the form of section 4.2, else `404 plan-not-found`.
+3. The plan exists and the caller is a member of its trip, else `404 plan-not-found`.
+4. The plan is `saved`, or the caller created it, else `403 not-plan-owner`: a draft
+   is its creator's own until it is saved.
+5. **`200`** with the Plan (section 3) as it is now, `Content-Type: application/json`.
+   After a save and before any edit, it equals the save's `200` body.
+
+| Answer                 | What a client does                                                       |
+| ---------------------- | ------------------------------------------------------------------------ |
+| `200`                  | show the plan; keep its `version` for the save                           |
+| `401 unauthenticated`  | refresh the Supabase session and read again                              |
+| `403 not-plan-owner`   | the creator has not saved it yet; tell the user the plan is not shared yet |
+| `404 plan-not-found`   | the plan is gone or the user left the trip; go back to the trip          |
+| `500 internal`         | retry with backoff (1 s, 2 s, 4 s…)                                      |
 
 ## 5. When this contract changes
 
@@ -296,8 +342,8 @@ exactly once, at `savedAt`. Show "Saved" either way.
 - Anything else is **breaking**: renaming or removing a field, changing a type or
   a unit, making a rule stricter for the request, changing the status of a
   problem type, or changing who may call the endpoint. A breaking change is
-  served at a new path, `/v2/plans/{planId}/save`. This path keeps working for at
-  least two checkpoints (about two weeks) after `/v2` ships, and its responses then
+  served at new paths, `/v2/plans/{planId}/save` and `/v2/plans/{planId}`. These
+  paths keep working for at least two checkpoints (about two weeks) after `/v2` ships, and its responses then
   carry `Deprecation` (RFC 9745) and `Sunset` (RFC 8594) headers with the date.
 - Every change, additive or breaking, is made here first, in its own commit, and
   the contract tests are updated in the same pull request as the code, never in a
@@ -306,4 +352,4 @@ exactly once, at `savedAt`. Show "Saved" either way.
 
 | Date        | Change                       |
 | ----------- | ---------------------------- |
-| 26 Nov 2026 | Version 1                    |
+| 26 Nov 2026 | Version 1: the save (4.1–4.7) and the read it depends on (4.8) |

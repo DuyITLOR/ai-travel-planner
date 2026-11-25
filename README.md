@@ -86,7 +86,7 @@ Clone mới, cài Node 20 + pnpm 10 + rustup (Rust 1.100.0 tự cài theo `rust-
 
 ## Contract và contract test
 
-- `POST /plans/{planId}/save` (bước Save chia sẻ lịch trình cho nhóm): [`docs/contract/save-plan.md`](docs/contract/save-plan.md).
+- `POST /plans/{planId}/save` (bước Save chia sẻ lịch trình cho nhóm) và `GET /plans/{planId}` (đọc plan và `version` trước khi save): [`docs/contract/save-plan.md`](docs/contract/save-plan.md).
 - Test: `apps/api/tests/save_plan_contract.rs` (mỗi problem `type`, quyền sở hữu, idempotency, validator)
   và `packages/shared/test/plan.test.ts` (schema Zod khớp contract). Cả hai chạy trong `pnpm test`.
 - Bảng lỗi trong contract được test đọc trực tiếp: sửa code mà không sửa contract (hoặc ngược lại) thì CI đỏ.
@@ -112,7 +112,7 @@ Clone mới, cài Node 20 + pnpm 10 + rustup (Rust 1.100.0 tự cài theo `rust-
 ## Quy trình
 
 - Mỗi việc là một issue trên GitHub Projects; nhánh đặt tên `feat/<issue>-mo-ta`, `fix/...`, `chore/...`.
-- Mở PR vào `main`, CI xanh và một người review rồi mới merge.
+- Mở PR vào `main`; ruleset "Protect main" chỉ cho merge khi 4 check `lint`, `format`, `typecheck`, `test` xanh. Chưa bắt buộc approval: nhóm 3 người, merge bằng merge commit.
 - Không commit `.env` hay key dịch vụ; key chỉ nằm ở backend.
 
 ## Deploy

@@ -247,6 +247,73 @@ Kept: PR #2 (rules and CI, green), PR #3 (red on `test` and blocked, then green)
 41 passed and 5 failed, the five names `PA2.md` lists; closed unmerged).
 Changed: our plan said to screenshot Settings → Branches, but protection is a ruleset; the
 screenshot is of the ruleset page, which a collaborator without admin rights can read.
-Changed: commits carry no AI co-author trailer, at our request.
+Changed: from PR #4 on, commits carry no AI co-author trailer, at our request (the commits of
+PR #2 and PR #3, `013bc36`, `94ea829`, `62be07a`, still carry one; we did not rewrite them).
 Rejected: merging by the assistant. Every merge was ours.
 By hand: we merged PR #2, #3 and #4; Duy turned on the required checks between PR #2 and PR #3.
+
+## 2026-11-25 — review round 6
+
+Tool: Claude Code, a sixth grading agent given only the rubric and a fresh clone of the tag
+`pa2`, checking every link of `PA2.md` with read-only `gh` calls. It marked 91/100.
+Kept, each with a test that fails first where it is code:
+
+- A stranger could not get the `version` to send: the contract said "fetch the plan again"
+  after a `409` but no endpoint returned a plan. Added `GET /plans/{planId}` (contract §4.8;
+  a draft is only its creator's, `403` for other members, `404` for strangers) and 7 tests.
+- "Every `…Vnd` field 0 to 2⁵³−1" held only for computed amounts; a stored price or budget was
+  passed through. Stored amounts are now clamped too, in the response and in the validator.
+- A replay after an edit returns the stored body of the old version; the contract now says so,
+  and a test pins it.
+- This log said our commits carry no co-author trailer, but three of them do. Corrected above.
+- `CLAUDE.md` Allowed tier left out `docs/`, which `settings.json` allows; README promised a
+  review before merge that the ruleset does not require. Both now say what is enforced.
+- `Bash(cat *.env*)` also blocked `.env.example`; `CLAUDE.md` now says it is read with the Read
+  tool, and `.env.staging`, `.env.test`, `sed`, `awk`, `type`, `Get-Content` are denied too.
+- The gitleaks false positive is allowlisted by its exact value in `.gitleaks.toml`.
+- `PA2.md` states the timeline plainly: when the checks became required, and that PR #3's red
+  commit was staged on purpose.
+
+Rejected: requiring one approval on `main`. With three people and a deadline it would turn the
+gate into waiting; the required checks are what the rubric asks for.
+By hand: nothing in the code. We asked for the round and chose to state PR #3's staging openly
+instead of arguing it.
+
+## 2026-11-25 — review round 7
+
+Tool: Claude Code, a seventh grading agent on a fresh clone of PR #7, told to grade as if it
+were merged and tagged. It marked 93/100.
+Kept, each with a test that fails first:
+
+- The contract said `quantity` ≥ 1 and times `00:00`–`23:59`, but a stored plan breaking them
+  was shown and saved as is. The contract now says such a plan is a server fault
+  (`500 internal` on read and save), and nothing is saved. Four broken plans tested.
+- Contract sentences with no test: `HEAD` like `GET`, and "steps 8 to 14 are atomic". Added
+  a `HEAD` test and eight concurrent saves that must share the plan once (same `savedAt`).
+- `amountVnd`/`limitVnd` are now stated as present on every violation, so a typed client
+  can handle rule codes it does not know; the `/v2` rule names both paths.
+- `CLAUDE.md` said "after `pnpm install`" while `settings.json` allows only
+  `pnpm install --frozen-lockfile`; it now says the latter.
+
+Changed: our self-assessment, which was below what two graders gave on criteria 2 and 7; it now
+claims 95, with criterion 4 at 17 because PR #3's red commit was staged.
+Rejected: staging another red PR to look "organic". It would be the same thing again.
+By hand: nothing in the code.
+
+## 2026-11-25 — review round 8
+
+Tool: Claude Code, an eighth grading agent, same setup as round 7. It marked 96/100.
+Kept, each with a test that fails first:
+
+- The contract promised `500` for a stored plan breaking section 3, but the check ignored
+  `version`, and a stored `version` of 0 reached the `409` step first. The check now covers
+  `version` and runs right after ownership (before the key), and the contract says where.
+- "Stops in schedule order" had no definition. It now means: by `day`, then `start`; `end`
+  after `start`; on one day, no overlap (touching is fine). Four more broken plans tested,
+  and one valid plan whose stops touch and span two days.
+- Tests for two sentences that had none: a server without its JWT secret answers `401`, and
+  the key is trimmed of spaces and compared case-sensitively.
+
+Rejected: nothing. Its remaining deduction (criterion 4, PR #3's red commit staged from a fix
+of the day before) cannot be fixed after the fact; `PA2.md` states it.
+By hand: nothing in the code.
