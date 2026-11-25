@@ -353,3 +353,15 @@ Kept, each with a test that fails without the code change:
 Rejected: deploying the api to Render just to name a URL: it would hold no plans (in-memory
 store) and needs secrets set up for nothing PA#2 grades.
 By hand: we decided not to deploy for PA#2.
+
+## 2026-11-25 — review round 11
+
+Tool: Claude Code, an eleventh grading agent, same setup. It marked 99/100.
+Kept: its one deduction. The contract said a cost past 2⁵³−1 is "always rejected", but with a
+stored budget also clamped to 2⁵³−1 the total equalled the budget and the plan was saved. The
+validator now rejects a total of 2⁵³−1 whatever the budget, the contract says so, and a test
+fails without the change. Also tests for the two trip changes the contract lists that had
+none: a member joining and a cap changing.
+Rejected: raising our claim to match its 99. Other rounds gave 95 and 96, mostly over PR #3's
+staged red commit; we keep 96.
+By hand: the decision to stop the review loop here and submit.
