@@ -1254,3 +1254,73 @@ async fn s4_5_a_replay_after_an_edit_returns_the_stored_response() {
     assert_eq!(now.json["version"], 4);
     assert_eq!(now.json["status"], "draft");
 }
+
+#[tokio::test]
+async fn s4_8_head_is_answered_like_get_without_a_body() {
+    let app = app_with(store());
+    let req = Request::head(format!("/plans/{OK_PLAN}"))
+        .header("authorization", format!("Bearer {}", token(CREATOR)))
+        .body(Body::empty())
+        .unwrap();
+    let res = app.clone().oneshot(req).await.unwrap();
+    assert_eq!(res.status(), StatusCode::OK);
+    assert_eq!(res.headers()["content-type"], "application/json");
+    let bytes = res.into_body().collect().await.unwrap().to_bytes();
+    assert!(bytes.is_empty());
+}
+
+#[tokio::test]
+async fn s3_a_stored_plan_that_breaks_section_3_is_never_shown_or_saved() {
+    type Break = fn(&mut Plan);
+    let broken: [(&str, Break); 4] = [
+        ("quantity 0", |p| p.stops[0].items[0].quantity = 0),
+        ("start 25:00", |p| p.stops[0].start = "25:00".into()),
+        ("end 9:00", |p| p.stops[0].end = "9:00".into()),
+        ("day 2026-13-01", |p| p.stops[0].day = "2026-13-01".into()),
+    ];
+    for (what, breaks) in broken {
+        let store = store();
+        let mut p = plan(OK_PLAN, TRIP_A, CREATOR, 3, vec![item("t", 1_000, 1)]);
+        breaks(&mut p);
+        store.insert_plan(p);
+        let app = app_with(store.clone());
+        let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+        assert_problem(&res, ProblemType::Internal);
+        let res = send(&app, Req::new(OK_PLAN)).await;
+        assert_problem(&res, ProblemType::Internal);
+        assert_eq!(
+            store.plan(OK_PLAN).unwrap().status,
+            PlanStatus::Draft,
+            "{what}"
+        );
+    }
+}
+
+#[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+async fn s4_3_two_saves_at_the_same_time_share_the_plan_once() {
+    let store = store();
+    let app = app_with(store.clone());
+    let tasks: Vec<_> = (0..8)
+        .map(|_| {
+            let app = app.clone();
+            tokio::spawn(async move { send(&app, Req::new(OK_PLAN)).await })
+        })
+        .collect();
+    let mut saved_at = Vec::new();
+    for t in tasks {
+        let res = t.await.unwrap();
+        assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+        saved_at.push(res.json["savedAt"].clone());
+    }
+    // one save happened; every other request saw it already saved (step 12)
+    assert!(saved_at.windows(2).all(|w| w[0] == w[1]), "{saved_at:?}");
+    let stored = store.plan(OK_PLAN).unwrap();
+    assert_eq!(stored.status, PlanStatus::Saved);
+    assert_eq!(
+        stored
+            .saved_at
+            .unwrap()
+            .to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
+        saved_at[0].as_str().unwrap()
+    );
+}
