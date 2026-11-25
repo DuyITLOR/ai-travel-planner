@@ -123,7 +123,7 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | `version`                  | integer from 1 to 2⁵³−1. Goes up by one on every edit of the plan. **Saving does not change it**            |
 | `createdBy`                | the member who created the plan, the only one who may save it                                               |
 | `savedAt`, `savedBy`       | always present. `null` while `draft`; set by the save that shares this `version`, never changed by a repeat. `savedAt` has milliseconds and ends in `Z` |
-| `stops`                    | in schedule order. May be empty                                                                             |
+| `stops`                    | in schedule order: by `day`, then `start`. Each stop's `end` is later than its `start`, and on the same day a stop starts no earlier than the previous one ends (they may touch, never overlap). May be empty |
 | `items[].quantity`         | integer ≥ 1, **per person**: every member follows the same schedule                                         |
 | `items[].unitPriceVnd`     | the price in the shared place data when the item was put in the plan                                        |
 | `costPerPersonVnd`         | sum of `unitPriceVnd × quantity` over the stop's items                                                      |
@@ -135,10 +135,12 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | `start`, `end`             | `00:00` to `23:59`                                                                                          |
 
 **A stored plan that breaks a rule of this table.** The endpoints that edit plans
-never store one. If one is found anyway (a `quantity` below 1, a `day`, `start` or
-`end` that is not a valid date or time in the format above), the api answers
-`500 internal` to a read (4.8) and to a save (after step 11 of 4.3), and nothing is
-saved: the plan cannot be shown or shared as it is.
+never store one. If one is found anyway (a `version` outside its range, a
+`quantity` below 1, a `day`, `start` or `end` that is not a valid date or time in
+the format above, or stops out of order or overlapping), the api answers
+`500 internal` to a read (4.8, after step 4) and to a save (4.3, after step 9,
+before the key is looked up), and nothing is saved: the plan cannot be shown or
+shared as it is.
 
 **Editing after a save.** Plans are edited through endpoints outside this contract
 (they come with the agent in PA#3). Every edit, of a draft or of a saved plan, adds
