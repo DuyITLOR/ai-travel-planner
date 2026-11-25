@@ -77,7 +77,9 @@ pub fn validate(plan: &Plan, trip: &Trip) -> Vec<Violation> {
     // The total for everyone stays within the trip budget.
     let total = total_cost(plan, trip);
     let budget = clamp(trip.budget_vnd);
-    if total > budget {
+    // A total that reached 2^53 - 1 overflowed (or is absurd): rejected even against a
+    // budget clamped to the same value.
+    if total > budget || total == MAX_VND {
         out.push(Violation {
             rule: "over-trip-budget",
             message: format!(
