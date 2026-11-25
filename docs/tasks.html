@@ -1,0 +1,2007 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ATP Task Board</title>
+    <!--
+      Board task của nhóm. Một file duy nhất: giao diện ở trên, dữ liệu ở khối
+      <script id="tasks-data"> cuối file. Mở bằng trình duyệt là thấy ngay.
+      Sửa: chạy `pnpm board` (docs/board-server.mjs), board mở ở localhost và tự ghi
+      vào file. Mở thẳng file trong Chrome/Edge thì lần sửa đầu phải chọn chính file
+      này và bấm Cho phép. Sau đó git add docs/tasks.html, commit, push.
+      Có thể sửa tay khối dữ liệu, giữ đúng JSON.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #faf9f5;
+        --surface: #ffffff;
+        --surface-2: #f0eee6;
+        --surface-3: #e8e6dc;
+        --text: #141413;
+        --text-2: #3d3d3a;
+        --muted: #73726c;
+        --border: #e3e1d7;
+        --border-strong: #d1cfc5;
+        --accent: #c6613f;
+        --accent-hover: #b4532f;
+        --accent-tint: #f6e9e2;
+        --on-accent: #faf9f5;
+        --ok: #5e7a3c;
+        --warn: #a8702f;
+        --err: #b5422f;
+        --s-todo: #87867f;
+        --s-in_progress: #5b8bc4;
+        --s-code_review: #8e76bf;
+        --s-testing: #c08a55;
+        --s-done: #6b8e47;
+        --shadow: 0 1px 2px rgba(20, 20, 19, 0.04), 0 2px 8px rgba(20, 20, 19, 0.04);
+        --serif: 'Source Serif 4', 'Noto Serif', Georgia, 'Times New Roman', serif;
+        --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        color-scheme: light;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+          --bg: #262624;
+          --surface: #30302e;
+          --surface-2: #1f1e1d;
+          --surface-3: #3a3a37;
+          --text: #faf9f5;
+          --text-2: #e5e4df;
+          --muted: #a6a39a;
+          --border: #3e3d39;
+          --border-strong: #4d4c47;
+          --accent: #d97757;
+          --accent-hover: #e08a6d;
+          --accent-tint: rgba(217, 119, 87, 0.16);
+          --on-accent: #1f1e1d;
+          --ok: #9dbb7a;
+          --warn: #ddb07f;
+          --err: #e5826b;
+          --s-todo: #a6a39a;
+          --s-in_progress: #8ab4e0;
+          --s-code_review: #b3a1dd;
+          --s-testing: #ddb07f;
+          --s-done: #9dbb7a;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme='dark'] {
+        --bg: #262624;
+        --surface: #30302e;
+        --surface-2: #1f1e1d;
+        --surface-3: #3a3a37;
+        --text: #faf9f5;
+        --text-2: #e5e4df;
+        --muted: #a6a39a;
+        --border: #3e3d39;
+        --border-strong: #4d4c47;
+        --accent: #d97757;
+        --accent-hover: #e08a6d;
+        --accent-tint: rgba(217, 119, 87, 0.16);
+        --on-accent: #1f1e1d;
+        --ok: #9dbb7a;
+        --warn: #ddb07f;
+        --err: #e5826b;
+        --s-todo: #a6a39a;
+        --s-in_progress: #8ab4e0;
+        --s-code_review: #b3a1dd;
+        --s-testing: #ddb07f;
+        --s-done: #9dbb7a;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 14px/1.5 var(--sans);
+        -webkit-font-smoothing: antialiased;
+      }
+      button,
+      select,
+      input,
+      textarea {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      code {
+        font-family: var(--mono);
+        font-size: 0.92em;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        padding: 0 5px;
+        border-radius: 5px;
+      }
+      .wrap {
+        max-width: 1520px;
+        margin: 0 auto;
+        padding: 24px 16px 40px;
+      }
+
+      /* ---------- header ---------- */
+      .top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .eyebrow {
+        color: var(--muted);
+        font-size: 12.5px;
+        letter-spacing: 0.02em;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        margin: 2px 0 0;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .btn {
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 6px 12px;
+        font-weight: 500;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+      }
+      .btn:hover {
+        background: var(--surface-2);
+      }
+      .btn.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--on-accent);
+      }
+      .btn.primary:hover {
+        background: var(--accent-hover);
+        border-color: var(--accent-hover);
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 5px 11px;
+        border-radius: 99px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        font-size: 12.5px;
+        color: var(--text-2);
+        white-space: nowrap;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--muted);
+        flex: none;
+      }
+      .pill.ok .dot {
+        background: var(--ok);
+      }
+      .pill.warn .dot {
+        background: var(--warn);
+      }
+      .pill.pending {
+        border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+        background: var(--accent-tint);
+      }
+      .pill.pending .dot {
+        background: var(--accent);
+      }
+      .saved {
+        color: var(--ok);
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .saved.show {
+        opacity: 1;
+      }
+      .me {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
+        padding: 3px 3px 3px 11px;
+        border: 1px solid var(--border-strong);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .me select {
+        border: 0;
+        background: transparent;
+        color: var(--text);
+        font-weight: 600;
+        padding: 3px 4px;
+      }
+      .me.need {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-tint);
+      }
+      select,
+      input[type='search'],
+      input[type='text'],
+      input[type='url'] {
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 6px 9px;
+        max-width: 100%;
+        outline: none;
+      }
+      select:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      .btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+
+      /* ---------- banner ---------- */
+      .banner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        margin-bottom: 16px;
+      }
+      .banner.err {
+        border-color: color-mix(in srgb, var(--err) 50%, var(--border));
+        background: color-mix(in srgb, var(--err) 8%, var(--surface));
+      }
+      .banner.pending {
+        border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+        background: var(--accent-tint);
+      }
+      .banner .msg {
+        flex: 1 1 320px;
+      }
+
+      /* ---------- summary ---------- */
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .pcard {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px 16px;
+        box-shadow: var(--shadow);
+      }
+      .pcard .head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .pcard .name {
+        font-family: var(--serif);
+        font-size: 19px;
+        font-weight: 500;
+      }
+      .pcard .ratio {
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      .pcard .feat {
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      .stack {
+        display: flex;
+        height: 6px;
+        border-radius: 99px;
+        overflow: hidden;
+        background: var(--surface-3);
+        margin: 10px 0 8px;
+      }
+      .stack i {
+        display: block;
+        height: 100%;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px 12px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .legend b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .sw {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        margin-right: 5px;
+        vertical-align: 1px;
+      }
+      details.plan {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 10px 16px;
+        margin-bottom: 20px;
+      }
+      details.plan summary {
+        cursor: pointer;
+        font-family: var(--serif);
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .fgrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        gap: 0 24px;
+        margin-top: 8px;
+      }
+      .frow {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 10px 0;
+        border-top: 1px solid var(--border);
+      }
+      .frow .body {
+        flex: 1;
+        min-width: 0;
+      }
+      .frow h4 {
+        margin: 0;
+        font-size: 13.5px;
+        font-weight: 600;
+      }
+      .frow p {
+        margin: 2px 0 4px;
+        color: var(--muted);
+        font-size: 12.5px;
+      }
+      .frow .who {
+        font-size: 12px;
+        color: var(--text-2);
+      }
+      .frow .who b {
+        font-weight: 600;
+      }
+      .fnum {
+        flex: none;
+        min-width: 24px;
+        height: 24px;
+        padding: 0 6px;
+        border-radius: 7px;
+        display: inline-grid;
+        place-items: center;
+        font-size: 12px;
+        font-weight: 600;
+        background: color-mix(in srgb, var(--fc) 16%, transparent);
+        color: color-mix(in srgb, var(--fc) 72%, var(--text));
+      }
+      .fcount {
+        flex: none;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: right;
+      }
+      .fcount .link {
+        display: block;
+        margin-top: 4px;
+      }
+
+      /* ---------- toolbar ---------- */
+      .bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .seg {
+        display: inline-flex;
+        padding: 3px;
+        gap: 2px;
+        border-radius: 10px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+      }
+      .seg button {
+        border: 0;
+        background: transparent;
+        padding: 5px 12px;
+        border-radius: 7px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .seg button.on {
+        background: var(--surface);
+        color: var(--text);
+        box-shadow: var(--shadow);
+      }
+      .bar input[type='search'] {
+        flex: 1 1 200px;
+        min-width: 0;
+      }
+
+      /* ---------- board ---------- */
+      .board {
+        display: grid;
+        gap: 12px;
+        align-items: start;
+      }
+      .board.kanban {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(272px, 1fr);
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      .board.people {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+      .col {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 10px;
+        min-height: 140px;
+      }
+      .col.over {
+        outline: 2px dashed var(--accent);
+        outline-offset: -5px;
+      }
+      .col-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 2px 4px 10px;
+      }
+      .col-head .label {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        font-family: var(--serif);
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .col-head .count {
+        color: var(--muted);
+        font-size: 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 99px;
+        padding: 0 8px;
+      }
+      .sub-head {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--text-2);
+        margin: 14px 4px 7px;
+      }
+      .sub-head .fnum {
+        min-width: 20px;
+        height: 20px;
+        font-size: 11px;
+      }
+      .sub-head .n {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .sub-head .link {
+        margin-left: auto;
+      }
+
+      /* ---------- form thêm / sửa task ---------- */
+      .tform {
+        background: var(--surface);
+        border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+        box-shadow: 0 0 0 3px var(--accent-tint);
+        border-radius: 14px;
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+      .tform h3 {
+        margin: 0 0 10px;
+        font-family: var(--serif);
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .tform .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px 12px;
+      }
+      .tform label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .tform .wide {
+        grid-column: 1 / -1;
+      }
+      .tform input,
+      .tform select,
+      .tform textarea {
+        width: 100%;
+        font-size: 13.5px;
+        color: var(--text);
+      }
+      .tform textarea {
+        min-height: 60px;
+        resize: vertical;
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 6px 9px;
+        outline: none;
+      }
+      .tform .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 12px;
+      }
+      .tform .hint {
+        margin-right: auto;
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .empty {
+        color: var(--muted);
+        font-size: 12.5px;
+        padding: 14px 6px;
+        text-align: center;
+      }
+
+      /* ---------- card ---------- */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        box-shadow: var(--shadow);
+        transition: border-color 0.15s;
+      }
+      .card:hover {
+        border-color: var(--border-strong);
+      }
+      .card.dragging {
+        opacity: 0.45;
+      }
+      .card[data-status='done'] .title {
+        color: var(--muted);
+        text-decoration: line-through;
+        text-decoration-color: var(--border-strong);
+      }
+      .card-top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        font-size: 12px;
+      }
+      .tid {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        font-weight: 600;
+        color: var(--text-2);
+      }
+      .tag {
+        padding: 1px 8px;
+        border-radius: 99px;
+        background: color-mix(in srgb, var(--fc) 15%, transparent);
+        color: color-mix(in srgb, var(--fc) 72%, var(--text));
+        font-weight: 600;
+        font-size: 11.5px;
+      }
+      .title {
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--text);
+        margin: 7px 0 9px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .row select {
+        flex: 1 1 120px;
+        font-size: 12.5px;
+        padding: 4px 7px;
+        border-radius: 7px;
+      }
+      .st-select {
+        border-color: color-mix(in srgb, var(--sc) 45%, var(--border)) !important;
+        background: color-mix(in srgb, var(--sc) 12%, var(--surface)) !important;
+        color: color-mix(in srgb, var(--sc) 70%, var(--text)) !important;
+        font-weight: 600;
+      }
+      .note {
+        margin-top: 9px;
+        padding: 7px 9px;
+        border-radius: 8px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--accent);
+        white-space: pre-wrap;
+        font-size: 12.5px;
+        color: var(--text-2);
+        cursor: text;
+      }
+      .note textarea {
+        width: 100%;
+        min-height: 64px;
+        border: 0;
+        background: transparent;
+        resize: vertical;
+        outline: none;
+        padding: 0;
+      }
+      .note .hint {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .link {
+        border: 0;
+        background: none;
+        padding: 0;
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 500;
+      }
+      .link:hover {
+        text-decoration: underline;
+      }
+      .link.quiet {
+        color: var(--muted);
+      }
+      .link.danger {
+        color: var(--err);
+      }
+      .tools .right {
+        margin-left: auto;
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .pr a {
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .pr-edit {
+        display: flex;
+        gap: 6px;
+        margin-top: 8px;
+      }
+      .pr-edit input {
+        flex: 1;
+        min-width: 0;
+        font-size: 12.5px;
+        padding: 4px 7px;
+      }
+      details.more {
+        margin-top: 7px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      details.more summary {
+        cursor: pointer;
+      }
+      details.more p {
+        margin: 6px 0;
+        color: var(--text-2);
+      }
+      details.more ol {
+        margin: 4px 0 0;
+        padding-left: 18px;
+      }
+      .last {
+        margin-top: 6px;
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      footer {
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 12.5px;
+        text-align: center;
+      }
+
+      .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        max-width: min(560px, calc(100vw - 32px));
+        background: var(--text);
+        color: var(--bg);
+        padding: 10px 16px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        z-index: 10;
+      }
+      .toast.show {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <div>
+          <div class="eyebrow">AI Travel Planner · CSC13114</div>
+          <h1>Task board</h1>
+        </div>
+        <div class="controls">
+          <span id="saveState"></span>
+          <label class="me" id="meBox"
+            >Tôi là
+            <select id="me" aria-label="Tôi là"></select>
+          </label>
+        </div>
+      </header>
+      <div id="banner"></div>
+      <div id="content"></div>
+      <footer>
+        Mở board bằng <code>pnpm board</code> để sửa là tự lưu, không phải chọn file.<br />
+        Sửa xong: <code>git add docs/tasks.html</code> → commit → push. Người khác
+        <code>git pull</code> rồi F5 là thấy.
+      </footer>
+      <input type="file" id="fileInput" accept=".html,text/html" hidden />
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      'use strict';
+
+      // ---------- helpers ----------
+      const $ = (s) => document.querySelector(s);
+      const esc = (s) =>
+        String(s ?? '').replace(
+          /[&<>"']/g,
+          (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+        );
+      const LS = {
+        get(k) {
+          try {
+            return localStorage.getItem(k);
+          } catch {
+            return null;
+          }
+        },
+        set(k, v) {
+          try {
+            localStorage.setItem(k, v);
+          } catch {
+            /* chế độ riêng tư: chỉ mất tiện ích nhớ lựa chọn */
+          }
+        },
+      };
+      const pad = (n) => String(n).padStart(2, '0');
+      const nowStamp = () => {
+        const d = new Date();
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      };
+      const hasFSA = 'showOpenFilePicker' in window;
+      const pageFileName = () => decodeURIComponent(location.pathname.split('/').pop() || '') || 'tasks.html';
+      // Màu theo thứ tự chức năng trong dữ liệu (1–9, rồi Việc chung).
+      const FEATURE_COLORS = [
+        '#cc785c',
+        '#5b8bc4',
+        '#6b8e47',
+        '#c46686',
+        '#c08a55',
+        '#4f9a94',
+        '#8e76bf',
+        '#b0954a',
+        '#7d8aa6',
+        '#87867f',
+      ];
+
+      let toastTimer;
+      function toast(msg, ms = 3800) {
+        const t = $('#toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), ms);
+      }
+
+      // ---------- khối dữ liệu trong chính file này ----------
+      // Ghép chuỗi để thẻ mở không xuất hiện nguyên văn trong code (tìm bằng lastIndexOf).
+      const DATA_OPEN = '<script type="application/json" id="tasks' + '-data">';
+      const DATA_CLOSE = '<' + '/script>';
+
+      function splitSource(src) {
+        if (/^(<{7}|>{7})( |$)/m.test(src)) {
+          throw new Error('File đang có conflict git (<<<<<<<). Sửa conflict rồi mở lại.');
+        }
+        const i = src.lastIndexOf(DATA_OPEN);
+        if (i < 0) throw new Error('File này không phải board tasks.html (không thấy khối dữ liệu).');
+        const start = i + DATA_OPEN.length;
+        const end = src.indexOf(DATA_CLOSE, start);
+        if (end < 0) throw new Error('Khối dữ liệu không có thẻ đóng.');
+        return { head: src.slice(0, start), json: src.slice(start, end), tail: src.slice(end) };
+      }
+      function parseData(text) {
+        let d;
+        try {
+          d = JSON.parse(text);
+        } catch (e) {
+          throw new Error('Dữ liệu task không phải JSON hợp lệ: ' + e.message);
+        }
+        if (!d || !Array.isArray(d.tasks) || !Array.isArray(d.people) || !Array.isArray(d.statuses)) {
+          throw new Error('Dữ liệu thiếu tasks / people / statuses.');
+        }
+        return d;
+      }
+      // 2 dấu cách, mỗi trường một dòng: git diff chỉ đổi đúng dòng bị sửa.
+      // Thoát "</" và "<!--" để chuỗi trong note không đóng được thẻ script.
+      const serialize = (d) =>
+        '\n' + JSON.stringify(d, null, 2).replace(/<\//g, '<\\/').replace(/<!-{2}/g, '<\\u0021--') + '\n';
+
+      // ---------- IndexedDB: nhớ file đã cấp quyền ----------
+      function idbOpen() {
+        return new Promise((res, rej) => {
+          const r = indexedDB.open('atp-task-board', 2);
+          r.onupgradeneeded = () => {
+            if (!r.result.objectStoreNames.contains('kv')) r.result.createObjectStore('kv');
+          };
+          r.onsuccess = () => res(r.result);
+          r.onerror = () => rej(r.error);
+        });
+      }
+      const withTimeout = (p, ms) =>
+        Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))]);
+      async function idbGet(k) {
+        const db = await idbOpen();
+        return new Promise((res, rej) => {
+          const q = db.transaction('kv').objectStore('kv').get(k);
+          q.onsuccess = () => res(q.result);
+          q.onerror = () => rej(q.error);
+        });
+      }
+      async function idbSet(k, v) {
+        const db = await idbOpen();
+        return new Promise((res, rej) => {
+          const tx = db.transaction('kv', 'readwrite');
+          tx.objectStore('kv').put(v, k);
+          tx.oncomplete = () => res();
+          tx.onerror = () => rej(tx.error);
+        });
+      }
+      const HANDLE_KEY = 'html:' + location.pathname;
+
+      // ---------- state ----------
+      const state = {
+        data: null,
+        srcJson: '', // khối JSON trên đĩa lần cuối board thấy
+        handle: null, // file đã được cấp quyền ghi
+        savedHandle: null,
+        pending: [], // thay đổi chưa ghi xuống file
+        error: '',
+        me: LS.get('atp.me') || '',
+        view: LS.get('atp.view') || 'people',
+        f: {
+          person: LS.get('atp.f.person') || '',
+          feature: LS.get('atp.f.feature') || '',
+          q: '',
+        },
+        editingNote: null,
+        noteDraft: '',
+        editingPr: null,
+        form: null, // { mode: 'add' | 'edit', id?, feature, assignee, title, doneWhen }
+        focusForm: false,
+        confirmDel: null,
+        planOpen: LS.get('atp.plan') !== '0',
+      };
+      let writeChain = Promise.resolve();
+      const readHandle = async (h) => (await h.getFile()).text();
+
+      // Mở qua `pnpm board` (docs/board-server.mjs): đọc và ghi file qua server, không cần chọn file.
+      // Cùng giao diện với FileSystemFileHandle nên save() và refreshFromDisk() dùng chung.
+      const SOURCE_URL = '/__board/source';
+      const NO_SERVER = 'Không kết nối được board server. Chạy lại "pnpm board" rồi bấm Lưu vào file.';
+      const serverHandle = {
+        name: 'tasks.html',
+        async getFile() {
+          let r;
+          try {
+            r = await fetch(SOURCE_URL, { cache: 'no-store' });
+          } catch {
+            throw new Error(NO_SERVER);
+          }
+          if (!r.ok) throw new Error(`Server trả ${r.status}: ${await r.text()}`);
+          const text = await r.text();
+          return { text: async () => text };
+        },
+        async createWritable() {
+          let buf = '';
+          return {
+            async write(s) {
+              buf += s;
+            },
+            async close() {
+              let r;
+              try {
+                r = await fetch(SOURCE_URL, { method: 'PUT', body: buf, headers: { 'content-type': 'text/plain' } });
+              } catch {
+                throw new Error(NO_SERVER);
+              }
+              if (!r.ok) throw new Error(`Server trả ${r.status}: ${await r.text()}`);
+            },
+          };
+        },
+      };
+
+      async function adopt(h) {
+        splitSource(await readHandle(h)); // đúng là file board mới nhận
+        state.handle = h;
+        state.savedHandle = h;
+        withTimeout(idbSet(HANDLE_KEY, h), 2000).catch(() => {});
+        if (h.name !== pageFileName()) {
+          toast(`Lưu ý: đang lưu vào "${h.name}", khác file đang mở (${pageFileName()}).`, 6000);
+        }
+        return true;
+      }
+
+      // Xin quyền ghi. Gọi trong lúc người dùng vừa thao tác (Chrome yêu cầu).
+      async function ensureWritable() {
+        if (state.handle) return true;
+        if (!hasFSA) return false;
+        try {
+          const saved = state.savedHandle;
+          if (saved) {
+            if ((await saved.requestPermission({ mode: 'readwrite' })) === 'granted') return await adopt(saved);
+            return false;
+          }
+          toast(`Chọn chính file ${pageFileName()} (trong docs/) để lưu. Muốn khỏi chọn file: chạy "pnpm board".`, 7000);
+          const [picked] = await window.showOpenFilePicker({
+            types: [{ description: 'Task board', accept: { 'text/html': ['.html'] } }],
+          });
+          if ((await picked.requestPermission({ mode: 'readwrite' })) !== 'granted') return false;
+          return await adopt(picked);
+        } catch (e) {
+          if (e.name !== 'AbortError') state.error = 'Chưa cấp được quyền lưu: ' + e.message;
+          return false;
+        }
+      }
+
+      // Ghi các thay đổi đang chờ. Luôn đọc file mới nhất trước khi ghi:
+      // nếu file vừa đổi (git pull, đổi nhánh) thì áp lại thay đổi lên bản mới, không ghi đè.
+      function save() {
+        writeChain = writeChain.then(async () => {
+          if (!state.pending.length) return;
+          if (!state.handle && !(await ensureWritable())) {
+            render();
+            return;
+          }
+          try {
+            const parts = splitSource(await readHandle(state.handle));
+            let reloaded = false;
+            if (parts.json !== state.srcJson) {
+              const fresh = parseData(parts.json);
+              for (const fn of state.pending) fn(fresh);
+              state.data = fresh;
+              reloaded = true;
+            }
+            const json = serialize(state.data);
+            const w = await state.handle.createWritable();
+            await w.write(parts.head + json + parts.tail);
+            await w.close();
+            state.srcJson = json;
+            state.pending = [];
+            state.error = '';
+            if (reloaded) toast('File vừa đổi bên ngoài (git pull?). Đã lấy bản mới rồi mới ghi thay đổi của bạn.', 5500);
+            flashSaved();
+          } catch (e) {
+            state.error = 'Chưa lưu được: ' + e.message;
+          }
+          render();
+        });
+        return writeChain;
+      }
+
+      function requireMe() {
+        if (state.me) return true;
+        $('#meBox').classList.add('need');
+        $('#me').focus();
+        toast('Chọn "Tôi là" trước để lịch sử ghi đúng tên.');
+        return false;
+      }
+
+      function mutate(fn) {
+        if (!requireMe()) return Promise.resolve(false);
+        fn(state.data);
+        state.pending.push(fn);
+        render();
+        return hasFSA || state.handle ? save() : Promise.resolve(true);
+      }
+
+      // Trình duyệt không ghi file trực tiếp: ghép dữ liệu mới vào mã nguồn rồi tải về.
+      async function downloadUpdated(src) {
+        try {
+          const parts = splitSource(src);
+          if (parts.json !== state.srcJson) {
+            const fresh = parseData(parts.json);
+            for (const fn of state.pending) fn(fresh);
+            state.data = fresh;
+          }
+          const json = serialize(state.data);
+          const blob = new Blob([parts.head + json + parts.tail], { type: 'text/html' });
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = pageFileName();
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+          state.srcJson = json;
+          state.pending = [];
+          state.error = '';
+          toast(`Đã tải ${pageFileName()} mới. Chép đè vào docs/ rồi commit.`, 5000);
+        } catch (e) {
+          state.error = e.message;
+        }
+        render();
+      }
+      async function startDownload() {
+        if (location.protocol.startsWith('http')) {
+          try {
+            const r = await fetch(location.href, { cache: 'no-store' });
+            if (r.ok) return downloadUpdated(await r.text());
+          } catch {
+            /* rơi xuống chọn file */
+          }
+        }
+        toast(`Chọn file ${pageFileName()} hiện tại để ghép dữ liệu mới vào.`);
+        $('#fileInput').click();
+      }
+
+      let savedTimer;
+      function flashSaved() {
+        const s = $('#savedFlag');
+        if (!s) return;
+        s.classList.add('show');
+        clearTimeout(savedTimer);
+        savedTimer = setTimeout(() => s.classList.remove('show'), 1600);
+      }
+
+      // ---------- thao tác trên task ----------
+      const findTask = (d, id) => d.tasks.find((t) => t.id === id);
+      function addHistory(t, change, from, to) {
+        if (!Array.isArray(t.history)) t.history = [];
+        t.history.push({ at: nowStamp(), by: state.me, change, from, to });
+      }
+      function setStatus(id, to) {
+        const t0 = findTask(state.data, id);
+        const askPr = to === 'code_review' && t0 && !t0.pr && t0.status !== to;
+        const at = nowStamp();
+        const by = state.me;
+        const p = mutate((d) => {
+          const t = findTask(d, id);
+          if (!t || t.status === to) return;
+          if (!Array.isArray(t.history)) t.history = [];
+          t.history.push({ at, by, change: 'status', from: t.status, to });
+          t.status = to;
+        });
+        if (askPr && state.me) {
+          state.editingPr = id;
+          render();
+          document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`)?.focus();
+        }
+        return p;
+      }
+      function setAssignee(id, to) {
+        const at = nowStamp();
+        const by = state.me;
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (!t || t.assignee === to) return;
+          if (!Array.isArray(t.history)) t.history = [];
+          t.history.push({ at, by, change: 'assignee', from: t.assignee, to });
+          t.assignee = to;
+        });
+      }
+      function setNote(id, text) {
+        const v = text.replace(/\s+$/, '');
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (t) t.note = v;
+        });
+      }
+      function setPr(id, url) {
+        const v = url.trim();
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (t) t.pr = v;
+        });
+      }
+      // Mã task = mã chức năng + số tiếp theo, ví dụ F2-01, F2-02.
+      function nextId(d, fid) {
+        const prefix = fid + '-';
+        let n = 0;
+        for (const t of d.tasks) {
+          if (t.id.startsWith(prefix)) n = Math.max(n, parseInt(t.id.slice(prefix.length), 10) || 0);
+        }
+        return prefix + pad(n + 1);
+      }
+      function addTask({ feature: fid, assignee, title, doneWhen }) {
+        const at = nowStamp();
+        const by = state.me;
+        let id = nextId(state.data, fid);
+        return mutate((d) => {
+          if (findTask(d, id)) id = nextId(d, fid); // file vừa đổi và đã có mã này
+          d.tasks.push({
+            id,
+            feature: fid,
+            title,
+            doneWhen,
+            assignee,
+            status: 'todo',
+            pr: '',
+            note: '',
+            history: [{ at, by, change: 'created' }],
+          });
+        });
+      }
+      function editTask(id, { feature: fid, title, doneWhen }) {
+        return mutate((d) => {
+          const t = findTask(d, id);
+          if (t) Object.assign(t, { feature: fid, title, doneWhen });
+        });
+      }
+      function deleteTask(id) {
+        return mutate((d) => {
+          d.tasks = d.tasks.filter((t) => t.id !== id);
+        });
+      }
+
+      // ---------- lookups ----------
+      const personName = (id) => state.data.people.find((p) => p.id === id)?.short || id || '—';
+      const statusName = (id) => state.data.statuses.find((s) => s.id === id)?.name || id;
+      const features = () => state.data.features || [];
+      const feature = (id) => features().find((f) => f.id === id);
+      const ownersOf = (f) => (f ? f.owners || (f.owner ? [f.owner] : []) : []);
+      // "F2" hiện là số 2; "CHUNG" không có số.
+      const featNum = (f) => (f && /^F\d+$/.test(f.id) ? f.id.slice(1) : '');
+      const featLabel = (f) => (f ? (featNum(f) ? `${featNum(f)} · ${f.name}` : f.name) : '');
+      // Tên chức năng theo phần của một người, ví dụ "Lập lịch trình + chi tiêu (dùng AI)".
+      const featNameFor = (f, pid) => f.name + (f.parts?.[pid] ? ` (${f.parts[pid]})` : '');
+      function featureColor(id) {
+        const i = features().findIndex((f) => f.id === id);
+        return FEATURE_COLORS[(i < 0 ? 0 : i) % FEATURE_COLORS.length];
+      }
+      const featOrder = (id) => {
+        const i = features().findIndex((f) => f.id === id);
+        return i < 0 ? 999 : i;
+      };
+      const byOrder = (a, b) =>
+        featOrder(a.feature) - featOrder(b.feature) || a.id.localeCompare(b.id, undefined, { numeric: true });
+
+      function visibleTasks() {
+        const q = state.f.q.trim().toLowerCase();
+        return state.data.tasks
+          .filter((t) => !state.f.person || t.assignee === state.f.person)
+          .filter((t) => !state.f.feature || t.feature === state.f.feature)
+          .filter((t) => !q || [t.id, t.title, t.note, t.doneWhen].some((x) => (x || '').toLowerCase().includes(q)))
+          .sort(byOrder);
+      }
+
+      // ---------- render ----------
+      function renderControls() {
+        const meSel = $('#me');
+        const people = state.data?.people || [];
+        meSel.innerHTML =
+          '<option value="">— chọn —</option>' +
+          people.map((p) => `<option value="${esc(p.id)}">${esc(p.short)}</option>`).join('');
+        meSel.value = people.some((p) => p.id === state.me) ? state.me : '';
+        $('#meBox').classList.toggle('need', !!state.data && !meSel.value);
+
+        const n = state.pending.length;
+        let html;
+        if (n) {
+          const canWrite = hasFSA || state.handle;
+          html = `<span class="pill pending"><span class="dot"></span>${n} thay đổi chưa lưu</span>
+            <button class="btn primary" data-act="${canWrite ? 'save' : 'download'}">${canWrite ? 'Lưu vào file' : 'Tải ' + esc(pageFileName())}</button>`;
+        } else if (state.handle) {
+          html = `<span class="pill ok"><span class="dot"></span>Tự lưu vào ${esc(state.handle.name)}
+            <span class="saved" id="savedFlag">✓</span></span>`;
+        } else if (hasFSA) {
+          html = `<span class="pill"><span class="dot"></span>Chưa cấp quyền lưu</span>
+            <button class="btn" data-act="grant">Cấp quyền</button>`;
+        } else {
+          html = `<span class="pill warn"><span class="dot"></span>Trình duyệt này không tự lưu được</span>`;
+        }
+        $('#saveState').innerHTML = `<span class="controls">${html}</span>`;
+      }
+
+      function renderBanner() {
+        const b = $('#banner');
+        if (state.error) {
+          b.innerHTML = `<div class="banner err"><span class="msg">${esc(state.error)}</span>
+            <button class="btn" data-act="dismiss">Đóng</button></div>`;
+        } else if (state.pending.length && !state.handle) {
+          const how = hasFSA
+            ? 'Bấm <b>Lưu vào file</b> và cho phép Chrome sửa file này.'
+            : `Safari/Firefox không ghi file trực tiếp: bấm <b>Tải ${esc(pageFileName())}</b> rồi chép đè vào <code>docs/</code>. Chrome/Edge thì tự lưu.`;
+          b.innerHTML = `<div class="banner pending"><span class="msg">Thay đổi mới chỉ nằm trong trình duyệt. ${how}</span></div>`;
+        } else {
+          b.innerHTML = '';
+        }
+      }
+
+      function renderSummary() {
+        const d = state.data;
+        const cards = d.people
+          .map((p) => {
+            const mine = d.tasks.filter((t) => t.assignee === p.id);
+            const n = mine.length || 1;
+            const counts = d.statuses.map((s) => [s, mine.filter((t) => t.status === s.id).length]);
+            const segs = counts
+              .map(([s, c]) => (c ? `<i style="width:${(c / n) * 100}%;background:var(--s-${s.id})" title="${esc(s.name)}: ${c}"></i>` : ''))
+              .join('');
+            const legend = counts
+              .map(([s, c]) => (c ? `<span><span class="sw" style="background:var(--s-${s.id})"></span>${esc(s.name)} <b>${c}</b></span>` : ''))
+              .join('');
+            const done = mine.filter((t) => t.status === 'done').length;
+            const feats = features()
+              .filter((f) => featNum(f) && ownersOf(f).includes(p.id))
+              .map((f) => `${featNum(f)}. ${featNameFor(f, p.id)}`)
+              .join(' · ');
+            return `<div class="pcard"><div class="head"><span class="name">${esc(p.short)}</span>
+              <span class="ratio">${done}/${mine.length} done</span></div>
+              <div class="feat">${esc(feats)}</div>
+              <div class="stack">${segs}</div><div class="legend">${legend}</div></div>`;
+          })
+          .join('');
+        const rows = features()
+          .map((f) => {
+            const all = d.tasks.filter((t) => t.feature === f.id);
+            const done = all.filter((t) => t.status === 'done').length;
+            const owners = ownersOf(f);
+            const who =
+              f.id === 'CHUNG'
+                ? 'Cả nhóm'
+                : owners
+                    .map((pid) => `<b>${esc(personName(pid))}</b>${f.parts?.[pid] ? ' ' + esc(f.parts[pid]) : ''}`)
+                    .join(' · ');
+            return `<div class="frow">
+              <span class="fnum" style="--fc:${featureColor(f.id)}">${esc(featNum(f) || '·')}</span>
+              <div class="body"><h4>${esc(f.name)}${f.main ? ' ⭐' : ''}</h4><p>${esc(f.description)}</p>
+                <div class="who">${who}</div></div>
+              <div class="fcount">${done}/${all.length} task
+                <button class="link" data-act="add" data-feature="${esc(f.id)}">+ Task</button></div>
+            </div>`;
+          })
+          .join('');
+        return `<section class="summary">${cards}</section>
+          <details class="plan"${state.planOpen ? ' open' : ''}><summary>Chia chức năng</summary>
+            <div class="fgrid">${rows}</div></details>`;
+      }
+
+      function renderToolbar() {
+        const d = state.data;
+        const opt = (v, label, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(label)}</option>`;
+        return `<nav class="bar">
+          <div class="seg">
+            <button data-view="kanban" class="${state.view === 'kanban' ? 'on' : ''}">Kanban</button>
+            <button data-view="people" class="${state.view === 'people' ? 'on' : ''}">Theo người</button>
+          </div>
+          <select data-filter="person" aria-label="Lọc người">${opt('', 'Mọi người', state.f.person)}${d.people.map((p) => opt(p.id, p.short, state.f.person)).join('')}</select>
+          <select data-filter="feature" aria-label="Lọc chức năng">${opt('', 'Mọi chức năng', state.f.feature)}${features().map((f) => opt(f.id, featLabel(f), state.f.feature)).join('')}</select>
+          <input type="search" data-filter="q" placeholder="Tìm mã, tên, note…" value="${esc(state.f.q)}" aria-label="Tìm" />
+          <button class="btn primary" data-act="add">+ Task</button>
+        </nav>`;
+      }
+
+      function renderForm() {
+        const fm = state.form;
+        if (!fm) return '';
+        const d = state.data;
+        const opt = (v, label, cur) => `<option value="${esc(v)}"${v === cur ? ' selected' : ''}>${esc(label)}</option>`;
+        const featOpts = features().map((f) => opt(f.id, featLabel(f), fm.feature)).join('');
+        const peopleOpts = d.people.map((p) => opt(p.id, p.short, fm.assignee)).join('');
+        const isAdd = fm.mode === 'add';
+        return `<section class="tform" id="tform">
+          <h3>${isAdd ? 'Thêm task' : 'Sửa ' + esc(fm.id)}</h3>
+          <div class="grid">
+            <label>Chức năng<select data-form="feature">${featOpts}</select></label>
+            ${isAdd ? `<label>Người làm<select data-form="assignee">${peopleOpts}</select></label>` : ''}
+            <label class="wide">Tên task<input type="text" data-form="title" value="${esc(fm.title)}"
+              placeholder="VD: API lọc địa điểm theo quận và mức giá" /></label>
+            <label class="wide">Đạt khi (không bắt buộc)<textarea data-form="doneWhen"
+              placeholder="Làm xong thì kiểm tra được gì">${esc(fm.doneWhen)}</textarea></label>
+          </div>
+          <div class="actions"><span class="hint">Enter để lưu · Esc để huỷ</span>
+            <button class="btn" data-act="form-cancel">Huỷ</button>
+            <button class="btn primary" data-act="form-save">${isAdd ? 'Thêm' : 'Lưu'}</button></div>
+        </section>`;
+      }
+      // Giữ chữ đang gõ trong form khi board vẽ lại.
+      function syncForm() {
+        if (!state.form) return;
+        document.querySelectorAll('#tform [data-form]').forEach((el) => {
+          state.form[el.dataset.form] = el.value;
+        });
+      }
+      function openForm(fm) {
+        state.form = fm;
+        state.focusForm = true;
+        render();
+      }
+
+      function renderCard(t) {
+        const d = state.data;
+        const f = feature(t.feature);
+        const statusOpts = d.statuses
+          .map((s) => `<option value="${esc(s.id)}"${s.id === t.status ? ' selected' : ''}>${esc(s.name)}</option>`)
+          .join('');
+        const peopleOpts = d.people
+          .map((p) => `<option value="${esc(p.id)}"${p.id === t.assignee ? ' selected' : ''}>${esc(p.short)}</option>`)
+          .join('');
+
+        let note = '';
+        if (state.editingNote === t.id) {
+          note = `<div class="note"><textarea data-note-input="${esc(t.id)}" aria-label="Note ${esc(t.id)}">${esc(state.noteDraft)}</textarea>
+            <div class="hint">Bấm ra ngoài hoặc ⌘/Ctrl+Enter để lưu · Esc để huỷ</div></div>`;
+        } else if (t.note) {
+          note = `<div class="note" data-act="edit-note" data-id="${esc(t.id)}" title="Bấm để sửa">${esc(t.note)}</div>`;
+        }
+        const pr =
+          state.editingPr === t.id
+            ? `<div class="pr-edit"><input type="url" data-pr-input="${esc(t.id)}" placeholder="https://github.com/…/pull/…" value="${esc(t.pr)}" />
+               <button class="btn" data-act="save-pr" data-id="${esc(t.id)}">Lưu</button></div>`
+            : '';
+        const tools = [
+          !t.note && state.editingNote !== t.id ? `<button class="link" data-act="edit-note" data-id="${esc(t.id)}">+ Note</button>` : '',
+          state.editingPr === t.id
+            ? ''
+            : t.pr
+              ? `<span class="pr"><a href="${esc(t.pr)}" target="_blank" rel="noopener">PR ↗</a></span><button class="link" data-act="edit-pr" data-id="${esc(t.id)}">sửa PR</button>`
+              : `<button class="link" data-act="edit-pr" data-id="${esc(t.id)}">+ PR</button>`,
+          state.confirmDel === t.id
+            ? `<span class="right">Xoá ${esc(t.id)}?
+                <button class="link danger" data-act="del-yes" data-id="${esc(t.id)}">Xoá</button>
+                <button class="link quiet" data-act="del-no">Thôi</button></span>`
+            : `<span class="right"><button class="link quiet" data-act="edit" data-id="${esc(t.id)}">Sửa</button>
+                <button class="link quiet" data-act="del" data-id="${esc(t.id)}">Xoá</button></span>`,
+        ].join('');
+
+        const hist = (t.history || []).slice().reverse();
+        const describe = (h) =>
+          h.change === 'created'
+            ? `${esc(personName(h.by))} tạo task`
+            : h.change === 'assignee'
+              ? `${esc(personName(h.by))} giao ${esc(personName(h.from))} → ${esc(personName(h.to))}`
+              : `${esc(personName(h.by))}: ${esc(statusName(h.from))} → ${esc(statusName(h.to))}`;
+        const last = hist[0] ? `<div class="last">${describe(hist[0])} · ${esc(hist[0].at)}</div>` : '';
+        const histList = hist.length
+          ? `<ol>${hist.map((h) => `<li>${esc(h.at)} · ${describe(h)}</li>`).join('')}</ol>`
+          : '<div>Chưa có thay đổi.</div>';
+        const draggable = state.editingNote === t.id || state.editingPr === t.id ? 'false' : 'true';
+
+        return `<article class="card" draggable="${draggable}" data-id="${esc(t.id)}" data-status="${esc(t.status)}" style="--sc:var(--s-${esc(t.status)})">
+          <div class="card-top"><span class="tid">${esc(t.id)}</span>
+            <span class="tag" style="--fc:${featureColor(t.feature)}">${esc(f ? featLabel(f) : t.feature)}</span></div>
+          <div class="title">${esc(t.title)}</div>
+          <div class="row">
+            <select class="st-select" data-act="status" data-id="${esc(t.id)}" aria-label="Trạng thái ${esc(t.id)}">${statusOpts}</select>
+            <select data-act="assignee" data-id="${esc(t.id)}" aria-label="Người làm ${esc(t.id)}">${peopleOpts}</select>
+          </div>
+          ${note}${pr}
+          <div class="tools">${tools}</div>
+          <details class="more"><summary>${t.doneWhen ? 'Đạt khi · ' : ''}lịch sử (${hist.length})</summary>
+            ${t.doneWhen ? `<p>${esc(t.doneWhen)}</p>` : ''}${histList}</details>
+          ${last}
+        </article>`;
+      }
+
+      function renderBoard() {
+        const d = state.data;
+        const tasks = visibleTasks();
+        if (state.view === 'people') {
+          const cols = d.people
+            .filter((p) => !state.f.person || p.id === state.f.person)
+            .map((p) => {
+              const mine = tasks.filter((t) => t.assignee === p.id);
+              // Mỗi cột: các chức năng người này phụ trách (kể cả chưa có task) và chức năng có task của họ.
+              const show = new Set(mine.map((t) => t.feature));
+              if (!state.f.q) {
+                for (const f of features()) {
+                  if (ownersOf(f).includes(p.id) && (!state.f.feature || f.id === state.f.feature)) show.add(f.id);
+                }
+              }
+              const fids = [...show].sort((a, b) => featOrder(a) - featOrder(b));
+              let body = '';
+              for (const fid of fids) {
+                const f = feature(fid);
+                const ts = mine.filter((t) => t.feature === fid);
+                const done = ts.filter((t) => t.status === 'done').length;
+                body += `<div class="sub-head"><span class="fnum" style="--fc:${featureColor(fid)}">${esc(featNum(f) || '·')}</span>
+                  ${esc(f ? featNameFor(f, p.id) : fid)} <span class="n">${done}/${ts.length}</span>
+                  <button class="link" data-act="add" data-feature="${esc(fid)}" data-person="${esc(p.id)}">+ Task</button></div>`;
+                body += ts.map(renderCard).join('');
+              }
+              const done = mine.filter((t) => t.status === 'done').length;
+              return `<section class="col" data-drop-person="${esc(p.id)}">
+                <div class="col-head"><span class="label">${esc(p.short)}</span><span class="count">${done}/${mine.length}</span></div>
+                ${body || '<div class="empty">Không có task</div>'}</section>`;
+            })
+            .join('');
+          return `<main class="board people">${cols}</main>`;
+        }
+        const cols = d.statuses
+          .map((s) => {
+            const inCol = tasks.filter((t) => t.status === s.id);
+            return `<section class="col" data-drop-status="${esc(s.id)}">
+              <div class="col-head"><span class="label"><span class="sw" style="background:var(--s-${esc(s.id)})"></span>${esc(s.name)}</span>
+              <span class="count">${inCol.length}</span></div>
+              ${inCol.map(renderCard).join('') || '<div class="empty">Kéo task vào đây</div>'}</section>`;
+          })
+          .join('');
+        return `<main class="board kanban">${cols}</main>`;
+      }
+
+      function render() {
+        const ta = document.querySelector('[data-note-input]');
+        if (ta) state.noteDraft = ta.value;
+        syncForm();
+        const formFocus = document.activeElement?.closest?.('#tform') ? document.activeElement.dataset.form : null;
+        const formCaret = formFocus === 'title' ? document.activeElement.selectionStart : null;
+        const searchFocused = document.activeElement?.matches?.('input[data-filter="q"]');
+        const caret = searchFocused ? document.activeElement.selectionStart : null;
+
+        renderControls();
+        renderBanner();
+        $('#content').innerHTML = state.data ? renderSummary() + renderToolbar() + renderForm() + renderBoard() : '';
+
+        if (state.form && state.focusForm) {
+          state.focusForm = false;
+          const title = document.querySelector('#tform [data-form="title"]');
+          $('#tform').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          title?.focus();
+        } else if (state.form && formFocus) {
+          const el = document.querySelector(`#tform [data-form="${formFocus}"]`);
+          el?.focus();
+          if (el && formCaret != null) el.setSelectionRange(formCaret, formCaret);
+        }
+
+        if (searchFocused) {
+          const s = document.querySelector('input[data-filter="q"]');
+          s.focus();
+          s.setSelectionRange(caret, caret);
+        }
+        const nt = document.querySelector('[data-note-input]');
+        if (nt && document.activeElement !== nt) {
+          nt.focus();
+          nt.setSelectionRange(nt.value.length, nt.value.length);
+        }
+      }
+
+      // ---------- events ----------
+      $('#me').addEventListener('change', (e) => {
+        state.me = e.target.value;
+        LS.set('atp.me', state.me);
+        render();
+      });
+      $('#fileInput').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        e.target.value = '';
+        if (file) downloadUpdated(await file.text());
+      });
+
+      document.addEventListener('click', (e) => {
+        const el = e.target.closest('[data-act],[data-view]');
+        if (!el) return;
+        if (el.dataset.view) {
+          state.view = el.dataset.view;
+          LS.set('atp.view', state.view);
+          render();
+          return;
+        }
+        const id = el.dataset.id;
+        switch (el.dataset.act) {
+          case 'save':
+            save();
+            break;
+          case 'grant':
+            ensureWritable().then((ok) => {
+              if (ok) refreshFromDisk(true);
+              render();
+            });
+            break;
+          case 'download':
+            startDownload();
+            break;
+          case 'dismiss':
+            state.error = '';
+            render();
+            break;
+          case 'edit-note':
+            if (state.editingNote === id) break;
+            state.editingNote = id;
+            state.noteDraft = findTask(state.data, id)?.note || '';
+            render();
+            break;
+          case 'edit-pr':
+            state.editingPr = id;
+            render();
+            document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`)?.focus();
+            break;
+          case 'save-pr': {
+            const inp = document.querySelector(`[data-pr-input="${CSS.escape(id)}"]`);
+            state.editingPr = null;
+            setPr(id, inp ? inp.value : '');
+            break;
+          }
+          case 'add': {
+            // Chức năng: nút bấm ở đâu thì lấy chức năng đó, không thì theo bộ lọc, không thì chức năng đầu tiên của mình.
+            const fid =
+              el.dataset.feature ||
+              state.f.feature ||
+              features().find((f) => featNum(f) && ownersOf(f).includes(state.me))?.id ||
+              features()[0]?.id ||
+              '';
+            const owners = ownersOf(feature(fid));
+            const assignee =
+              el.dataset.person || (owners.length === 1 ? owners[0] : owners.includes(state.me) ? state.me : owners[0]) || state.me;
+            openForm({ mode: 'add', feature: fid, assignee: assignee || state.data.people[0].id, title: '', doneWhen: '' });
+            break;
+          }
+          case 'edit': {
+            const t = findTask(state.data, id);
+            if (t) openForm({ mode: 'edit', id, feature: t.feature, title: t.title, doneWhen: t.doneWhen || '' });
+            break;
+          }
+          case 'form-cancel':
+            state.form = null;
+            render();
+            break;
+          case 'form-save':
+            submitForm();
+            break;
+          case 'del':
+            state.confirmDel = id;
+            render();
+            break;
+          case 'del-no':
+            state.confirmDel = null;
+            render();
+            break;
+          case 'del-yes':
+            state.confirmDel = null;
+            deleteTask(id);
+            break;
+        }
+      });
+
+      function submitForm() {
+        syncForm();
+        const fm = state.form;
+        const title = (fm.title || '').trim();
+        if (!title) {
+          toast('Nhập tên task trước đã.');
+          document.querySelector('#tform [data-form="title"]')?.focus();
+          return;
+        }
+        if (!requireMe()) return;
+        const fields = { feature: fm.feature, title, doneWhen: (fm.doneWhen || '').trim() };
+        state.form = null;
+        if (fm.mode === 'add') addTask({ ...fields, assignee: fm.assignee });
+        else editTask(fm.id, fields);
+      }
+
+      document.addEventListener(
+        'toggle',
+        (e) => {
+          if (e.target.matches?.('details.plan')) {
+            state.planOpen = e.target.open;
+            LS.set('atp.plan', state.planOpen ? '1' : '0');
+          }
+        },
+        true,
+      );
+
+      document.addEventListener('change', (e) => {
+        const el = e.target;
+        if (el.dataset.act === 'status') setStatus(el.dataset.id, el.value);
+        else if (el.dataset.act === 'assignee') setAssignee(el.dataset.id, el.value);
+        else if (el.dataset.form === 'feature' && state.form?.mode === 'add') {
+          // Đổi chức năng thì gợi ý luôn người phụ trách chức năng đó.
+          syncForm();
+          const owners = ownersOf(feature(el.value));
+          const who = document.querySelector('#tform [data-form="assignee"]');
+          if (who && owners.length && !owners.includes(who.value)) who.value = state.form.assignee = owners[0];
+        } else if (el.dataset.filter && el.dataset.filter !== 'q') {
+          state.f[el.dataset.filter] = el.value;
+          LS.set('atp.f.' + el.dataset.filter, el.value);
+          render();
+        }
+      });
+      document.addEventListener('input', (e) => {
+        if (e.target.dataset.filter === 'q') {
+          state.f.q = e.target.value;
+          render();
+        }
+      });
+
+      function commitNote(ta, keep) {
+        const id = ta.dataset.noteInput;
+        const value = ta.value;
+        state.editingNote = null;
+        state.noteDraft = '';
+        const old = findTask(state.data, id)?.note || '';
+        if (keep && value.replace(/\s+$/, '') !== old) setNote(id, value);
+        else render();
+      }
+      document.addEventListener('focusout', (e) => {
+        if (e.target.matches?.('[data-note-input]') && state.editingNote) commitNote(e.target, true);
+      });
+      document.addEventListener('keydown', (e) => {
+        const t = e.target;
+        if (t.closest?.('#tform')) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            state.form = null;
+            render();
+          } else if (e.key === 'Enter' && (t.dataset.form === 'title' || e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            submitForm();
+          }
+          return;
+        }
+        if (t.matches?.('[data-note-input]')) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            commitNote(t, false);
+          } else if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            commitNote(t, true);
+          }
+        } else if (t.matches?.('[data-pr-input]')) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            state.editingPr = null;
+            setPr(t.dataset.prInput, t.value);
+          } else if (e.key === 'Escape') {
+            state.editingPr = null;
+            render();
+          }
+        }
+      });
+
+      // kéo thả: Kanban đổi trạng thái, "Theo người" đổi người làm
+      document.addEventListener('dragstart', (e) => {
+        const card = e.target.closest?.('.card');
+        if (!card) return;
+        e.dataTransfer.setData('text/plain', card.dataset.id);
+        e.dataTransfer.effectAllowed = 'move';
+        card.classList.add('dragging');
+      });
+      document.addEventListener('dragend', (e) => e.target.closest?.('.card')?.classList.remove('dragging'));
+      document.addEventListener('dragover', (e) => {
+        const col = e.target.closest?.('[data-drop-status],[data-drop-person]');
+        if (!col) return;
+        e.preventDefault();
+        document.querySelectorAll('.col.over').forEach((c) => c !== col && c.classList.remove('over'));
+        col.classList.add('over');
+      });
+      document.addEventListener('dragleave', (e) => {
+        const col = e.target.closest?.('.col');
+        if (col && !col.contains(e.relatedTarget)) col.classList.remove('over');
+      });
+      document.addEventListener('drop', (e) => {
+        const col = e.target.closest?.('[data-drop-status],[data-drop-person]');
+        if (!col) return;
+        e.preventDefault();
+        col.classList.remove('over');
+        const id = e.dataTransfer.getData('text/plain');
+        if (!id) return;
+        if (col.dataset.dropStatus) setStatus(id, col.dataset.dropStatus);
+        else setAssignee(id, col.dataset.dropPerson);
+      });
+
+      // Đã có quyền đọc file: quay lại tab (sau git pull, đổi nhánh) thì lấy bản mới trên đĩa.
+      async function refreshFromDisk(quiet) {
+        if (!state.handle || state.pending.length || state.editingNote || state.form) return;
+        try {
+          const parts = splitSource(await readHandle(state.handle));
+          if (parts.json === state.srcJson) return;
+          state.data = parseData(parts.json);
+          state.srcJson = parts.json;
+          state.error = '';
+          render();
+          if (!quiet) toast('File vừa đổi trên đĩa, đã tải bản mới.');
+        } catch (e) {
+          state.error = e.message;
+          render();
+        }
+      }
+      window.addEventListener('focus', () => refreshFromDisk(false));
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') refreshFromDisk(false);
+      });
+      window.addEventListener('beforeunload', (e) => {
+        if (state.pending.length) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
+      // ---------- start: đọc dữ liệu nằm sẵn trong file ----------
+      document.addEventListener('DOMContentLoaded', async () => {
+        const el = document.getElementById('tasks-data');
+        try {
+          state.srcJson = el.textContent;
+          state.data = parseData(state.srcJson);
+        } catch (e) {
+          state.error = e.message;
+        }
+        render();
+        if (location.protocol.startsWith('http')) {
+          try {
+            splitSource(await readHandle(serverHandle));
+            state.handle = serverHandle;
+            await refreshFromDisk(true);
+            render();
+            return;
+          } catch {
+            /* trang không chạy qua board server: dùng cách chọn file hoặc tải về */
+          }
+        }
+        if (!hasFSA) return;
+        try {
+          const h = await withTimeout(idbGet(HANDLE_KEY), 1500);
+          if (h) {
+            state.savedHandle = h;
+            if ((await h.queryPermission({ mode: 'readwrite' })) === 'granted') {
+              await adopt(h);
+              await refreshFromDisk(true);
+              render();
+            }
+          }
+        } catch {
+          /* chưa từng cấp quyền: lần sửa đầu tiên sẽ hỏi */
+        }
+      });
+    </script>
+
+    <!-- ======== DỮ LIỆU TASK: board tự ghi phần dưới đây, có thể sửa tay (giữ đúng JSON) ======== -->
+    <script type="application/json" id="tasks-data">
+{
+  "project": "AI Travel Planner",
+  "people": [
+    {
+      "id": "duy",
+      "name": "Lê Nhựt Duy",
+      "short": "Duy",
+      "mssv": "23127178",
+      "github": "DuyITLOR"
+    },
+    {
+      "id": "dang",
+      "name": "Nguyễn Thành Dâng",
+      "short": "Dâng",
+      "mssv": "23127334",
+      "github": "ThanhDang-Vn"
+    },
+    {
+      "id": "dat",
+      "name": "Trương Thành Đạt",
+      "short": "Đạt",
+      "mssv": "23127344",
+      "github": "trwng-thdat"
+    }
+  ],
+  "statuses": [
+    {
+      "id": "todo",
+      "name": "Todo"
+    },
+    {
+      "id": "in_progress",
+      "name": "In progress"
+    },
+    {
+      "id": "code_review",
+      "name": "Code review"
+    },
+    {
+      "id": "testing",
+      "name": "Testing"
+    },
+    {
+      "id": "done",
+      "name": "Done"
+    }
+  ],
+  "features": [
+    {
+      "id": "F1",
+      "name": "Đăng nhập + hồ sơ",
+      "owners": [
+        "dang"
+      ],
+      "description": "Đăng ký bằng email hoặc Google; chọn sở thích (cà phê, bảo tàng, ăn uống…) và mức chi."
+    },
+    {
+      "id": "F2",
+      "name": "Tìm địa điểm + bản đồ",
+      "owners": [
+        "duy"
+      ],
+      "description": "Lọc 150 điểm ở TP.HCM theo loại, quận, đang mở cửa, mức giá; xem trên bản đồ; bấm vào thì có mô tả, ảnh, menu và giá."
+    },
+    {
+      "id": "F3",
+      "name": "Sổ địa điểm",
+      "owners": [
+        "duy"
+      ],
+      "description": "Lưu nơi muốn đi, check-in nơi đã đi, xem bản đồ các nơi đã đi; review 1–5 sao (phải check-in rồi mới được review)."
+    },
+    {
+      "id": "F4",
+      "name": "Nhóm",
+      "owners": [
+        "dang"
+      ],
+      "description": "Tạo nhóm, mời bạn bằng link, đặt tổng tiền của nhóm và mức tối đa mỗi người chịu chi."
+    },
+    {
+      "id": "F5",
+      "name": "Lập lịch trình + chi tiêu",
+      "owners": [
+        "dat"
+      ],
+      "main": true,
+      "description": "Chức năng chính, chỉ dùng AI (bỏ chế độ tự làm tay). Nhập ngày, giờ, điểm xuất phát, số tiền → AI gợi ý điểm, người dùng bỏ hoặc ghim → AI xếp lịch, chọn món, tính tiền mỗi người; code kiểm tra giờ mở cửa, khoảng cách, tiền, trời mưa; xem lại, bấm Lưu thì cả nhóm mới thấy."
+    },
+    {
+      "id": "F6",
+      "name": "Thời tiết",
+      "owners": [
+        "duy"
+      ],
+      "description": "Xem dự báo mưa và ngày lễ; AI tự né điểm ngoài trời khi trời mưa."
+    },
+    {
+      "id": "F7",
+      "name": "Bài đăng",
+      "owners": [
+        "dang"
+      ],
+      "description": "Đăng ảnh khoảnh khắc gắn địa điểm, like, bình luận; tài khoản doanh nghiệp đăng bài quảng bá."
+    },
+    {
+      "id": "F8",
+      "name": "Tìm bạn đồng hành",
+      "owners": [
+        "duy"
+      ],
+      "description": "Bật hồ sơ công khai, AI gợi ý người hợp mình, có chặn và báo cáo."
+    },
+    {
+      "id": "F9",
+      "name": "Admin",
+      "owners": [
+        "dat"
+      ],
+      "description": "Duyệt tài khoản doanh nghiệp, xử lý báo cáo, xem thống kê các lần chạy AI."
+    },
+    {
+      "id": "CHUNG",
+      "name": "Việc chung",
+      "owners": [
+        "duy",
+        "dang",
+        "dat"
+      ],
+      "description": "Việc không thuộc riêng chức năng nào: dữ liệu 150 điểm, repo, CI, deploy, demo, báo cáo."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "CHUNG-01",
+      "feature": "CHUNG",
+      "title": "Khung repo: pnpm workspace, Next.js, Axum, Supabase config, CI",
+      "doneWhen": "pnpm dev chạy web và api; CI xanh.",
+      "assignee": "dang",
+      "status": "done",
+      "pr": "",
+      "note": "",
+      "history": [
+        {
+          "at": "2026-11-22 20:03",
+          "by": "dang",
+          "change": "status",
+          "from": "todo",
+          "to": "done"
+        }
+      ]
+    },
+    {
+      "id": "CHUNG-02",
+      "feature": "CHUNG",
+      "title": "Quality gate: CLAUDE.md, permissions, CI chạy đúng lệnh README, branch protection",
+      "doneWhen": "PR #2 merge; main không push thẳng được.",
+      "assignee": "dat",
+      "status": "done",
+      "pr": "https://github.com/DuyITLOR/ai-travel-planner/pull/2",
+      "note": "",
+      "history": [
+        {
+          "at": "2026-11-24 16:27",
+          "by": "dat",
+          "change": "status",
+          "from": "todo",
+          "to": "done"
+        }
+      ]
+    }
+  ]
+}
+</script>
+  </body>
+</html>

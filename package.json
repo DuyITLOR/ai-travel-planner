@@ -9,6 +9,7 @@
     "dev": "pnpm -r --parallel --filter ./apps/* dev",
     "dev:web": "pnpm --filter @atp/web dev",
     "dev:api": "pnpm --filter @atp/api dev",
+    "board": "node docs/board-server.mjs",
     "build": "pnpm -r build",
     "lint": "eslint . && pnpm --filter @atp/api lint",
     "typecheck": "pnpm -r typecheck",
