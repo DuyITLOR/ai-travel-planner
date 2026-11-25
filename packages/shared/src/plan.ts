@@ -130,10 +130,9 @@ export const Problem = z
   .superRefine((p, ctx) => {
     const slug = p.type.slice(PROBLEM_TYPE_BASE.length);
     const spec: ProblemSpec | undefined = (SAVE_PLAN_PROBLEMS as Record<string, ProblemSpec>)[slug];
-    if (!spec) {
-      ctx.addIssue({ code: 'custom', path: ['type'], message: `unknown problem type ${slug}` });
-      return;
-    }
+    // A type this version does not know is allowed (contract sections 2 and 5): the client
+    // treats it by its status, so there is nothing more to check here.
+    if (!spec) return;
     if (p.status !== spec.status) {
       ctx.addIssue({ code: 'custom', path: ['status'], message: `${slug} is ${spec.status}` });
     }

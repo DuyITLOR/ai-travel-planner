@@ -317,3 +317,51 @@ Kept, each with a test that fails first:
 Rejected: nothing. Its remaining deduction (criterion 4, PR #3's red commit staged from a fix
 of the day before) cannot be fixed after the fact; `PA2.md` states it.
 By hand: nothing in the code.
+
+## 2026-11-25 — review round 9
+
+Tool: Claude Code, a ninth grading agent, same setup. It marked 95/100.
+Kept:
+
+- Our stored-plan check parsed dates and times with chrono only, which accepts `" 9:00"`,
+  `"10: 5"`, `"2026-12- 6"` and `"+999-12-06"`. The check now requires the exact byte shape
+  (zero-padded digits, `:` and `-` in place) before the range. The four strings are in the
+  test; with the old check the test fails, with the new one it passes.
+- `quantity` had no upper bound while every other integer stops at 2⁵³−1 for JavaScript
+  clients. Contract, check and test now bound it.
+- `CLAUDE.md` Allowed tier now lists the `cargo` checks and branch-local `git` that
+  `settings.json` allows; `PA2.md` installs with `--frozen-lockfile`.
+
+Rejected: nothing. Still open: the deployed base URL in contract §1 (the team must confirm the
+Render URL) and criterion 4's staged red commit.
+By hand: nothing in the code.
+
+## 2026-11-25 — review round 10
+
+Tool: Claude Code, a tenth grading agent, same setup. It marked 95/100.
+Kept, each with a test that fails without the code change:
+
+- A saved plan stayed `saved` when its trip changed (a member left, the budget or a cap went
+  down), so a repeat save (step 12) reported as saved a plan the trip now rejects, and `GET`
+  no longer equalled the save's body. The contract now says a change to the trip is an edit of
+  its plans (new version, back to draft), and the store does that. Two tests: a member leaves,
+  the budget drops.
+- The Zod `Problem` schema refused problem types it did not know, while the contract tells a
+  client to handle them by status. It now accepts them; a test covers it.
+- Contract §1 now says plainly that version 1 is not deployed yet and gives the local URL.
+
+Rejected: deploying the api to Render just to name a URL: it would hold no plans (in-memory
+store) and needs secrets set up for nothing PA#2 grades.
+By hand: we decided not to deploy for PA#2.
+
+## 2026-11-25 — review round 11
+
+Tool: Claude Code, an eleventh grading agent, same setup. It marked 99/100.
+Kept: its one deduction. The contract said a cost past 2⁵³−1 is "always rejected", but with a
+stored budget also clamped to 2⁵³−1 the total equalled the budget and the plan was saved. The
+validator now rejects a total of 2⁵³−1 whatever the budget, the contract says so, and a test
+fails without the change. Also tests for the two trip changes the contract lists that had
+none: a member joining and a cap changing.
+Rejected: raising our claim to match its 99. Other rounds gave 95 and 96, mostly over PR #3's
+staged red commit; we keep 96.
+By hand: the decision to stop the review loop here and submit.

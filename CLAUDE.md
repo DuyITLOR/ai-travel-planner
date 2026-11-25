@@ -38,7 +38,7 @@ From the repo root after `pnpm install --frozen-lockfile`; each covers TS and Ru
 
 ## Permissions (enforced in `.claude/settings.json`)
 
-- **Allowed:** read the code; run the `pnpm` commands and `pnpm dev`; edit source in `apps/`, `packages/` and `docs/` (not the ask-first files below).
+- **Allowed:** read the code; run the `pnpm` and `cargo` checks and `pnpm dev`; `git switch -c`, `add`, `commit` on a branch; edit `apps/`, `packages/`, `docs/` (not the ask-first files below).
 - **Ask first:** edit tests, `validator.rs` or `docs/contract/`; add a dependency or a migration; `supabase db push`; edit `.github/`, `render.yaml`, this file; `git push`.
 - **Never:** read or print a `.env` file (`.env.example` is read with the Read tool, never `cat`); commit a secret; push to `main` (protection refuses it too); force-push; reset the cloud database.
 

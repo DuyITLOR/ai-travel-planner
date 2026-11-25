@@ -18,8 +18,9 @@ is wrong, change it in its own commit that says why, before changing the code.
 
 ## 1. Conventions
 
-- Base URL: the api origin: `http://localhost:4000` locally; the deployed api on Render
-  has its own origin, which the web app reads from `NEXT_PUBLIC_API_URL`.
+- Base URL: `http://localhost:4000` (run `pnpm dev`). Version 1 is not deployed yet; when
+  it is (Render, PA#3), its origin is added here and the web app reads it from
+  `NEXT_PUBLIC_API_URL`.
 - Requests and responses are JSON, UTF-8. Field names are `camelCase`.
 - **Money is an integer number of dong (VND)**, in fields ending in `Vnd`. Never a
   float, never thousands of dong. The server computes every amount; the client
@@ -124,20 +125,20 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | `createdBy`                | the member who created the plan, the only one who may save it                                               |
 | `savedAt`, `savedBy`       | always present. `null` while `draft`; set by the save that shares this `version`, never changed by a repeat. `savedAt` has milliseconds and ends in `Z` |
 | `stops`                    | in schedule order: by `day`, then `start`. Each stop's `end` is later than its `start`, and on the same day a stop starts no earlier than the previous one ends (they may touch, never overlap). May be empty |
-| `items[].quantity`         | integer ≥ 1, **per person**: every member follows the same schedule                                         |
+| `items[].quantity`         | integer from 1 to 2⁵³−1, **per person**: every member follows the same schedule                             |
 | `items[].unitPriceVnd`     | the price in the shared place data when the item was put in the plan                                        |
 | `costPerPersonVnd`         | sum of `unitPriceVnd × quantity` over the stop's items                                                      |
 | `cost.perPersonVnd`        | sum of `costPerPersonVnd` over all stops                                                                    |
 | `cost.memberCount`         | number of members of the trip (1 for an individual trip)                                                    |
 | `cost.totalVnd`            | `perPersonVnd × memberCount`                                                                                |
 | `cost.budgetVnd`           | the trip budget: the group total, or the one person's amount for an individual trip                         |
-| every `…Vnd` field         | integer from 0 to 2⁵³−1, whether stored (`unitPriceVnd`, `budgetVnd`, a member's cap) or computed. A stored amount outside that range is reported, and validated, as the nearest end (below 0 as 0); a computed amount that would be larger is reported as 9007199254740991, which is over any budget, so such a plan is always rejected |
+| every `…Vnd` field         | integer from 0 to 2⁵³−1, whether stored (`unitPriceVnd`, `budgetVnd`, a member's cap) or computed. A stored amount outside that range is reported, and validated, as the nearest end (below 0 as 0); a computed amount that would be larger is reported as 9007199254740991, and a `cost.totalVnd` of 9007199254740991 always breaks `over-trip-budget`, whatever the budget, so such a plan is always rejected |
 | `start`, `end`             | `00:00` to `23:59`                                                                                          |
 
 **A stored plan that breaks a rule of this table.** The endpoints that edit plans
 never store one. If one is found anyway (a `version` outside its range, a
-`quantity` below 1, a `day`, `start` or `end` that is not a valid date or time in
-the format above, or stops out of order or overlapping), the api answers
+`quantity` outside its range, a `day`, `start` or `end` that is not a valid date or
+time in exactly the format above (zero-padded digits, no spaces or signs), or stops out of order or overlapping), the api answers
 `500 internal` to a read (4.8, after step 4) and to a save (4.3, after step 9,
 before the key is looked up), and nothing is saved: the plan cannot be shown or
 shared as it is.
@@ -146,7 +147,11 @@ shared as it is.
 (they come with the agent in PA#3). Every edit, of a draft or of a saved plan, adds
 one to `version` and sets `status` back to `"draft"`, `savedAt` and `savedBy` back
 to `null`: the group keeps seeing nothing new until the creator saves the new
-version with this endpoint. The current content and `version` are read with
+version with this endpoint. **A change to the trip** (a member joins or leaves, the
+budget or a member's cap changes) counts as an edit of each of the trip's plans:
+`version` goes up by one and a saved plan goes back to `"draft"`. So a saved plan
+always passed the validator against the trip as it is now, and step 12 of 4.3
+never reports as saved a plan that the current trip would reject. The current content and `version` are read with
 `GET /plans/{planId}` (section 4.8); after a `409` the client reads the plan again
 and shows it to the user before saving.
 
@@ -323,7 +328,8 @@ No body, no `Idempotency-Key`: reading changes nothing and is always safe to ret
 4. The plan is `saved`, or the caller created it, else `403 not-plan-owner`: a draft
    is its creator's own until it is saved.
 5. **`200`** with the Plan (section 3) as it is now, `Content-Type: application/json`.
-   After a save and before any edit, it equals the save's `200` body.
+   After a save and before any edit of the plan or its trip, it equals the save's
+   `200` body.
 
 | Answer                 | What a client does                                                       |
 | ---------------------- | ------------------------------------------------------------------------ |
