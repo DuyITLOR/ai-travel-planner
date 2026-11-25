@@ -20,6 +20,23 @@ pub struct Member {
     pub cap_vnd: Option<i64>,
 }
 
+impl Plan {
+    /// The rules of the Plan table in contract section 3 that hold for stored data:
+    /// `quantity` at least 1, `day` a real `YYYY-MM-DD` date, `start`/`end` a real `HH:MM`.
+    /// The edit endpoints never store a plan that breaks them; if one is found anyway it is
+    /// a server fault (`500 internal`), never shown or saved.
+    pub fn is_well_formed(&self) -> bool {
+        let time = |t: &str| t.len() == 5 && chrono::NaiveTime::parse_from_str(t, "%H:%M").is_ok();
+        self.stops.iter().all(|s| {
+            s.day.len() == 10
+                && chrono::NaiveDate::parse_from_str(&s.day, "%Y-%m-%d").is_ok()
+                && time(&s.start)
+                && time(&s.end)
+                && s.items.iter().all(|i| i.quantity >= 1)
+        })
+    }
+}
+
 impl Trip {
     pub fn is_member(&self, user: Uuid) -> bool {
         self.members.iter().any(|m| m.user_id == user)

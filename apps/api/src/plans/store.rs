@@ -134,6 +134,11 @@ impl PlanStore for InMemoryPlanStore {
         if plan.status == PlanStatus::Draft && plan.created_by != user {
             return Err(SaveFailure::NotOwner);
         }
+        if !plan.is_well_formed() {
+            return Err(SaveFailure::Internal(format!(
+                "stored plan {plan_id} is malformed"
+            )));
+        }
         serde_json::to_value(PlanView::new(plan, trip))
             .map_err(|e| SaveFailure::Internal(e.to_string()))
     }
@@ -181,6 +186,14 @@ impl PlanStore for InMemoryPlanStore {
             return Err(SaveFailure::VersionConflict {
                 current: plan.version,
             });
+        }
+
+        // A stored plan that breaks contract section 3 is never shown or saved.
+        if !plan.is_well_formed() {
+            return Err(SaveFailure::Internal(format!(
+                "stored plan {} is malformed",
+                cmd.plan_id
+            )));
         }
 
         // 5. Saved already at this version: safe to repeat, nothing changes.
