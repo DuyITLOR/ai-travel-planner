@@ -99,8 +99,14 @@ impl InMemoryPlanStore {
         self.state.lock().unwrap_or_else(|e| e.into_inner())
     }
 
+    /// Adds a trip, or changes one (members, budget, caps). A change is an edit of each of
+    /// the trip's plans (contract section 3): version + 1, back to draft.
     pub fn insert_trip(&self, trip: Trip) {
-        self.lock().trips.insert(trip.id, trip);
+        let mut state = self.lock();
+        let id = trip.id;
+        if state.trips.insert(id, trip).is_some() {
+            reopen_plans(&mut state, id);
+        }
     }
 
     pub fn insert_plan(&self, plan: Plan) {
@@ -109,13 +115,25 @@ impl InMemoryPlanStore {
 
     /// A member leaves the trip (or is removed from it).
     pub fn remove_member(&self, trip: Uuid, user: Uuid) {
-        if let Some(t) = self.lock().trips.get_mut(&trip) {
+        let mut state = self.lock();
+        if let Some(t) = state.trips.get_mut(&trip) {
             t.members.retain(|m| m.user_id != user);
+            reopen_plans(&mut state, trip);
         }
     }
 
     pub fn plan(&self, id: Uuid) -> Option<Plan> {
         self.lock().plans.get(&id).cloned()
+    }
+}
+
+/// Every plan of a changed trip becomes a new draft version, to be reviewed and saved again.
+fn reopen_plans(state: &mut State, trip: Uuid) {
+    for plan in state.plans.values_mut().filter(|p| p.trip_id == trip) {
+        plan.version += 1;
+        plan.status = PlanStatus::Draft;
+        plan.saved_at = None;
+        plan.saved_by = None;
     }
 }
 
