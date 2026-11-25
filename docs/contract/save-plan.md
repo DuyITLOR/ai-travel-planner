@@ -18,8 +18,9 @@ is wrong, change it in its own commit that says why, before changing the code.
 
 ## 1. Conventions
 
-- Base URL: the api origin: `http://localhost:4000` locally; the deployed api on Render
-  has its own origin, which the web app reads from `NEXT_PUBLIC_API_URL`.
+- Base URL: `http://localhost:4000` (run `pnpm dev`). Version 1 is not deployed yet; when
+  it is (Render, PA#3), its origin is added here and the web app reads it from
+  `NEXT_PUBLIC_API_URL`.
 - Requests and responses are JSON, UTF-8. Field names are `camelCase`.
 - **Money is an integer number of dong (VND)**, in fields ending in `Vnd`. Never a
   float, never thousands of dong. The server computes every amount; the client
@@ -146,7 +147,11 @@ shared as it is.
 (they come with the agent in PA#3). Every edit, of a draft or of a saved plan, adds
 one to `version` and sets `status` back to `"draft"`, `savedAt` and `savedBy` back
 to `null`: the group keeps seeing nothing new until the creator saves the new
-version with this endpoint. The current content and `version` are read with
+version with this endpoint. **A change to the trip** (a member joins or leaves, the
+budget or a member's cap changes) counts as an edit of each of the trip's plans:
+`version` goes up by one and a saved plan goes back to `"draft"`. So a saved plan
+always passed the validator against the trip as it is now, and step 12 of 4.3
+never reports as saved a plan that the current trip would reject. The current content and `version` are read with
 `GET /plans/{planId}` (section 4.8); after a `409` the client reads the plan again
 and shows it to the user before saving.
 
@@ -323,7 +328,8 @@ No body, no `Idempotency-Key`: reading changes nothing and is always safe to ret
 4. The plan is `saved`, or the caller created it, else `403 not-plan-owner`: a draft
    is its creator's own until it is saved.
 5. **`200`** with the Plan (section 3) as it is now, `Content-Type: application/json`.
-   After a save and before any edit, it equals the save's `200` body.
+   After a save and before any edit of the plan or its trip, it equals the save's
+   `200` body.
 
 | Answer                 | What a client does                                                       |
 | ---------------------- | ------------------------------------------------------------------------ |
