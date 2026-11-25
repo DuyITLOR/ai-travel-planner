@@ -1392,3 +1392,38 @@ async fn s4_2_the_key_is_trimmed_of_spaces_and_compared_case_sensitively() {
     assert_eq!(other.status, StatusCode::OK);
     assert!(other.headers.get("idempotent-replayed").is_none());
 }
+
+#[tokio::test]
+async fn s3_a_member_leaving_sends_a_saved_plan_back_to_draft() {
+    let store = store();
+    let app = app_with(store.clone());
+    let saved = send(&app, Req::new(OK_PLAN)).await;
+    assert_eq!(saved.status, StatusCode::OK, "{}", saved.json);
+    store.remove_member(TRIP_A, MEMBER);
+    let now = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(now.json["status"], "draft");
+    assert_eq!(now.json["version"], 4);
+    assert_eq!(now.json["cost"]["memberCount"], 3);
+    // the old version is no longer what is stored
+    let res = send(&app, Req::new(OK_PLAN)).await;
+    assert_problem(&res, ProblemType::VersionConflict);
+    assert_eq!(res.json["currentVersion"], 4);
+    let res = send(&app, Req::new(OK_PLAN).version(4)).await;
+    assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+}
+
+#[tokio::test]
+async fn s3_a_lower_budget_sends_a_saved_plan_back_to_draft_and_the_validator_decides() {
+    let store = store();
+    let app = app_with(store.clone());
+    assert_eq!(send(&app, Req::new(OK_PLAN)).await.status, StatusCode::OK);
+    store.insert_trip(Trip {
+        id: TRIP_A,
+        budget_vnd: 100_000,
+        members: members(),
+    });
+    assert_eq!(store.plan(OK_PLAN).unwrap().status, PlanStatus::Draft);
+    let res = send(&app, Req::new(OK_PLAN).version(4)).await;
+    assert_problem(&res, ProblemType::PlanRejected);
+    assert_eq!(res.json["violations"][0]["rule"], "over-trip-budget");
+}

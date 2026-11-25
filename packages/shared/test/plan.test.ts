@@ -73,6 +73,17 @@ describe('Problem schema', () => {
     expect(Problem.safeParse({ error: 'not_found' }).success).toBe(false);
   });
 
+  it('a type this version does not know is accepted, to be handled by its status', () => {
+    const future = {
+      type: 'https://atp.example/problems/trip-locked',
+      title: 'Trip locked',
+      status: 423,
+      detail: 'The trip is locked.',
+    };
+    expect(Problem.safeParse(future).success).toBe(true);
+    expect(Problem.safeParse({ ...future, status: 200 }).success).toBe(false);
+  });
+
   it('userId is present only on over-member-cap', () => {
     const rejected = {
       type: 'https://atp.example/problems/plan-rejected',
