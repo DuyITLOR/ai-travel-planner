@@ -134,6 +134,12 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | every `…Vnd` field         | integer from 0 to 2⁵³−1, whether stored (`unitPriceVnd`, `budgetVnd`, a member's cap) or computed. A stored amount outside that range is reported, and validated, as the nearest end (below 0 as 0); a computed amount that would be larger is reported as 9007199254740991, which is over any budget, so such a plan is always rejected |
 | `start`, `end`             | `00:00` to `23:59`                                                                                          |
 
+**A stored plan that breaks a rule of this table.** The endpoints that edit plans
+never store one. If one is found anyway (a `quantity` below 1, a `day`, `start` or
+`end` that is not a valid date or time in the format above), the api answers
+`500 internal` to a read (4.8) and to a save (after step 11 of 4.3), and nothing is
+saved: the plan cannot be shown or shared as it is.
+
 **Editing after a save.** Plans are edited through endpoints outside this contract
 (they come with the agent in PA#3). Every edit, of a draft or of a saved plan, adds
 one to `version` and sets `status` back to `"draft"`, `savedAt` and `savedBy` back
@@ -149,8 +155,8 @@ and shows it to the user before saving.
 | `rule`      | a rule code from section 4.4. **Clients must accept codes they do not know** (section 5)      |
 | `message`   | one sentence for the user, in English                                                         |
 | `userId`    | present only on `over-member-cap` (absent, not `null`, on every other rule): the member whose cap is the lowest |
-| `amountVnd` | `over-member-cap`: `cost.perPersonVnd`. `over-trip-budget`: `cost.totalVnd`                   |
-| `limitVnd`  | `over-member-cap`: that member's cap. `over-trip-budget`: `cost.budgetVnd`                    |
+| `amountVnd` | present on **every** violation, whatever its `rule`. `over-member-cap`: `cost.perPersonVnd`. `over-trip-budget`: `cost.totalVnd` |
+| `limitVnd`  | present on **every** violation, whatever its `rule`. `over-member-cap`: that member's cap. `over-trip-budget`: `cost.budgetVnd` |
 
 ## 4. The endpoint
 
@@ -334,8 +340,8 @@ No body, no `Idempotency-Key`: reading changes nothing and is always safe to ret
 - Anything else is **breaking**: renaming or removing a field, changing a type or
   a unit, making a rule stricter for the request, changing the status of a
   problem type, or changing who may call the endpoint. A breaking change is
-  served at a new path, `/v2/plans/{planId}/save`. This path keeps working for at
-  least two checkpoints (about two weeks) after `/v2` ships, and its responses then
+  served at new paths, `/v2/plans/{planId}/save` and `/v2/plans/{planId}`. These
+  paths keep working for at least two checkpoints (about two weeks) after `/v2` ships, and its responses then
   carry `Deprecation` (RFC 9745) and `Sunset` (RFC 8594) headers with the date.
 - Every change, additive or breaking, is made here first, in its own commit, and
   the contract tests are updated in the same pull request as the code, never in a
