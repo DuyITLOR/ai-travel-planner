@@ -335,3 +335,21 @@ Kept:
 Rejected: nothing. Still open: the deployed base URL in contract §1 (the team must confirm the
 Render URL) and criterion 4's staged red commit.
 By hand: nothing in the code.
+
+## 2026-11-25 — review round 10
+
+Tool: Claude Code, a tenth grading agent, same setup. It marked 95/100.
+Kept, each with a test that fails without the code change:
+
+- A saved plan stayed `saved` when its trip changed (a member left, the budget or a cap went
+  down), so a repeat save (step 12) reported as saved a plan the trip now rejects, and `GET`
+  no longer equalled the save's body. The contract now says a change to the trip is an edit of
+  its plans (new version, back to draft), and the store does that. Two tests: a member leaves,
+  the budget drops.
+- The Zod `Problem` schema refused problem types it did not know, while the contract tells a
+  client to handle them by status. It now accepts them; a test covers it.
+- Contract §1 now says plainly that version 1 is not deployed yet and gives the local URL.
+
+Rejected: deploying the api to Render just to name a URL: it would hold no plans (in-memory
+store) and needs secrets set up for nothing PA#2 grades.
+By hand: we decided not to deploy for PA#2.
