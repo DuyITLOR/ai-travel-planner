@@ -2,7 +2,7 @@ use chrono::{DateTime, SecondsFormat, Utc};
 use serde::Serialize;
 use uuid::Uuid;
 
-use super::validator::{per_person_cost, stop_cost, total_cost};
+use super::validator::{clamp, per_person_cost, stop_cost, total_cost};
 
 /// A trip: the group (one member for an individual trip) and its total budget.
 #[derive(Debug, Clone)]
@@ -139,7 +139,7 @@ impl PlanView {
                         .map(|i| ItemView {
                             item_id: i.item_id.clone(),
                             name: i.name.clone(),
-                            unit_price_vnd: i.unit_price_vnd,
+                            unit_price_vnd: clamp(i.unit_price_vnd),
                             quantity: i.quantity,
                         })
                         .collect(),
@@ -150,7 +150,7 @@ impl PlanView {
                 per_person_vnd: per_person,
                 member_count,
                 total_vnd: total_cost(plan, trip),
-                budget_vnd: trip.budget_vnd,
+                budget_vnd: clamp(trip.budget_vnd),
             },
         }
     }

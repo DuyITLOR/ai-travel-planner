@@ -1,5 +1,5 @@
-//! `POST /plans/{planId}/save` — docs/contract/save-plan.md. The checks below run in
-//! the order section 4 of the contract lists them.
+//! `POST /plans/{planId}/save` and `GET /plans/{planId}` — docs/contract/save-plan.md.
+//! The checks below run in the order sections 4.3 and 4.8 of the contract list them.
 
 use axum::{
     body::{Body, to_bytes},
@@ -41,16 +41,50 @@ pub async fn save_plan(
     }
 }
 
-/// Any method other than POST on this path (contract section 4.3, step 0).
+/// Any method other than POST on the save path (contract section 4.3, step 0).
 pub async fn method_not_allowed() -> Response {
-    let mut res = Problem::new(
-        ProblemType::MethodNotAllowed,
-        "This path only accepts POST.",
-    )
-    .into_response();
+    not_allowed("This path only accepts POST.", "POST")
+}
+
+/// Any method other than GET (or HEAD) on the plan path (contract section 4.8).
+pub async fn read_method_not_allowed() -> Response {
+    not_allowed("This path only accepts GET.", "GET, HEAD")
+}
+
+fn not_allowed(detail: &'static str, allow: &'static str) -> Response {
+    let mut res = Problem::new(ProblemType::MethodNotAllowed, detail).into_response();
     res.headers_mut()
-        .insert(header::ALLOW, HeaderValue::from_static("POST"));
+        .insert(header::ALLOW, HeaderValue::from_static(allow));
     res
+}
+
+/// `GET /plans/{planId}`: the plan's current content (contract section 4.8).
+pub async fn get_plan(
+    State(state): State<AppState>,
+    AuthUser(user): AuthUser,
+    path: Result<Path<String>, PathRejection>,
+) -> Response {
+    let raw_id = path.map(|Path(id)| id).unwrap_or_default();
+    let Some(plan_id) = parse_plan_id(&raw_id) else {
+        return not_found().into_response();
+    };
+    match state.plans.read(user, plan_id) {
+        Ok(body) => json_response(body, false),
+        Err(SaveFailure::NotOwner) => Problem::new(
+            ProblemType::NotPlanOwner,
+            "This plan is a draft; only the member who created it can see it before it is saved.",
+        )
+        .into_response(),
+        Err(failure) => to_problem(failure).into_response(),
+    }
+}
+
+/// Only the hyphenated 36-character form; `Uuid::parse_str` also takes braces, `urn:uuid:`
+/// and the simple form, which the contract does not allow.
+fn parse_plan_id(raw: &str) -> Option<Uuid> {
+    Some(raw)
+        .filter(|id| id.len() == 36)
+        .and_then(|id| Uuid::parse_str(id).ok())
 }
 
 async fn handle(
@@ -109,12 +143,7 @@ async fn handle(
     let expected_version = read_body(&value)?;
 
     // 7. Path id
-    // Only the hyphenated 36-character form; `Uuid::parse_str` also takes braces, `urn:uuid:`
-    // and the simple form, which the contract does not allow.
-    let plan_id = Some(raw_id)
-        .filter(|id| id.len() == 36)
-        .and_then(|id| Uuid::parse_str(id).ok())
-        .ok_or_else(not_found)?;
+    let plan_id = parse_plan_id(raw_id).ok_or_else(not_found)?;
 
     // 8-14. The atomic part. Two requests are "the same" when they name the same plan and
     // the same expectedVersion; fields the server ignores do not count.

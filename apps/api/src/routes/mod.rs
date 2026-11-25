@@ -10,8 +10,14 @@ use crate::AppState;
 
 /// Gắn route của từng tính năng tại đây (places, itineraries, groups, ...).
 pub fn router() -> Router<AppState> {
-    Router::new().route("/health", get(health::health)).route(
-        "/plans/{plan_id}/save",
-        post(plans::save_plan).fallback(plans::method_not_allowed),
-    )
+    Router::new()
+        .route("/health", get(health::health))
+        .route(
+            "/plans/{plan_id}",
+            get(plans::get_plan).fallback(plans::read_method_not_allowed),
+        )
+        .route(
+            "/plans/{plan_id}/save",
+            post(plans::save_plan).fallback(plans::method_not_allowed),
+        )
 }

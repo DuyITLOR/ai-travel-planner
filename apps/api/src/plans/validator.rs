@@ -24,14 +24,15 @@ pub struct Violation {
 /// which is over every budget, so such a plan is always rejected.
 pub const MAX_VND: i64 = 9_007_199_254_740_991;
 
-fn clamp(v: i64) -> i64 {
+/// Every amount the api reports, stored or computed, is clamped to 0 ..= 2^53 - 1.
+pub fn clamp(v: i64) -> i64 {
     v.clamp(0, MAX_VND)
 }
 
 /// Cost of one stop for one person.
 pub fn stop_cost(stop: &Stop) -> i64 {
     clamp(stop.items.iter().fold(0i64, |acc, i| {
-        acc.saturating_add(i.unit_price_vnd.saturating_mul(i.quantity))
+        acc.saturating_add(clamp(i.unit_price_vnd).saturating_mul(i.quantity.max(0)))
     }))
 }
 
@@ -57,7 +58,7 @@ pub fn validate(plan: &Plan, trip: &Trip) -> Vec<Violation> {
     let lowest = trip
         .members
         .iter()
-        .filter_map(|m| m.cap_vnd.map(|c| (c, m.user_id)))
+        .filter_map(|m| m.cap_vnd.map(|c| (clamp(c), m.user_id)))
         .min();
     if let Some((cap, user)) = lowest
         && per_person > cap
@@ -75,16 +76,16 @@ pub fn validate(plan: &Plan, trip: &Trip) -> Vec<Violation> {
 
     // The total for everyone stays within the trip budget.
     let total = total_cost(plan, trip);
-    if total > trip.budget_vnd {
+    let budget = clamp(trip.budget_vnd);
+    if total > budget {
         out.push(Violation {
             rule: "over-trip-budget",
             message: format!(
-                "The plan costs {total} VND in total, over the trip budget of {} VND.",
-                trip.budget_vnd
+                "The plan costs {total} VND in total, over the trip budget of {budget} VND."
             ),
             user_id: None,
             amount_vnd: total,
-            limit_vnd: trip.budget_vnd,
+            limit_vnd: budget,
         });
     }
     out
