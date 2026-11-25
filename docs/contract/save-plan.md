@@ -124,7 +124,7 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | `createdBy`                | the member who created the plan, the only one who may save it                                               |
 | `savedAt`, `savedBy`       | always present. `null` while `draft`; set by the save that shares this `version`, never changed by a repeat. `savedAt` has milliseconds and ends in `Z` |
 | `stops`                    | in schedule order: by `day`, then `start`. Each stop's `end` is later than its `start`, and on the same day a stop starts no earlier than the previous one ends (they may touch, never overlap). May be empty |
-| `items[].quantity`         | integer ≥ 1, **per person**: every member follows the same schedule                                         |
+| `items[].quantity`         | integer from 1 to 2⁵³−1, **per person**: every member follows the same schedule                             |
 | `items[].unitPriceVnd`     | the price in the shared place data when the item was put in the plan                                        |
 | `costPerPersonVnd`         | sum of `unitPriceVnd × quantity` over the stop's items                                                      |
 | `cost.perPersonVnd`        | sum of `costPerPersonVnd` over all stops                                                                    |
@@ -136,8 +136,8 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 
 **A stored plan that breaks a rule of this table.** The endpoints that edit plans
 never store one. If one is found anyway (a `version` outside its range, a
-`quantity` below 1, a `day`, `start` or `end` that is not a valid date or time in
-the format above, or stops out of order or overlapping), the api answers
+`quantity` outside its range, a `day`, `start` or `end` that is not a valid date or
+time in exactly the format above (zero-padded digits, no spaces or signs), or stops out of order or overlapping), the api answers
 `500 internal` to a read (4.8, after step 4) and to a save (4.3, after step 9,
 before the key is looked up), and nothing is saved: the plan cannot be shown or
 shared as it is.
