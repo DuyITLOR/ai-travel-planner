@@ -1272,11 +1272,26 @@ async fn s4_8_head_is_answered_like_get_without_a_body() {
 #[tokio::test]
 async fn s3_a_stored_plan_that_breaks_section_3_is_never_shown_or_saved() {
     type Break = fn(&mut Plan);
-    let broken: [(&str, Break); 4] = [
+    fn second_stop(p: &mut Plan, day: &str, start: &str, end: &str) {
+        let mut stop = p.stops[0].clone();
+        stop.day = day.into();
+        stop.start = start.into();
+        stop.end = end.into();
+        p.stops.push(stop);
+    }
+    let broken: [(&str, Break); 8] = [
         ("quantity 0", |p| p.stops[0].items[0].quantity = 0),
         ("start 25:00", |p| p.stops[0].start = "25:00".into()),
         ("end 9:00", |p| p.stops[0].end = "9:00".into()),
         ("day 2026-13-01", |p| p.stops[0].day = "2026-13-01".into()),
+        ("version 0", |p| p.version = 0),
+        ("end before start", |p| p.stops[0].end = "08:00".into()),
+        ("overlap", |p| {
+            second_stop(p, "2026-12-06", "10:00", "11:00")
+        }),
+        ("out of order", |p| {
+            second_stop(p, "2026-12-05", "09:00", "10:00")
+        }),
     ];
     for (what, breaks) in broken {
         let store = store();
@@ -1323,4 +1338,50 @@ async fn s4_3_two_saves_at_the_same_time_share_the_plan_once() {
             .to_rfc3339_opts(chrono::SecondsFormat::Millis, true),
         saved_at[0].as_str().unwrap()
     );
+}
+
+#[tokio::test]
+async fn s3_stops_may_touch_and_span_days() {
+    let store = store();
+    let mut p = plan(OK_PLAN, TRIP_A, CREATOR, 3, vec![item("t", 1_000, 1)]);
+    let mut next = p.stops[0].clone();
+    next.start = "10:30".into(); // the first one ends at 10:30
+    next.end = "11:00".into();
+    let mut tomorrow = p.stops[0].clone();
+    tomorrow.day = "2026-12-07".into();
+    tomorrow.start = "08:00".into();
+    tomorrow.end = "08:30".into();
+    p.stops.extend([next, tomorrow]);
+    store.insert_plan(p);
+    let app = app_with(store);
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_eq!(res.status, StatusCode::OK, "{}", res.json);
+    assert_eq!(send(&app, Req::new(OK_PLAN)).await.status, StatusCode::OK);
+}
+
+#[tokio::test]
+async fn s4_1_a_server_without_its_jwt_secret_answers_401_to_every_token() {
+    let config = Config {
+        port: 0,
+        web_origins: vec!["http://localhost:3000".into()],
+        database_url: None,
+    };
+    let app = build_app(&config, AppState::new(Db::disabled()).with_plans(store()));
+    let res = send(&app, Req::new(OK_PLAN)).await;
+    assert_problem(&res, ProblemType::Unauthenticated);
+    let res = get(&app, &OK_PLAN.to_string(), Some(CREATOR)).await;
+    assert_problem(&res, ProblemType::Unauthenticated);
+}
+
+#[tokio::test]
+async fn s4_2_the_key_is_trimmed_of_spaces_and_compared_case_sensitively() {
+    let app = app_with(store());
+    let first = send(&app, Req::new(OK_PLAN).key("k-Case")).await;
+    assert_eq!(first.status, StatusCode::OK, "{}", first.json);
+    let trimmed = send(&app, Req::new(OK_PLAN).key("  k-Case  ")).await;
+    assert_eq!(trimmed.headers["idempotent-replayed"], "true");
+    // another case is another key: saved already at this version (step 12), not a replay
+    let other = send(&app, Req::new(OK_PLAN).key("K-CASE")).await;
+    assert_eq!(other.status, StatusCode::OK);
+    assert!(other.headers.get("idempotent-replayed").is_none());
 }
