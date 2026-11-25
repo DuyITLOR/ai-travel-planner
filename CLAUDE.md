@@ -9,7 +9,7 @@
 
 ## Commands
 
-From the repo root after `pnpm install`; each covers TS and Rust, and CI runs exactly these.
+From the repo root after `pnpm install --frozen-lockfile`; each covers TS and Rust, and CI runs exactly these.
 
 - `pnpm lint`: ESLint + `cargo clippy --all-targets --locked -- -D warnings`
 - `pnpm format:check`: Prettier + `cargo fmt --check` (fix with `pnpm format`)

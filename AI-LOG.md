@@ -278,3 +278,24 @@ Rejected: requiring one approval on `main`. With three people and a deadline it 
 gate into waiting; the required checks are what the rubric asks for.
 By hand: nothing in the code. We asked for the round and chose to state PR #3's staging openly
 instead of arguing it.
+
+## 2026-11-25 — review round 7
+
+Tool: Claude Code, a seventh grading agent on a fresh clone of PR #7, told to grade as if it
+were merged and tagged. It marked 93/100.
+Kept, each with a test that fails first:
+
+- The contract said `quantity` ≥ 1 and times `00:00`–`23:59`, but a stored plan breaking them
+  was shown and saved as is. The contract now says such a plan is a server fault: `500
+internal` on read and save, nothing saved. Four broken plans tested.
+- Contract sentences with no test: `HEAD` like `GET`, and "steps 8 to 14 are atomic". Added
+  a `HEAD` test and eight concurrent saves that must share the plan once (same `savedAt`).
+- `amountVnd`/`limitVnd` are now stated as present on every violation, so a typed client
+  can handle rule codes it does not know; the `/v2` rule names both paths.
+- `CLAUDE.md` said "after `pnpm install`" while `settings.json` allows only
+  `pnpm install --frozen-lockfile`; it now says the latter.
+
+Changed: our self-assessment, which was below what two graders gave on criteria 2 and 7; it now
+claims 95, with criterion 4 at 17 because PR #3's red commit was staged.
+Rejected: staging another red PR to look "organic". It would be the same thing again.
+By hand: nothing in the code.
