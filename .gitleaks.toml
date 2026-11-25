@@ -1,0 +1,9 @@
+# The example Idempotency-Key in the contract is a UUID a client would send, not a secret.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "example Idempotency-Key UUID in the contract"
+paths = ['''docs/contract/save-plan\.md''']
+regexes = ['''9f1c2e7a-3b4d-4c5e-9f6a-7b8c9d0e1f2a''']
+condition = "AND"

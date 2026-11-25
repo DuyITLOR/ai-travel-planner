@@ -247,6 +247,34 @@ Kept: PR #2 (rules and CI, green), PR #3 (red on `test` and blocked, then green)
 41 passed and 5 failed, the five names `PA2.md` lists; closed unmerged).
 Changed: our plan said to screenshot Settings → Branches, but protection is a ruleset; the
 screenshot is of the ruleset page, which a collaborator without admin rights can read.
-Changed: commits carry no AI co-author trailer, at our request.
+Changed: from PR #4 on, commits carry no AI co-author trailer, at our request (the commits of
+PR #2 and PR #3, `013bc36`, `94ea829`, `62be07a`, still carry one; we did not rewrite them).
 Rejected: merging by the assistant. Every merge was ours.
 By hand: we merged PR #2, #3 and #4; Duy turned on the required checks between PR #2 and PR #3.
+
+## 2026-11-25 — review round 6
+
+Tool: Claude Code, a sixth grading agent given only the rubric and a fresh clone of the tag
+`pa2`, checking every link of `PA2.md` with read-only `gh` calls. It marked 91/100.
+Kept, each with a test that fails first where it is code:
+
+- A stranger could not get the `version` to send: the contract said "fetch the plan again"
+  after a `409` but no endpoint returned a plan. Added `GET /plans/{planId}` (contract §4.8;
+  a draft is only its creator's, `403` for other members, `404` for strangers) and 7 tests.
+- "Every `…Vnd` field 0 to 2⁵³−1" held only for computed amounts; a stored price or budget was
+  passed through. Stored amounts are now clamped too, in the response and in the validator.
+- A replay after an edit returns the stored body of the old version; the contract now says so,
+  and a test pins it.
+- This log said our commits carry no co-author trailer, but three of them do. Corrected above.
+- `CLAUDE.md` Allowed tier left out `docs/`, which `settings.json` allows; README promised a
+  review before merge that the ruleset does not require. Both now say what is enforced.
+- `Bash(cat *.env*)` also blocked `.env.example`; `CLAUDE.md` now says it is read with the Read
+  tool, and `.env.staging`, `.env.test`, `sed`, `awk`, `type`, `Get-Content` are denied too.
+- The gitleaks false positive is allowlisted by its exact value in `.gitleaks.toml`.
+- `PA2.md` states the timeline plainly: when the checks became required, and that PR #3's red
+  commit was staged on purpose.
+
+Rejected: requiring one approval on `main`. With three people and a deadline it would turn the
+gate into waiting; the required checks are what the rubric asks for.
+By hand: nothing in the code. We asked for the round and chose to state PR #3's staging openly
+instead of arguing it.

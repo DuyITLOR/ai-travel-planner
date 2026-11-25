@@ -38,9 +38,9 @@ From the repo root after `pnpm install`; each covers TS and Rust, and CI runs ex
 
 ## Permissions (enforced in `.claude/settings.json`)
 
-- **Allowed:** read the code; run the `pnpm` commands and `pnpm dev`; edit source in `apps/` and `packages/`.
+- **Allowed:** read the code; run the `pnpm` commands and `pnpm dev`; edit source in `apps/`, `packages/` and `docs/` (not the ask-first files below).
 - **Ask first:** edit tests, `validator.rs` or `docs/contract/`; add a dependency or a migration; `supabase db push`; edit `.github/`, `render.yaml`, this file; `git push`.
-- **Never:** read or print any `.env` file except `.env.example`; commit a secret; push to `main` (protection refuses it too); force-push; reset the cloud database.
+- **Never:** read or print a `.env` file (`.env.example` is read with the Read tool, never `cat`); commit a secret; push to `main` (protection refuses it too); force-push; reset the cloud database.
 
 ## Incidents
 
