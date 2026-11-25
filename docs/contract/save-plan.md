@@ -132,7 +132,7 @@ Clients decide what to do from `type`, never from `title` or `detail`.
 | `cost.memberCount`         | number of members of the trip (1 for an individual trip)                                                    |
 | `cost.totalVnd`            | `perPersonVnd × memberCount`                                                                                |
 | `cost.budgetVnd`           | the trip budget: the group total, or the one person's amount for an individual trip                         |
-| every `…Vnd` field         | integer from 0 to 2⁵³−1, whether stored (`unitPriceVnd`, `budgetVnd`, a member's cap) or computed. A stored amount outside that range is reported, and validated, as the nearest end (below 0 as 0); a computed amount that would be larger is reported as 9007199254740991, which is over any budget, so such a plan is always rejected |
+| every `…Vnd` field         | integer from 0 to 2⁵³−1, whether stored (`unitPriceVnd`, `budgetVnd`, a member's cap) or computed. A stored amount outside that range is reported, and validated, as the nearest end (below 0 as 0); a computed amount that would be larger is reported as 9007199254740991, and a `cost.totalVnd` of 9007199254740991 always breaks `over-trip-budget`, whatever the budget, so such a plan is always rejected |
 | `start`, `end`             | `00:00` to `23:59`                                                                                          |
 
 **A stored plan that breaks a rule of this table.** The endpoints that edit plans
