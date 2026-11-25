@@ -168,6 +168,14 @@ impl PlanStore for InMemoryPlanStore {
             return Err(SaveFailure::NotOwner);
         }
 
+        // A stored plan that breaks contract section 3 is never shown or saved.
+        if !plan.is_well_formed() {
+            return Err(SaveFailure::Internal(format!(
+                "stored plan {} is malformed",
+                cmd.plan_id
+            )));
+        }
+
         // 3. A key already used by this caller within 24 hours: replay or refuse.
         let key_id = (cmd.user, cmd.key.clone());
         if let Some(stored) = state.keys.get(&key_id) {
@@ -186,14 +194,6 @@ impl PlanStore for InMemoryPlanStore {
             return Err(SaveFailure::VersionConflict {
                 current: plan.version,
             });
-        }
-
-        // A stored plan that breaks contract section 3 is never shown or saved.
-        if !plan.is_well_formed() {
-            return Err(SaveFailure::Internal(format!(
-                "stored plan {} is malformed",
-                cmd.plan_id
-            )));
         }
 
         // 5. Saved already at this version: safe to repeat, nothing changes.

@@ -22,18 +22,27 @@ pub struct Member {
 
 impl Plan {
     /// The rules of the Plan table in contract section 3 that hold for stored data:
-    /// `quantity` at least 1, `day` a real `YYYY-MM-DD` date, `start`/`end` a real `HH:MM`.
+    /// `version` 1 to 2^53 - 1, `quantity` at least 1, `day` a real `YYYY-MM-DD` date,
+    /// `start`/`end` a real `HH:MM`, `end` after `start`, stops in schedule order without
+    /// overlap.
     /// The edit endpoints never store a plan that breaks them; if one is found anyway it is
     /// a server fault (`500 internal`), never shown or saved.
     pub fn is_well_formed(&self) -> bool {
         let time = |t: &str| t.len() == 5 && chrono::NaiveTime::parse_from_str(t, "%H:%M").is_ok();
-        self.stops.iter().all(|s| {
+        let each = self.stops.iter().all(|s| {
             s.day.len() == 10
                 && chrono::NaiveDate::parse_from_str(&s.day, "%Y-%m-%d").is_ok()
                 && time(&s.start)
                 && time(&s.end)
+                && s.end > s.start
                 && s.items.iter().all(|i| i.quantity >= 1)
-        })
+        });
+        // `YYYY-MM-DD` and `HH:MM` compare as strings in time order.
+        let in_order = self
+            .stops
+            .windows(2)
+            .all(|w| w[0].day < w[1].day || (w[0].day == w[1].day && w[0].end <= w[1].start));
+        (1..=super::validator::MAX_VND).contains(&self.version) && each && in_order
     }
 }
 
