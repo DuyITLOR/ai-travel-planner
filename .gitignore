@@ -23,3 +23,6 @@ target/
 
 # Claude Code: settings.json is shared, local overrides are not
 .claude/settings.local.json
+
+# Ảnh địa điểm là tài nguyên riêng của team, không đưa lên repo
+data/images/

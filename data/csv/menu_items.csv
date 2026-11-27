@@ -1,0 +1,603 @@
+﻿item_id,place_id,name,kind,price_vnd
+p001-m1,p001,Vé thông thường (người lớn),ticket,60000
+p001-m2,p001,"Vé giảm 50% (người cao tuổi, đối tượng chính sách)",ticket,30000
+p001-m3,p001,"Vé trẻ em, học sinh, sinh viên (miễn phí, xuất trình giấy tờ)",ticket,0
+p002-m1,p002,Vé tham quan (người lớn),ticket,60000
+p002-m2,p002,"Vé giảm 50% (người từ 60 tuổi, đối tượng chính sách)",ticket,30000
+p002-m3,p002,"Vé trẻ em 6–16 tuổi, học sinh, sinh viên (miễn phí)",ticket,0
+p003-m1,p003,Vé tham quan (người lớn),ticket,60000
+p003-m2,p003,"Vé giảm 50% (người cao tuổi, đối tượng chính sách)",ticket,30000
+p003-m3,p003,"Vé trẻ em, học sinh, sinh viên (miễn phí)",ticket,0
+p003-m4,p003,Phí mang máy ảnh chụp hình,service,100000
+p004-m1,p004,Vé tham quan (người lớn),ticket,60000
+p004-m2,p004,"Vé giảm 50% (người từ 60 tuổi, đối tượng chính sách)",ticket,30000
+p004-m3,p004,"Vé trẻ em, học sinh, sinh viên (miễn phí)",ticket,0
+p005-m1,p005,Vé vào cửa (miễn phí),ticket,0
+p006-m1,p006,Vé trải nghiệm đầy đủ 90 phút (người lớn),ticket,750000
+p006-m2,p006,"Vé trẻ em cao 1m–1,4m",ticket,500000
+p006-m3,p006,Trẻ em dưới 1m (miễn phí),ticket,0
+p007-m1,p007,Vé người lớn (bao gồm chụp ảnh),ticket,180000
+p007-m2,p007,"Vé học sinh, sinh viên, người cao tuổi, trẻ em 2–15 tuổi",ticket,90000
+p008-m1,p008,Vé vào cửa (miễn phí),ticket,0
+p008-m2,p008,Gửi xe (miễn phí),service,0
+p009-m1,p009,Vé vào cửa (miễn phí),ticket,0
+p010-m1,p010,Vé vào cửa khách Việt Nam (miễn phí),ticket,0
+p010-m2,p010,Vé khách nước ngoài,ticket,40000
+p011-m1,p011,Vé người lớn ngày thường,ticket,150000
+p011-m2,p011,Vé trẻ em ngày thường,ticket,100000
+p011-m3,p011,Vé người lớn cuối tuần/lễ,ticket,200000
+p011-m4,p011,Vé trẻ em cuối tuần/lễ,ticket,150000
+p012-m1,p012,Vé khách du lịch (người lớn),ticket,50000
+p012-m2,p012,"Vé học sinh, sinh viên, trẻ em",ticket,30000
+p013-m1,p013,Vé người lớn,ticket,80000
+p013-m2,p013,Vé sinh viên / người cao tuổi,ticket,40000
+p013-m3,p013,Vé trẻ em (6 – dưới 16 tuổi),ticket,20000
+p013-m4,p013,Thuê audio guide,service,50000
+p014-m1,p014,Vào cửa (miễn phí),ticket,0
+p014-m2,p014,Gửi xe máy (gần Nhà thờ Đức Bà/Đường sách),service,5000
+p015-m1,p015,Vào cửa / ngắm bên ngoài (miễn phí),ticket,0
+p015-m2,p015,Gửi xe máy,service,5000
+p016-m1,p016,Ngắm/chụp ảnh mặt ngoài (miễn phí),ticket,0
+p017-m1,p017,Vào cửa (miễn phí),ticket,0
+p018-m1,p018,Vào cửa (miễn phí),ticket,0
+p018-m2,p018,Gửi xe máy,service,5000
+p019-m1,p019,Phí thang máy (được quán hoàn lại),service,5000
+p019-m2,p019,Gửi xe máy tầng trệt,service,3000
+p019-m3,p019,Đồ uống The Letter Cafe (tầng 6),drink,30000
+p019-m4,p019,Đồ uống Sài Gòn Ơi Cafe (tầng 5),drink,40000
+p020-m1,p020,Vào cửa (miễn phí),ticket,0
+p021-m1,p021,Vé người lớn ngày thường (T2–T6),ticket,450000
+p021-m2,p021,Vé người lớn cuối tuần/lễ,ticket,510000
+p021-m3,p021,Vé trẻ em 4–12 tuổi ngày thường,ticket,250000
+p021-m4,p021,Vé trẻ em 4–12 tuổi cuối tuần/lễ,ticket,260000
+p022-m1,p022,Vé người lớn,ticket,240000
+p022-m2,p022,Vé trẻ em 4–12 tuổi,ticket,160000
+p022-m3,p022,Vé người cao tuổi (65+),ticket,160000
+p022-m4,p022,Trẻ em dưới 4 tuổi (miễn phí),ticket,0
+p023-m1,p023,Vé vào cổng người lớn (khách Việt Nam),ticket,35000
+p023-m2,p023,Vé vào cổng khách nước ngoài,ticket,85000
+p023-m3,p023,Chui hầm,service,20000
+p023-m4,p023,"Bắn súng thể thao quốc phòng (mỗi viên, từ)",service,40000
+p023-m5,p023,Khu tái hiện vùng giải phóng Củ Chi,ticket,85000
+p023-m6,p023,Tour đêm Trăng chiến khu,service,399000
+p024-m1,p024,Vào cửa (miễn phí),ticket,0
+p025-m1,p025,Vào cửa,ticket,0
+p025-m2,p025,Gửi xe máy (miễn phí),service,0
+p025-m3,p025,"Công đức (tuỳ tâm, mức thường gặp)",service,10000
+p026-m1,p026,Vào cửa,ticket,0
+p027-m1,p027,Vào cửa,ticket,0
+p027-m2,p027,Gửi xe máy (miễn phí),service,0
+p028-m1,p028,Vào cửa,ticket,0
+p028-m2,p028,Gửi xe máy (miễn phí),service,0
+p029-m1,p029,Vào cửa,ticket,0
+p030-m1,p030,Vào cửa,ticket,0
+p031-m1,p031,Vào cửa,ticket,0
+p032-m1,p032,Vào cửa,ticket,0
+p033-m1,p033,Vào cửa,ticket,0
+p034-m1,p034,Vào cửa,ticket,0
+p035-m1,p035,Vào cửa,ticket,0
+p036-m1,p036,Vào cửa,ticket,0
+p037-m1,p037,"Vé người lớn (cao từ 1,3m)",ticket,60000
+p037-m2,p037,"Vé trẻ em (1m – dưới 1,3m)",ticket,40000
+p037-m3,p037,Tour đêm thứ Bảy,ticket,200000
+p037-m4,p037,Tham quan khu capybara,service,50000
+p037-m5,p037,Gửi xe máy (xe tay ga),service,4000
+p037-m6,p037,Gửi xe máy (xe số),service,3000
+p037-m7,p037,Gửi ô tô 4–7 chỗ,service,30000
+p038-m1,p038,Vào cửa,ticket,0
+p038-m2,p038,Gửi xe máy,service,5000
+p039-m1,p039,Vào cửa,ticket,0
+p040-m1,p040,Vào cửa,ticket,0
+p040-m2,p040,Gửi xe máy (bãi đường Võ Thị Sáu),service,5000
+p040-m3,p040,Gửi ô tô (bãi đường Điện Biên Phủ),service,20000
+p041-m1,p041,Vào cửa,ticket,0
+p041-m2,p041,Gửi xe máy (cổng Hoàng Minh Giám),service,5000
+p042-m1,p042,Vào cửa,ticket,0
+p042-m2,p042,Gửi xe máy,service,5000
+p043-m1,p043,Vào cửa,ticket,0
+p044-m1,p044,Vào cửa,ticket,0
+p044-m2,p044,Gửi xe máy,service,5000
+p045-m1,p045,Buffet đồng quê cuối tuần – người lớn,food,439000
+p045-m2,p045,"Buffet đồng quê – trẻ em dưới 1,4m",food,279000
+p045-m3,p045,Thuê võng,service,40000
+p045-m4,p045,"Câu cá (1 cần, gồm mồi)",service,40000
+p046-m1,p046,Vào cửa,ticket,0
+p046-m2,p046,Vé hồ bơi người lớn (ngày thường),ticket,20000
+p046-m3,p046,Vé hồ bơi trẻ em (ngày thường),ticket,10000
+p046-m4,p046,Buffet cuối tuần – người lớn,food,290000
+p046-m5,p046,Buffet cuối tuần – trẻ em,food,170000
+p047-m1,p047,"Vé tham quan trong ngày (cao trên 1m4, mua tại cổng chính)",ticket,160000
+p047-m2,p047,"Vé tham quan trong ngày (cao 1m–1m4, cổng chính)",ticket,100000
+p047-m3,p047,"Vé trọn gói (trên 1m4, cổng chính; gồm trò chơi, Thủy cung, xe điện)",ticket,300000
+p047-m4,p047,"Vé trọn gói (dưới 1m4, cổng chính)",ticket,220000
+p047-m5,p047,Vé Băng Đăng (trên 1m4),ticket,70000
+p047-m6,p047,Buffet kèm vé cổng (người lớn),food,249000
+p048-m1,p048,Vé khách lẻ (cao trên 1m4),ticket,220000
+p048-m2,p048,"Vé khách lẻ (cao 0,8m–1m4)",ticket,180000
+p048-m3,p048,"Trẻ em dưới 0,8m",ticket,0
+p048-m4,p048,Vé HSSV/giảng viên (ưu đãi),ticket,170000
+p048-m5,p048,Tủ gửi đồ,service,25000
+p049-m1,p049,Vé cổng người lớn (từ 1m4),ticket,180000
+p049-m2,p049,Vé cổng trẻ em (dưới 1m4),ticket,90000
+p049-m3,p049,"Vé cổng Kỳ Quan – chỉ tắm biển (người lớn, du khách)",ticket,150000
+p049-m4,p049,Combo Gia đình 1 (người lớn),ticket,250000
+p049-m5,p049,Combo Gia đình 4 (người lớn),ticket,350000
+p049-m6,p049,Combo 30 trò chơi (người lớn),ticket,770000
+p050-m1,p050,"Vé Hòn Đảo Nhiệt Đới – người lớn, T2–T6",ticket,200000
+p050-m2,p050,"Vé Hòn Đảo Nhiệt Đới – người lớn, cuối tuần/lễ",ticket,250000
+p050-m3,p050,"Vé Khu Vườn Mộng Mơ – người lớn, T2–T6",ticket,100000
+p050-m4,p050,"Vé Khu Vườn Mộng Mơ – người lớn, cuối tuần/lễ",ticket,120000
+p050-m5,p050,"Combo 2 khu – người lớn, T2–T6",ticket,270000
+p050-m6,p050,"Combo 2 khu – trẻ em 100–139cm, T2–T6",ticket,190000
+p051-m1,p051,Vé 1 lượt,ticket,15000
+p051-m2,p051,Vé khứ hồi,ticket,30000
+p051-m3,p051,"Người từ 70 tuổi, trẻ dưới 1 tuổi, người khuyết tật, thương binh",ticket,0
+p052-m1,p052,"Vé 2D người lớn – ngày thường (T2, T3, T5)",ticket,115000
+p052-m2,p052,Vé 2D người lớn – cuối tuần/lễ,ticket,135000
+p052-m3,p052,Vé U22 (từ),ticket,70000
+p052-m4,p052,Vé 2D – Thứ Tư Vui Vẻ (theo bảng MoMo),ticket,75000
+p053-m1,p053,Vé 2D người lớn – T2/T4/T6 trước 17h,ticket,70000
+p053-m2,p053,Vé 2D người lớn – T2/T4/T6 sau 17h,ticket,75000
+p053-m3,p053,Vé 2D người lớn – cuối tuần sau 17h,ticket,90000
+p053-m4,p053,Vé 2D người lớn – ngày lễ,ticket,95000
+p053-m5,p053,Vé U22 – ngày thường trước 17h,ticket,45000
+p054-m1,p054,"Vé 1 tiếng (trước 19:00, T2–T6)",ticket,169000
+p054-m2,p054,Vé 1 tiếng (sau 19:00 & cuối tuần),ticket,189000
+p054-m3,p054,Vé 1 tiếng (ngày lễ),ticket,199000
+p054-m4,p054,"Combo 2 tiếng, nhóm từ 4 người (trước 19:00, T2–T6)",ticket,249000
+p054-m5,p054,"Combo 2 tiếng, nhóm từ 4 người (sau 19:00 & cuối tuần)",ticket,269000
+p054-m6,p054,"Combo 2 tiếng, nhóm từ 4 người (ngày lễ)",ticket,289000
+p055-m1,p055,"Vé vào cổng (đường bộ, gồm xe điện)",ticket,60000
+p055-m2,p055,Tham quan đầm cá sấu (khứ hồi),ticket,20000
+p055-m3,p055,Câu cá sấu (thuyền lồng sắt),ticket,60000
+p055-m4,p055,Chèo xuồng đến Đầm Dơi,ticket,65000
+p055-m5,p055,Ca nô từ trung tâm đến Đầm Dơi (khứ hồi),ticket,185000
+p055-m6,p055,Thuê xe đạp (30 phút),service,60000
+p056-m1,p056,"Set menu 2026 người lớn (3/4/5 món, từ)",ticket,980000
+p056-m2,p056,"Set menu chay người lớn (4/5 món, từ)",ticket,950000
+p056-m3,p056,"Set menu trẻ em 6–11 tuổi (4 món, từ)",ticket,850000
+p057-m1,p057,Vé người lớn,ticket,150000
+p057-m2,p057,Vé trẻ em,ticket,100000
+p058-m1,p058,Hạng AAH (cuối khán phòng tầng trệt),ticket,800000
+p058-m2,p058,Hạng OOH (giữa khán phòng),ticket,1250000
+p058-m3,p058,"Hạng WOW (hàng đầu trung tâm, kèm đồ uống chào mừng)",ticket,1750000
+p059-m1,p059,5 pin cài áo gốm,service,350000
+p059-m2,p059,5 gác đũa gốm,service,350000
+p059-m3,p059,1 ly gốm cỡ thông thường,service,480000
+p059-m4,p059,Freestyle (tự chọn sản phẩm),service,580000
+p059-m5,p059,Combo 2 sản phẩm,service,900000
+p059-m6,p059,Lớp cho trẻ em,service,580000
+p060-m1,p060,"Workshop nặn gốm (1 buổi, gồm nguyên liệu, nung, tráng men, giao hàng)",service,450000
+p061-m1,p061,Workshop gốm/gỗ (1 người),service,450000
+p061-m2,p061,Sản phẩm gốm size S,service,400000
+p062-m1,p062,"Workshop gốm 3 giờ (1 người, gồm nung và tráng men 1 sản phẩm)",service,400000
+p063-m1,p063,Vào cửa (miễn phí),ticket,0
+p064-m1,p064,Vé người lớn,ticket,200000
+p064-m2,p064,Vé HSSV (có thẻ),ticket,100000
+p064-m3,p064,Vé họa sĩ & nhà nghiên cứu nghệ thuật,ticket,100000
+p064-m4,p064,Vé trẻ em 7–12 tuổi,ticket,100000
+p064-m5,p064,"Trẻ em 0–6 tuổi, người khuyết tật",ticket,0
+p064-m6,p064,Gửi xe máy/ô tô,service,0
+p065-m1,p065,Vé hạng 1.600.000đ (show kèm thực đơn),ticket,1600000
+p065-m2,p065,Vé hạng 1.800.000đ,ticket,1800000
+p065-m3,p065,Phục trang hóa thân,service,300000
+p066-m1,p066,Vé 1 tiếng (T2–T5),ticket,169000
+p066-m2,p066,Vé 1 tiếng (T6–CN),ticket,189000
+p066-m3,p066,Vé 1 tiếng (ngày lễ),ticket,199000
+p066-m4,p066,Combo 2 tiếng (T2–CN),ticket,269000
+p066-m5,p066,Combo 2 tiếng (ngày lễ),ticket,289000
+p067-m1,p067,Vào cửa trung tâm thương mại,ticket,0
+p067-m2,p067,"Gửi xe máy (2 giờ đầu, 05:00–23:59)",service,8000
+p067-m3,p067,Gửi xe máy thêm mỗi giờ,service,1000
+p067-m4,p067,Gửi xe máy qua đêm (00:00–04:59),service,40000
+p068-m1,p068,Vào cửa trung tâm thương mại,ticket,0
+p068-m2,p068,Gửi xe máy ban ngày (06:00–18:00),service,6000
+p068-m3,p068,Gửi xe máy ban đêm (18:00–06:00),service,9000
+p069-m1,p069,Vào cửa trung tâm thương mại,ticket,0
+p069-m2,p069,Vé trượt băng Vincom Ice Rink,ticket,220000
+p069-m3,p069,Thuê giày trượt băng (1 lượt),service,30000
+p069-m4,p069,"Vé CGV 2D người lớn (T2, T3, T5)",ticket,65000
+p069-m5,p069,"Vé CGV 2D người lớn (T6–CN, lễ)",ticket,105000
+p070-m1,p070,Vào cửa trung tâm thương mại,ticket,0
+p070-m2,p070,Gửi xe máy,service,5000
+p070-m3,p070,"Vé CGV 2D người lớn (T2, T3, T5 sau 12:00)",ticket,85000
+p070-m4,p070,"Vé CGV 2D người lớn (T6–CN, lễ)",ticket,105000
+p071-m1,p071,Vào cửa trung tâm thương mại,ticket,0
+p071-m2,p071,Gửi xe máy,service,5000
+p071-m3,p071,"Vé CGV 2D người lớn (T2, T3, T5)",ticket,65000
+p071-m4,p071,"Vé CGV 2D người lớn (T6–CN, lễ)",ticket,105000
+p072-m1,p072,Vào cửa trung tâm thương mại,ticket,0
+p072-m2,p072,Gửi xe máy,service,0
+p072-m3,p072,Vé CGV 2D người lớn (ngày thường),ticket,105000
+p072-m4,p072,"Vé CGV 2D người lớn (cuối tuần, lễ)",ticket,125000
+p072-m5,p072,Vé CGV 2D người lớn (Thứ Tư),ticket,79000
+p073-m1,p073,Vào cửa trung tâm thương mại,ticket,0
+p073-m2,p073,Gửi xe máy,service,0
+p073-m3,p073,Vé CGV 2D người lớn (ngày thường),ticket,105000
+p073-m4,p073,"Vé CGV 2D người lớn (cuối tuần, lễ)",ticket,125000
+p073-m5,p073,Vé CGV 2D người lớn (Thứ Tư),ticket,79000
+p074-m1,p074,Vào cửa trung tâm thương mại,ticket,0
+p074-m2,p074,Gửi xe máy,service,5000
+p074-m3,p074,Thuê giày bowling Power Bowl,service,15000
+p074-m4,p074,Vé CGV 2D người lớn (ngày thường),ticket,105000
+p074-m5,p074,Vé CGV 2D người lớn (cuối tuần),ticket,125000
+p074-m6,p074,"Buffet Joopii (từ, mỗi người)",food,159000
+p074-m7,p074,Spicy Box người lớn,food,159000
+p075-m1,p075,Vào cửa trung tâm thương mại,ticket,0
+p075-m2,p075,Vé BHD Star 2D người lớn (Thứ Hai),ticket,60000
+p075-m3,p075,Vé BHD Star 2D người lớn (T3–T5 sau 17:00),ticket,80000
+p075-m4,p075,Vé BHD Star 2D người lớn (T6 sau 17:00),ticket,90000
+p076-m1,p076,Vào cửa trung tâm thương mại,ticket,0
+p076-m2,p076,Gửi xe máy,service,3000
+p076-m3,p076,"Vé CGV 2D người lớn (T2, T3, T5 sau 12:00)",ticket,85000
+p076-m4,p076,"Vé CGV 2D người lớn (T6–CN, lễ)",ticket,105000
+p077-m1,p077,Vào cửa trung tâm thương mại,ticket,0
+p078-m1,p078,Vào cửa trung tâm thương mại,ticket,0
+p078-m2,p078,Gửi xe máy (hầm),service,0
+p078-m3,p078,Vé Galaxy 2D người lớn (Thứ Ba),ticket,45000
+p078-m4,p078,"Vé Galaxy 2D người lớn (T2, T4, T5 sau 17:00)",ticket,75000
+p078-m5,p078,Vé Galaxy 2D người lớn (T6–CN sau 17:00),ticket,90000
+p079-m1,p079,Vào chợ,ticket,0
+p080-m1,p080,Vào chợ,ticket,0
+p081-m1,p081,Vào chợ,ticket,0
+p082-m1,p082,Vào chợ,ticket,0
+p083-m1,p083,Vào chợ,ticket,0
+p084-m1,p084,Vào chợ,ticket,0
+p084-m2,p084,Bún / hủ tiếu / bánh canh (từ),food,25000
+p084-m3,p084,Nem bò nướng sả cây (1 xiên),food,10000
+p085-m1,p085,Vào chợ,ticket,0
+p085-m2,p085,"Phá lấu chiên Vũ Tùng (từ, gần chợ)",food,20000
+p086-m1,p086,Vào chợ,ticket,0
+p087-m1,p087,Vào chợ,ticket,0
+p088-m1,p088,Vào chợ,ticket,0
+p089-m1,p089,Vào chợ,ticket,0
+p090-m1,p090,Vào chợ,ticket,0
+p090-m2,p090,Cháo sườn Ông Tạ (tô),food,35000
+p090-m3,p090,Bánh xèo Cô Sáu (chiếc),food,30000
+p090-m4,p090,Canh bún Cô Út (tô),food,25000
+p090-m5,p090,Huyết chưng (phần),food,50000
+p090-m6,p090,Quần áo đồng giá (sản phẩm cơ bản),service,80000
+p091-m1,p091,Bánh mì Huynh Hoa trứ danh,food,78000
+p091-m2,p091,Bánh bao,food,35000
+p091-m3,p091,Cơm cháy chà bông,food,65000
+p091-m4,p091,Cơm cháy mắm,food,50000
+p091-m5,p091,Chả lụa Huynh Hoa (500g),food,145000
+p092-m1,p092,Bánh mì thập cẩm (ổ),food,24000
+p092-m2,p092,Bánh mì đầy đủ (giá ShopeeFood),food,27000
+p092-m3,p092,Bánh mì chả lụa (giá ShopeeFood),food,27000
+p092-m4,p092,Bánh mì xíu mại (giá ShopeeFood),food,27000
+p092-m5,p092,Bánh mì trứng ốp la (giá ShopeeFood),food,20000
+p092-m6,p092,Combo bánh mì + trà tắc (giá ShopeeFood),food,45000
+p093-m1,p093,Bánh xèo (thường),food,110000
+p093-m2,p093,Bánh xèo đặc biệt,food,180000
+p093-m3,p093,Chả đùm,food,55000
+p093-m4,p093,Trà đá,drink,8000
+p094-m1,p094,Cơm tấm sườn (phần),food,75000
+p094-m2,p094,Cơm sườn (giá ShopeeFood),food,112000
+p094-m3,p094,Cơm sườn bì chả (giá ShopeeFood),food,136000
+p094-m4,p094,Cơm sườn bì chả ốp la (giá ShopeeFood),food,148000
+p094-m5,p094,Cơm bì chả (giá ShopeeFood),food,83000
+p094-m6,p094,Canh khổ qua (giá ShopeeFood),food,40000
+p095-m1,p095,Phở bò tô nhỏ,food,85000
+p095-m2,p095,Phở bò tô lớn,food,95000
+p095-m3,p095,Gửi xe máy,service,5000
+p096-m1,p096,Phở tái gân,food,115000
+p096-m2,p096,Phở nạm gân,food,115000
+p096-m3,p096,Phở thập cẩm,food,130000
+p096-m4,p096,Phở tái nạm gân,food,130000
+p096-m5,p096,Cà phê sữa đá,drink,35000
+p096-m6,p096,Trà Ô Long,drink,20000
+p097-m1,p097,Phở/miến gà tô nhỏ,food,55000
+p097-m2,p097,Phở/miến gà tô lớn,food,65000
+p097-m3,p097,Gỏi gà (dĩa),food,100000
+p098-m1,p098,Ốc hương rang muối (phần nhỏ),food,200000
+p098-m2,p098,Càng ghẹ rang muối (phần nhỏ),food,200000
+p098-m3,p098,Ốc len xào dừa,food,120000
+p098-m4,p098,Ốc mỡ xào bơ,food,120000
+p098-m5,p098,Móng tay xào rau muống,food,150000
+p098-m6,p098,Ốc tỏi nướng mỡ hành (1 con),food,60000
+p099-m1,p099,Vào phố (miễn phí),ticket,0
+p099-m2,p099,Dĩa ốc (giá khởi điểm),food,100000
+p099-m3,p099,Càng cua nướng (giá thấp nhất),food,200000
+p100-m1,p100,Ốc hương rang muối ớt,food,110000
+p100-m2,p100,Ốc hương xào bơ,food,110000
+p100-m3,p100,Răng mực xào bơ,food,110000
+p100-m4,p100,Ốc len xào dừa,food,110000
+p100-m5,p100,Ốc móng tay xào rau muống,food,79000
+p100-m6,p100,Ốc cà na rang muối,food,55000
+p101-m1,p101,Hủ tiếu Nam Vang (tô đặc trưng),food,118000
+p101-m2,p101,Hủ tiếu Nam Vang (giá ShopeeFood),food,155000
+p101-m3,p101,Hủ tiếu Nam Vang không tôm (giá ShopeeFood),food,144000
+p101-m4,p101,Hủ tiếu đồ biển (giá ShopeeFood),food,224000
+p101-m5,p101,Bò kho (giá ShopeeFood),food,194000
+p101-m6,p101,Pate chaud (giá ShopeeFood),food,47000
+p101-m7,p101,Bánh quẩy (giá ShopeeFood),food,20000
+p102-m1,p102,Bột chiên (phần),food,40000
+p102-m2,p102,Há cảo (dĩa),food,25000
+p102-m3,p102,Gỏi cuốn (cuốn),food,10000
+p102-m4,p102,Bì cuốn (cuốn),food,10000
+p103-m1,p103,Súp Cua (cỡ M),food,32000
+p103-m2,p103,Súp Cua (cỡ XL),food,47000
+p103-m3,p103,Súp Óc Heo (cỡ nhỏ nhất),food,30000
+p103-m4,p103,Súp Tôm (cỡ nhỏ nhất),food,30000
+p103-m5,p103,Súp Trứng Bắc Thảo (cỡ nhỏ nhất),food,28000
+p103-m6,p103,Súp Đặc Biệt,food,62000
+p104-m1,p104,Phá lấu bò + bánh mì,food,35000
+p104-m2,p104,Mì phá lấu,food,40000
+p104-m3,p104,Phá lấu bò (phần),food,35000
+p104-m4,p104,Phá lấu bò (phần lớn),food,60000
+p104-m5,p104,Phá lấu chiên,food,35000
+p104-m6,p104,Gỏi khô bò,food,35000
+p104-m7,p104,Bánh mì ăn kèm,food,4000
+p104-m8,p104,Nước sâm (chai),drink,10000
+p105-m1,p105,Bánh canh cua thập cẩm,food,50000
+p105-m2,p105,Bánh canh đầy đủ (giá ShopeeFood),food,66000
+p105-m3,p105,Bánh canh cua + chả (giá ShopeeFood),food,66000
+p105-m4,p105,Bánh canh hải sản (giá ShopeeFood),food,66000
+p105-m5,p105,Cua thêm (giá ShopeeFood),food,36000
+p105-m6,p105,Quẩy thêm (giá ShopeeFood),food,4000
+p106-m1,p106,Bún thịt nướng chả giò (tô),food,40000
+p106-m2,p106,Bún thịt nướng (giá ShopeeFood),food,65000
+p106-m3,p106,Bún chả giò + thịt nướng (giá ShopeeFood),food,65000
+p106-m4,p106,Bún thịt thập cẩm (giá ShopeeFood),food,70000
+p106-m5,p106,Bánh hỏi thịt nướng (giá ShopeeFood),food,75000
+p106-m6,p106,Combo bún thịt nướng + Sting (giá ShopeeFood),food,83000
+p107-m1,p107,Chè hột gà trà,food,38000
+p107-m2,p107,Chè mè đen,food,33000
+p107-m3,p107,Chè đậu đỏ,food,33000
+p107-m4,p107,Chè nếp than,food,38000
+p107-m5,p107,Sâm bửu lượng,food,43000
+p107-m6,p107,Chè khúc bạch,food,45000
+p107-m7,p107,Đậu hủ hạnh nhân,food,28000
+p108-m1,p108,Vào khu ẩm thực (miễn phí),ticket,0
+p108-m2,p108,Thịt xiên nướng (xiên),food,15000
+p108-m3,p108,Nem nướng bò sả (giá từ),food,10000
+p108-m4,p108,Mực giòn vị Thái (10 xiên),food,35000
+p108-m5,p108,Gà rán (giá từ),food,15000
+p108-m6,p108,Gửi xe máy (bãi hẻm 382 Lê Hồng Phong),service,5000
+p109-m1,p109,"Bún riêu đầy đủ (cua, huyết, đậu hũ)",food,72000
+p109-m2,p109,Chả cây thêm,food,10000
+p109-m3,p109,Combo 2 cuốn,food,30000
+p109-m4,p109,Đậu hũ ăn thêm (nhỏ),food,35000
+p109-m5,p109,Rau thêm,food,10000
+p110-m1,p110,Cơm gà luộc,food,78000
+p110-m2,p110,Cơm đùi gà luộc,food,83000
+p110-m3,p110,Cơm gà luộc + xá xíu,food,88000
+p110-m4,p110,Cơm vịt quay,food,78000
+p110-m5,p110,Cơm heo quay,food,73000
+p110-m6,p110,Trà tắc,drink,15000
+p111-m1,p111,Các món bún (bún thịt nướng...),food,80000
+p111-m2,p111,Sinh tố,drink,120000
+p111-m3,p111,Trà đá (ly),drink,25000
+p111-m4,p111,Gửi xe máy,service,10000
+p112-m1,p112,Đậu hũ chiên sả ớt,food,130000
+p112-m2,p112,Nem rán thịt và tôm,food,150000
+p112-m3,p112,Thịt kho trứng,food,160000
+p112-m4,p112,Cơm chiên hải sản,food,150000
+p112-m5,p112,Cua lột rang muối tỏi,food,390000
+p113-m1,p113,Bánh xèo tôm thịt,food,139000
+p113-m2,p113,Bánh xèo hải sản,food,239000
+p113-m3,p113,Cơm chiên dừa tôm & trứng,food,149000
+p113-m4,p113,Chân gà nướng muối ớt,food,129000
+p113-m5,p113,Đậu hũ nấm sốt xì dầu,food,99000
+p114-m1,p114,Bò lúc lắc,food,150000
+p114-m2,p114,Rau muống xào tỏi,food,85000
+p114-m3,p114,Cơm chiên hải sản,food,125000
+p114-m4,p114,Gỏi ngó sen tôm thịt,food,125000
+p114-m5,p114,Cơm trắng,food,15000
+p114-m6,p114,"Nước ép (xoài xanh, ổi, thơm...)",drink,65000
+p114-m7,p114,Bia Saigon,drink,50000
+p115-m1,p115,Burrata Parma Ham Pizza,food,298000
+p115-m2,p115,Margherita Pizza,food,160000
+p115-m3,p115,Spicy Garlic Shrimp Pizza,food,254000
+p115-m4,p115,Signature Burrata with Rocket and Tomato Salad,food,185000
+p115-m5,p115,Crab Cream Spaghetti with Tomato Sauce,food,254000
+p115-m6,p115,Tiramisu with Mascarpone,food,92000
+p115-m7,p115,Craft beer 4P's (Yuzu Wheat),drink,98000
+p116-m1,p116,Chả giò Sài Gòn,food,125000
+p116-m2,p116,Gỏi cuốn tôm thịt chấm tương đậu,food,135000
+p116-m3,p116,Bánh xèo tôm thịt,food,155000
+p116-m4,p116,Cuốn diếp tôm mực,food,185000
+p116-m5,p116,"Set Lunch (cơm, món chính, rau, canh, tráng miệng)",food,165000
+p116-m6,p116,Bia Saigon Special,drink,50000
+p117-m1,p117,Bánh xèo tôm thịt,food,100000
+p117-m2,p117,Chả giò tôm cua đặc biệt,food,95000
+p117-m3,p117,Cua lột sốt me,food,145000
+p117-m4,p117,Bò Mỹ lúc lắc,food,155000
+p117-m5,p117,Bún chả Hà Nội,food,135000
+p117-m6,p117,Rau muống xào tỏi,food,75000
+p117-m7,p117,Canh chua cá,food,99000
+p118-m1,p118,Lẩu cá kèo (nhỏ),food,300000
+p118-m2,p118,Lẩu cá kèo (lớn),food,460000
+p118-m3,p118,Cá kèo chiên (nhỏ),food,165000
+p118-m4,p118,Lẩu Thái,food,370000
+p118-m5,p118,Đậu hũ lướt ván,food,82000
+p118-m6,p118,Combo lẩu cá kèo + 1 nước ngọt,food,325000
+p119-m1,p119,"Gỏi ngó sen tôm thịt (giá ShopeeFood, CN Central)",food,193320
+p119-m2,p119,"Gỏi bưởi tôm thịt (giá ShopeeFood, CN Central)",food,193320
+p119-m3,p119,"Rau muống xào tỏi (giá ShopeeFood, CN Central)",food,85320
+p119-m4,p119,"Khổ qua xào trứng (giá ShopeeFood, CN Central)",food,106920
+p119-m5,p119,"Mắm kho quẹt (giá ShopeeFood, CN Central)",food,59400
+p119-m6,p119,"Coke (giá ShopeeFood, CN Central)",drink,63720
+p120-m1,p120,Gỏi bưởi chanh dây Tây Bắc,food,140000
+p120-m2,p120,Súp dưa tươi Thuận Nam,food,150000
+p120-m3,p120,Canh chua nhà Hum,food,240000
+p120-m4,p120,Cà-ri xanh,food,240000
+p120-m5,p120,"Chè trôi nước mè đen, nước đường hoa dừa Trà Vinh",food,140000
+p121-m1,p121,Gỏi cuốn heo nướng (10 cuốn),food,110000
+p121-m2,p121,Bánh xèo tôm thịt,food,195000
+p121-m3,p121,Bò lúc lắc khoai lang chiên,food,275000
+p121-m4,p121,Cơm tấm sườn nướng mật ong,food,195000
+p121-m5,p121,Cà phê sữa đá,drink,55000
+p121-m6,p121,Trà đá,drink,15000
+p122-m1,p122,Miến xào cua (phần),food,310000
+p122-m2,p122,Miến cua nước,food,210000
+p122-m3,p122,Chả giò cua biển (phần),food,280000
+p122-m4,p122,Cua lột chiên bột,food,390000
+p122-m5,p122,Bánh canh cua,food,210000
+p122-m6,p122,Súp cua,food,150000
+p122-m7,p122,Rau muống xào tỏi,food,100000
+p123-m1,p123,Set Lẩu bò tươi riêu cua,food,455000
+p123-m2,p123,Set Lẩu bò nấm rừng,food,425000
+p123-m3,p123,Thịt bò tươi nhúng,food,99000
+p123-m4,p123,Bò tươi nướng tảng,food,199000
+p123-m5,p123,Bò tơ cuốn bánh tráng,food,199000
+p123-m6,p123,Lẩu riêu cua,food,135000
+p124-m1,p124,Gỏi nấm khoai môn sốt chanh dây,food,169000
+p124-m2,p124,Gỏi bưởi,food,169000
+p124-m3,p124,Salad Sớm Mai,food,179000
+p124-m4,p124,Củ hủ dừa và đậu hũ kho tương đậu,food,109000
+p124-m5,p124,Đậu hũ sốt Tứ Xuyên,food,159000
+p124-m6,p124,Cà om chuối đậu,food,159000
+p124-m7,p124,Kho quẹt rau đồng quê,food,159000
+p125-m1,p125,"Buffet U22 (/người, chưa VAT)",food,199000
+p125-m2,p125,"Buffet Quốc Dân (/người, chưa VAT)",food,319000
+p125-m3,p125,"Buffet Xèo Xèo (/người, chưa VAT)",food,399000
+p125-m4,p125,"Buffet Xèo Xèo Classic (/người, chưa VAT)",food,529000
+p126-m1,p126,Cà phê đen nóng (ly lớn),drink,27000
+p126-m2,p126,Cà phê đá,drink,28000
+p126-m3,p126,Cà phê sữa nóng (ly lớn),drink,28000
+p126-m4,p126,Cà phê sữa đá,drink,33000
+p126-m5,p126,Bạc xỉu đá,drink,30000
+p126-m6,p126,Trà đường nóng/đá,drink,24000
+p126-m7,p126,Lipton chanh nóng/đá,drink,27000
+p127-m1,p127,Cà Phê Sữa Pha Phin,drink,45000
+p127-m2,p127,Cà Phê Vị Phở,drink,60000
+p127-m3,p127,Robusta Colada,drink,55000
+p127-m4,p127,Cà Phê Sữa Yến Mạch,drink,55000
+p127-m5,p127,Latte Hạnh Nhân,drink,60000
+p127-m6,p127,Bơ Nữ Hoàng Cà Phê Sữa,drink,60000
+p128-m1,p128,Cà phê nâu đá (8oz),drink,35000
+p128-m2,p128,Cà phê nâu đá (12oz),drink,39000
+p128-m3,p128,Bạc xỉu đá (12oz),drink,45000
+p128-m4,p128,Bạc xỉu nóng,drink,49000
+p128-m5,p128,Cốt dừa cà phê,drink,59000
+p129-m1,p129,Espresso,drink,50000
+p129-m2,p129,Americano (nóng),drink,60000
+p129-m3,p129,Cappuccino,drink,70000
+p129-m4,p129,Latte (nóng),drink,70000
+p129-m5,p129,Iced Latte,drink,75000
+p129-m6,p129,Cold Brew,drink,70000
+p129-m7,p129,Iced Roasted Almond Latte,drink,80000
+p130-m1,p130,Sài Gòn Cafe sữa đá anh ơi,drink,40000
+p130-m2,p130,Sài Gòn Cafe (cà phê đen),drink,40000
+p130-m3,p130,Latte,drink,55000
+p130-m4,p130,Trà Đào Cam Sả,drink,55000
+p130-m5,p130,Matcha Latte,drink,50000
+p130-m6,p130,Bánh ngọt (cake),food,45000
+p130-m7,p130,Xôi xà xíu + chà bông,food,60000
+p131-m1,p131,Vietnamese Black Coffee,drink,60000
+p131-m2,p131,Vietnamese Milk Coffee,drink,65000
+p131-m3,p131,Cappuccino / Flat White / Latte,drink,85000
+p131-m4,p131,Tiramisu Iced Coffee,drink,95000
+p131-m5,p131,Lemongrass Peach Iced Tea,drink,85000
+p131-m6,p131,Coconut Matcha Cloud,drink,120000
+p131-m7,p131,Salmon Royale Croissant,food,220000
+p132-m1,p132,Bạc xỉu,drink,35000
+p132-m2,p132,Trà Oolong Nướng Sữa (size S),drink,42000
+p132-m3,p132,Oolong Ba Lá,drink,42000
+p132-m4,p132,Matcha dừa (Matcha coconut),drink,59000
+p133-m1,p133,Cà phê đen,drink,115000
+p133-m2,p133,Cà phê sữa,drink,120000
+p133-m3,p133,Bạc xỉu,drink,120000
+p133-m4,p133,Cà phê trứng,drink,150000
+p133-m5,p133,Cà phê muối,drink,150000
+p133-m6,p133,Cold brew truyền thống,drink,135000
+p133-m7,p133,Chả giò,food,220000
+p134-m1,p134,Signature Marou,drink,105000
+p134-m2,p134,Marou Signature Pearl Ice,drink,120000
+p134-m3,p134,Coconut Cappuccino (Vegan),drink,95000
+p134-m4,p134,Coconut Milk (Vegan),drink,70000
+p134-m5,p134,Croissant,food,70000
+p134-m6,p134,Pain Au Chocolat,food,75000
+p134-m7,p134,Chocolate Flan Mini,food,80000
+p135-m1,p135,Kem Trái Dừa,food,165000
+p135-m2,p135,"Kem Bạch Đằng (2 viên kem dừa, sốt chocolate, trái cây)",food,150000
+p135-m3,p135,Kem Cà Phê,food,115000
+p135-m4,p135,Kem Bốn Mùi,food,130000
+p135-m5,p135,Kem Sầu Riêng,food,125000
+p135-m6,p135,Nước cam tươi,drink,90000
+p135-m7,p135,Táo ép,drink,80000
+p136-m1,p136,Cà phê sữa,drink,50000
+p136-m2,p136,Bạc xỉu,drink,60000
+p136-m3,p136,Americano,drink,60000
+p136-m4,p136,Latte (sữa Meiji),drink,70000
+p136-m5,p136,Nitro Coldbrew,drink,60000
+p136-m6,p136,Matcha Latte (sữa Meiji),drink,80000
+p136-m7,p136,Bánh Cinnamon Roll,food,55000
+p137-m1,p137,Cà phê sữa,drink,55000
+p137-m2,p137,Bạc xỉu,drink,53000
+p137-m3,p137,Cà phê muối,drink,65000
+p137-m4,p137,Sữa tươi cà phê,drink,52000
+p137-m5,p137,Trà tắc xí muội,drink,50000
+p137-m6,p137,Mì trộn trứng cá viên,food,58000
+p138-m1,p138,Milk Coffee,drink,81000
+p138-m2,p138,Black Coffee,drink,70200
+p138-m3,p138,Hot Egg Coffee,drink,97200
+p138-m4,p138,Latte (hot/iced),drink,91800
+p138-m5,p138,Cappuccino (hot/iced),drink,86400
+p138-m6,p138,Pulled Beef Benedict,food,237600
+p139-m1,p139,Egg coffee / Egg cacao / Egg matcha (nóng hoặc đá),drink,40000
+p139-m2,p139,Vietnamese milk coffee,drink,40000
+p139-m3,p139,Salt coffee,drink,55000
+p139-m4,p139,Coconut coffee,drink,55000
+p139-m5,p139,Kumquat ginger lemongrass tea,drink,55000
+p139-m6,p139,Mango smoothie,drink,75000
+p139-m7,p139,Egg benedict chicken benny,food,150000
+p140-m1,p140,Trà Sữa Phúc Long (L),drink,60000
+p140-m2,p140,Trà Vải Lài (L),drink,65000
+p140-m3,p140,Trà Nhãn Sen (L),drink,65000
+p140-m4,p140,Trà Ô Long Sữa (L),drink,60000
+p140-m5,p140,Phin Sữa Đá (M),drink,39000
+p140-m6,p140,Bạc Xỉu (L),drink,45000
+p140-m7,p140,Cà phê Cappuccino (L),drink,65000
+p141-m1,p141,Cà phê sữa đá,drink,30000
+p141-m2,p141,Cà phê đen,drink,30000
+p141-m3,p141,Cà phê trứng,drink,35000
+p141-m4,p141,Trà sữa,drink,30000
+p141-m5,p141,Chanh muối,drink,30000
+p141-m6,p141,Xí muội,drink,30000
+p142-m1,p142,Cà Phê Muối (nhỏ),drink,22000
+p142-m2,p142,Cà Phê Muối (lớn),drink,29000
+p142-m3,p142,Cà Phê Muối Chai,drink,65000
+p142-m4,p142,Combo 1: Cà Phê Muối + Ca Cao Sữa,drink,47000
+p143-m1,p143,Ô Long Sữa Phê La,drink,54000
+p143-m2,p143,Ô Long Sữa Phê La (size La),drink,69000
+p143-m3,p143,Lụa Đào (size Phê),drink,54000
+p143-m4,p143,Lang Biang,drink,54000
+p143-m5,p143,Trà Vỏ Cà Phê,drink,54000
+p143-m6,p143,Matcha Coco Latte,drink,59000
+p143-m7,p143,Phê Nâu,drink,39000
+p144-m1,p144,Vào cửa phố đi bộ,ticket,0
+p144-m2,p144,"Bia (lon/ly, mức thấp nhất của khoảng 20.000–50.000)",drink,20000
+p144-m3,p144,Cocktail tại quán bar (giá từ),drink,80000
+p144-m4,p144,Món ăn đường phố (giá từ),food,50000
+p144-m5,p144,Massage chân (giá từ),service,100000
+p145-m1,p145,"Signature cocktail (vd. Mojito Royal, Uncanny Touch)",drink,350000
+p145-m2,p145,"Classic cocktail (Margarita, Whiskey Sour, Cosmopolitan...)",drink,350000
+p145-m3,p145,"Happy hour Duo Combo (2 cocktail + 1 snack, 17:30–20:00)",drink,590000
+p145-m4,p145,"Happy hour Circle Combo (4 cocktail + 1 snack, 17:30–20:00)",drink,950000
+p146-m1,p146,Cocktail The Ritual Collection - Drip (Coffee Culture),drink,280000
+p146-m2,p146,Cocktail The Ritual Collection - Bloom (Flower Vendor Culture),drink,280000
+p146-m3,p146,Cocktail Miss Saigon,drink,280000
+p146-m4,p146,Cocktail The Heritage collection,drink,280000
+p147-m1,p147,"Signature cocktail (Negroni, Aperol Spritz, Espresso Martini...)",drink,220000
+p147-m2,p147,Vang đỏ theo ly - Princess des Sables Syrah,drink,200000
+p147-m3,p147,Prosecco theo ly - Cavalieri Reali,drink,260000
+p147-m4,p147,Bia Belgo Blond (Việt Nam),drink,150000
+p147-m5,p147,Bia Việt,drink,130000
+p147-m6,p147,Cà phê / trà Dilmah,drink,120000
+p148-m1,p148,Kurtz's Insane IPA (pint),drink,160000
+p148-m2,p148,Kurtz's Insane IPA (small),drink,55000
+p148-m3,p148,Dream Alone Pale Ale (pint),drink,160000
+p148-m4,p148,Quietest Creature Lemongrass Wit (medium),drink,105000
+p148-m5,p148,Excited Magpie Dry Irish Stout Nitro (pint),drink,145000
+p148-m6,p148,Loose Rivet New England IPA (pint),drink,185000
+p148-m7,p148,Tháp bia 3 lít (Pale Ale / IPA),drink,875000
+p149-m1,p149,Jasmine IPA,drink,115000
+p149-m2,p149,Session IPA,drink,99000
+p149-m3,p149,Irish Stout,drink,99000
+p149-m4,p149,Cyclo Stout,drink,165000
+p150-m1,p150,Phí cover (một số ngày có nhạc),service,70000
+p150-m2,p150,Vé show tribute band (đặt trước),ticket,100000
+p150-m3,p150,Vé show tribute band (mua tại cửa),ticket,150000
