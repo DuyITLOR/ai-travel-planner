@@ -23,6 +23,8 @@ target/
 
 # Claude Code: settings.json is shared, local overrides are not
 .claude/settings.local.json
+# Plans written by /plan are working files, one per task
+docs/plans/
 
 # Ảnh địa điểm là tài nguyên riêng của team, không đưa lên repo
 data/images/
