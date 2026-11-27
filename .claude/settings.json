@@ -43,37 +43,31 @@
       "Edit(apps/web/**/*.test.ts)",
       "Edit(apps/api/src/plans/validator.rs)",
       "Edit(docs/contract/**)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-main.mjs\""
+          }
+        ]
+      }
     ],
-    "deny": [
-      "Read(**/.env)",
-      "Read(**/.env.local)",
-      "Read(**/.env.development)",
-      "Read(**/.env.production)",
-      "Read(**/.env.*.local)",
-      "Bash(cat *.env*)",
-      "Bash(head *.env*)",
-      "Bash(tail *.env*)",
-      "Bash(less *.env*)",
-      "Bash(grep *.env*)",
-      "Read(**/.env.staging)",
-      "Read(**/.env.test)",
-      "Bash(sed *.env*)",
-      "Bash(awk *.env*)",
-      "Bash(type *.env*)",
-      "Bash(Get-Content *.env*)",
-      "Bash(printenv:*)",
-      "Bash(env)",
-      "Bash(git push --force:*)",
-      "Bash(git push -f:*)",
-      "Bash(git push origin main)",
-      "Bash(git push origin HEAD:main)",
-      "Bash(git reset --hard:*)",
-      "Bash(git commit --no-verify:*)",
-      "Bash(supabase db reset --linked:*)",
-      "Bash(rm -rf:*)",
-      "Bash(git push -u origin main)",
-      "Bash(git push --set-upstream origin main)",
-      "Bash(git push origin --force:*)"
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format-file.mjs\"",
+            "timeout": 30
+          }
+        ]
+      }
     ]
   }
 }

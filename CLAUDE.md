@@ -36,7 +36,10 @@ From the repo root after `pnpm install --frozen-lockfile`; each covers TS and Ru
 - Return 500 for bad client input; return the problem `type` the contract names.
 - Make a check unable to fail: no `--passWithNoTests`, `|| true` or `continue-on-error` in a check.
 
-## Permissions (enforced in `.claude/settings.json`)
+## Permissions
+
+`.claude/settings.json` enforces Allowed and Ask first. Never is a rule to follow: nothing refuses it except branch protection on `main`.
+Hooks in `.claude/hooks/`: an edit on `main` is refused (create a branch first); every edited file is formatted with rustfmt or Prettier.
 
 - **Allowed:** read the code; run the `pnpm` and `cargo` checks and `pnpm dev`; `git switch -c`, `add`, `commit` on a branch; edit `apps/`, `packages/`, `docs/` (not the ask-first files below).
 - **Ask first:** edit tests, `validator.rs` or `docs/contract/`; add a dependency or a migration; `supabase db push`; edit `.github/`, `render.yaml`, this file; `git push`.
