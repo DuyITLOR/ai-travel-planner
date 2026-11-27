@@ -1,13 +1,7 @@
-import { Be_Vietnam_Pro } from 'next/font/google';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { beVietnamPro as font } from '@/lib/fonts';
 import styles from './auth.module.css';
-
-const font = Be_Vietnam_Pro({
-  subsets: ['latin', 'vietnamese'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-});
 
 const PROMISES = [
   'Không đến nơi đang đóng cửa',
