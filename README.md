@@ -65,6 +65,18 @@ Api nối thẳng vào Postgres bằng `sqlx`; web dùng `@supabase/supabase-js`
   áp dụng local bằng `supabase db reset`, lên cloud bằng `supabase db push` (sau khi `supabase link`).
   Bảng nào web đọc trực tiếp thì phải bật Row Level Security.
 
+### Dữ liệu địa điểm
+
+Bộ dữ liệu dùng chung trong `data/` (xem `data/README.md`) nằm trong 3 bảng: `places` (150 điểm),
+`menu_items` (món/vé, giá VND nguyên) và `travel_times` (mọi cặp `from_place_id` → `to_place_id`,
+phút đi xe máy và mét). Schema ở `supabase/migrations/*_create_places.sql`; RLS cho phép mọi người đọc, không ai ghi qua API.
+
+Nạp hoặc cập nhật sau khi sửa file JSON (cần `DATABASE_URL` trong `apps/api/.env`; chạy lại được):
+
+```bash
+cd apps/api && cargo run --bin seed_places
+```
+
 ### Đăng nhập (Supabase Auth)
 
 Web đăng nhập bằng email/mật khẩu hoặc Google; phiên lưu trong cookie (`@supabase/ssr`).
