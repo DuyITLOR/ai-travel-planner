@@ -1,0 +1,4216 @@
+[
+ {
+  "item_id": "p001-m1",
+  "place_id": "p001",
+  "name": "Vé thông thường (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p001-m2",
+  "place_id": "p001",
+  "name": "Vé giảm 50% (người cao tuổi, đối tượng chính sách)",
+  "kind": "ticket",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p001-m3",
+  "place_id": "p001",
+  "name": "Vé trẻ em, học sinh, sinh viên (miễn phí, xuất trình giấy tờ)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p002-m1",
+  "place_id": "p002",
+  "name": "Vé tham quan (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p002-m2",
+  "place_id": "p002",
+  "name": "Vé giảm 50% (người từ 60 tuổi, đối tượng chính sách)",
+  "kind": "ticket",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p002-m3",
+  "place_id": "p002",
+  "name": "Vé trẻ em 6–16 tuổi, học sinh, sinh viên (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p003-m1",
+  "place_id": "p003",
+  "name": "Vé tham quan (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p003-m2",
+  "place_id": "p003",
+  "name": "Vé giảm 50% (người cao tuổi, đối tượng chính sách)",
+  "kind": "ticket",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p003-m3",
+  "place_id": "p003",
+  "name": "Vé trẻ em, học sinh, sinh viên (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p003-m4",
+  "place_id": "p003",
+  "name": "Phí mang máy ảnh chụp hình",
+  "kind": "service",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p004-m1",
+  "place_id": "p004",
+  "name": "Vé tham quan (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p004-m2",
+  "place_id": "p004",
+  "name": "Vé giảm 50% (người từ 60 tuổi, đối tượng chính sách)",
+  "kind": "ticket",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p004-m3",
+  "place_id": "p004",
+  "name": "Vé trẻ em, học sinh, sinh viên (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p005-m1",
+  "place_id": "p005",
+  "name": "Vé vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p006-m1",
+  "place_id": "p006",
+  "name": "Vé trải nghiệm đầy đủ 90 phút (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 750000
+ },
+ {
+  "item_id": "p006-m2",
+  "place_id": "p006",
+  "name": "Vé trẻ em cao 1m–1,4m",
+  "kind": "ticket",
+  "price_vnd": 500000
+ },
+ {
+  "item_id": "p006-m3",
+  "place_id": "p006",
+  "name": "Trẻ em dưới 1m (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p007-m1",
+  "place_id": "p007",
+  "name": "Vé người lớn (bao gồm chụp ảnh)",
+  "kind": "ticket",
+  "price_vnd": 180000
+ },
+ {
+  "item_id": "p007-m2",
+  "place_id": "p007",
+  "name": "Vé học sinh, sinh viên, người cao tuổi, trẻ em 2–15 tuổi",
+  "kind": "ticket",
+  "price_vnd": 90000
+ },
+ {
+  "item_id": "p008-m1",
+  "place_id": "p008",
+  "name": "Vé vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p008-m2",
+  "place_id": "p008",
+  "name": "Gửi xe (miễn phí)",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p009-m1",
+  "place_id": "p009",
+  "name": "Vé vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p010-m1",
+  "place_id": "p010",
+  "name": "Vé vào cửa khách Việt Nam (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p010-m2",
+  "place_id": "p010",
+  "name": "Vé khách nước ngoài",
+  "kind": "ticket",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p011-m1",
+  "place_id": "p011",
+  "name": "Vé người lớn ngày thường",
+  "kind": "ticket",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p011-m2",
+  "place_id": "p011",
+  "name": "Vé trẻ em ngày thường",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p011-m3",
+  "place_id": "p011",
+  "name": "Vé người lớn cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p011-m4",
+  "place_id": "p011",
+  "name": "Vé trẻ em cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p012-m1",
+  "place_id": "p012",
+  "name": "Vé khách du lịch (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p012-m2",
+  "place_id": "p012",
+  "name": "Vé học sinh, sinh viên, trẻ em",
+  "kind": "ticket",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p013-m1",
+  "place_id": "p013",
+  "name": "Vé người lớn",
+  "kind": "ticket",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p013-m2",
+  "place_id": "p013",
+  "name": "Vé sinh viên / người cao tuổi",
+  "kind": "ticket",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p013-m3",
+  "place_id": "p013",
+  "name": "Vé trẻ em (6 – dưới 16 tuổi)",
+  "kind": "ticket",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p013-m4",
+  "place_id": "p013",
+  "name": "Thuê audio guide",
+  "kind": "service",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p014-m1",
+  "place_id": "p014",
+  "name": "Vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p014-m2",
+  "place_id": "p014",
+  "name": "Gửi xe máy (gần Nhà thờ Đức Bà/Đường sách)",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p015-m1",
+  "place_id": "p015",
+  "name": "Vào cửa / ngắm bên ngoài (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p015-m2",
+  "place_id": "p015",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p016-m1",
+  "place_id": "p016",
+  "name": "Ngắm/chụp ảnh mặt ngoài (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p017-m1",
+  "place_id": "p017",
+  "name": "Vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p018-m1",
+  "place_id": "p018",
+  "name": "Vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p018-m2",
+  "place_id": "p018",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p019-m1",
+  "place_id": "p019",
+  "name": "Phí thang máy (được quán hoàn lại)",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p019-m2",
+  "place_id": "p019",
+  "name": "Gửi xe máy tầng trệt",
+  "kind": "service",
+  "price_vnd": 3000
+ },
+ {
+  "item_id": "p019-m3",
+  "place_id": "p019",
+  "name": "Đồ uống The Letter Cafe (tầng 6)",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p019-m4",
+  "place_id": "p019",
+  "name": "Đồ uống Sài Gòn Ơi Cafe (tầng 5)",
+  "kind": "drink",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p020-m1",
+  "place_id": "p020",
+  "name": "Vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p021-m1",
+  "place_id": "p021",
+  "name": "Vé người lớn ngày thường (T2–T6)",
+  "kind": "ticket",
+  "price_vnd": 450000
+ },
+ {
+  "item_id": "p021-m2",
+  "place_id": "p021",
+  "name": "Vé người lớn cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 510000
+ },
+ {
+  "item_id": "p021-m3",
+  "place_id": "p021",
+  "name": "Vé trẻ em 4–12 tuổi ngày thường",
+  "kind": "ticket",
+  "price_vnd": 250000
+ },
+ {
+  "item_id": "p021-m4",
+  "place_id": "p021",
+  "name": "Vé trẻ em 4–12 tuổi cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 260000
+ },
+ {
+  "item_id": "p022-m1",
+  "place_id": "p022",
+  "name": "Vé người lớn",
+  "kind": "ticket",
+  "price_vnd": 240000
+ },
+ {
+  "item_id": "p022-m2",
+  "place_id": "p022",
+  "name": "Vé trẻ em 4–12 tuổi",
+  "kind": "ticket",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p022-m3",
+  "place_id": "p022",
+  "name": "Vé người cao tuổi (65+)",
+  "kind": "ticket",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p022-m4",
+  "place_id": "p022",
+  "name": "Trẻ em dưới 4 tuổi (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p023-m1",
+  "place_id": "p023",
+  "name": "Vé vào cổng người lớn (khách Việt Nam)",
+  "kind": "ticket",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p023-m2",
+  "place_id": "p023",
+  "name": "Vé vào cổng khách nước ngoài",
+  "kind": "ticket",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p023-m3",
+  "place_id": "p023",
+  "name": "Chui hầm",
+  "kind": "service",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p023-m4",
+  "place_id": "p023",
+  "name": "Bắn súng thể thao quốc phòng (mỗi viên, từ)",
+  "kind": "service",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p023-m5",
+  "place_id": "p023",
+  "name": "Khu tái hiện vùng giải phóng Củ Chi",
+  "kind": "ticket",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p023-m6",
+  "place_id": "p023",
+  "name": "Tour đêm Trăng chiến khu",
+  "kind": "service",
+  "price_vnd": 399000
+ },
+ {
+  "item_id": "p024-m1",
+  "place_id": "p024",
+  "name": "Vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p025-m1",
+  "place_id": "p025",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p025-m2",
+  "place_id": "p025",
+  "name": "Gửi xe máy (miễn phí)",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p025-m3",
+  "place_id": "p025",
+  "name": "Công đức (tuỳ tâm, mức thường gặp)",
+  "kind": "service",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p026-m1",
+  "place_id": "p026",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p027-m1",
+  "place_id": "p027",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p027-m2",
+  "place_id": "p027",
+  "name": "Gửi xe máy (miễn phí)",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p028-m1",
+  "place_id": "p028",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p028-m2",
+  "place_id": "p028",
+  "name": "Gửi xe máy (miễn phí)",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p029-m1",
+  "place_id": "p029",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p030-m1",
+  "place_id": "p030",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p031-m1",
+  "place_id": "p031",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p032-m1",
+  "place_id": "p032",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p033-m1",
+  "place_id": "p033",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p034-m1",
+  "place_id": "p034",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p035-m1",
+  "place_id": "p035",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p036-m1",
+  "place_id": "p036",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p037-m1",
+  "place_id": "p037",
+  "name": "Vé người lớn (cao từ 1,3m)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p037-m2",
+  "place_id": "p037",
+  "name": "Vé trẻ em (1m – dưới 1,3m)",
+  "kind": "ticket",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p037-m3",
+  "place_id": "p037",
+  "name": "Tour đêm thứ Bảy",
+  "kind": "ticket",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p037-m4",
+  "place_id": "p037",
+  "name": "Tham quan khu capybara",
+  "kind": "service",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p037-m5",
+  "place_id": "p037",
+  "name": "Gửi xe máy (xe tay ga)",
+  "kind": "service",
+  "price_vnd": 4000
+ },
+ {
+  "item_id": "p037-m6",
+  "place_id": "p037",
+  "name": "Gửi xe máy (xe số)",
+  "kind": "service",
+  "price_vnd": 3000
+ },
+ {
+  "item_id": "p037-m7",
+  "place_id": "p037",
+  "name": "Gửi ô tô 4–7 chỗ",
+  "kind": "service",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p038-m1",
+  "place_id": "p038",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p038-m2",
+  "place_id": "p038",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p039-m1",
+  "place_id": "p039",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p040-m1",
+  "place_id": "p040",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p040-m2",
+  "place_id": "p040",
+  "name": "Gửi xe máy (bãi đường Võ Thị Sáu)",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p040-m3",
+  "place_id": "p040",
+  "name": "Gửi ô tô (bãi đường Điện Biên Phủ)",
+  "kind": "service",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p041-m1",
+  "place_id": "p041",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p041-m2",
+  "place_id": "p041",
+  "name": "Gửi xe máy (cổng Hoàng Minh Giám)",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p042-m1",
+  "place_id": "p042",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p042-m2",
+  "place_id": "p042",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p043-m1",
+  "place_id": "p043",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p044-m1",
+  "place_id": "p044",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p044-m2",
+  "place_id": "p044",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p045-m1",
+  "place_id": "p045",
+  "name": "Buffet đồng quê cuối tuần – người lớn",
+  "kind": "food",
+  "price_vnd": 439000
+ },
+ {
+  "item_id": "p045-m2",
+  "place_id": "p045",
+  "name": "Buffet đồng quê – trẻ em dưới 1,4m",
+  "kind": "food",
+  "price_vnd": 279000
+ },
+ {
+  "item_id": "p045-m3",
+  "place_id": "p045",
+  "name": "Thuê võng",
+  "kind": "service",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p045-m4",
+  "place_id": "p045",
+  "name": "Câu cá (1 cần, gồm mồi)",
+  "kind": "service",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p046-m1",
+  "place_id": "p046",
+  "name": "Vào cửa",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p046-m2",
+  "place_id": "p046",
+  "name": "Vé hồ bơi người lớn (ngày thường)",
+  "kind": "ticket",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p046-m3",
+  "place_id": "p046",
+  "name": "Vé hồ bơi trẻ em (ngày thường)",
+  "kind": "ticket",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p046-m4",
+  "place_id": "p046",
+  "name": "Buffet cuối tuần – người lớn",
+  "kind": "food",
+  "price_vnd": 290000
+ },
+ {
+  "item_id": "p046-m5",
+  "place_id": "p046",
+  "name": "Buffet cuối tuần – trẻ em",
+  "kind": "food",
+  "price_vnd": 170000
+ },
+ {
+  "item_id": "p047-m1",
+  "place_id": "p047",
+  "name": "Vé tham quan trong ngày (cao trên 1m4, mua tại cổng chính)",
+  "kind": "ticket",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p047-m2",
+  "place_id": "p047",
+  "name": "Vé tham quan trong ngày (cao 1m–1m4, cổng chính)",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p047-m3",
+  "place_id": "p047",
+  "name": "Vé trọn gói (trên 1m4, cổng chính; gồm trò chơi, Thủy cung, xe điện)",
+  "kind": "ticket",
+  "price_vnd": 300000
+ },
+ {
+  "item_id": "p047-m4",
+  "place_id": "p047",
+  "name": "Vé trọn gói (dưới 1m4, cổng chính)",
+  "kind": "ticket",
+  "price_vnd": 220000
+ },
+ {
+  "item_id": "p047-m5",
+  "place_id": "p047",
+  "name": "Vé Băng Đăng (trên 1m4)",
+  "kind": "ticket",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p047-m6",
+  "place_id": "p047",
+  "name": "Buffet kèm vé cổng (người lớn)",
+  "kind": "food",
+  "price_vnd": 249000
+ },
+ {
+  "item_id": "p048-m1",
+  "place_id": "p048",
+  "name": "Vé khách lẻ (cao trên 1m4)",
+  "kind": "ticket",
+  "price_vnd": 220000
+ },
+ {
+  "item_id": "p048-m2",
+  "place_id": "p048",
+  "name": "Vé khách lẻ (cao 0,8m–1m4)",
+  "kind": "ticket",
+  "price_vnd": 180000
+ },
+ {
+  "item_id": "p048-m3",
+  "place_id": "p048",
+  "name": "Trẻ em dưới 0,8m",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p048-m4",
+  "place_id": "p048",
+  "name": "Vé HSSV/giảng viên (ưu đãi)",
+  "kind": "ticket",
+  "price_vnd": 170000
+ },
+ {
+  "item_id": "p048-m5",
+  "place_id": "p048",
+  "name": "Tủ gửi đồ",
+  "kind": "service",
+  "price_vnd": 25000
+ },
+ {
+  "item_id": "p049-m1",
+  "place_id": "p049",
+  "name": "Vé cổng người lớn (từ 1m4)",
+  "kind": "ticket",
+  "price_vnd": 180000
+ },
+ {
+  "item_id": "p049-m2",
+  "place_id": "p049",
+  "name": "Vé cổng trẻ em (dưới 1m4)",
+  "kind": "ticket",
+  "price_vnd": 90000
+ },
+ {
+  "item_id": "p049-m3",
+  "place_id": "p049",
+  "name": "Vé cổng Kỳ Quan – chỉ tắm biển (người lớn, du khách)",
+  "kind": "ticket",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p049-m4",
+  "place_id": "p049",
+  "name": "Combo Gia đình 1 (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 250000
+ },
+ {
+  "item_id": "p049-m5",
+  "place_id": "p049",
+  "name": "Combo Gia đình 4 (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 350000
+ },
+ {
+  "item_id": "p049-m6",
+  "place_id": "p049",
+  "name": "Combo 30 trò chơi (người lớn)",
+  "kind": "ticket",
+  "price_vnd": 770000
+ },
+ {
+  "item_id": "p050-m1",
+  "place_id": "p050",
+  "name": "Vé Hòn Đảo Nhiệt Đới – người lớn, T2–T6",
+  "kind": "ticket",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p050-m2",
+  "place_id": "p050",
+  "name": "Vé Hòn Đảo Nhiệt Đới – người lớn, cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 250000
+ },
+ {
+  "item_id": "p050-m3",
+  "place_id": "p050",
+  "name": "Vé Khu Vườn Mộng Mơ – người lớn, T2–T6",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p050-m4",
+  "place_id": "p050",
+  "name": "Vé Khu Vườn Mộng Mơ – người lớn, cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p050-m5",
+  "place_id": "p050",
+  "name": "Combo 2 khu – người lớn, T2–T6",
+  "kind": "ticket",
+  "price_vnd": 270000
+ },
+ {
+  "item_id": "p050-m6",
+  "place_id": "p050",
+  "name": "Combo 2 khu – trẻ em 100–139cm, T2–T6",
+  "kind": "ticket",
+  "price_vnd": 190000
+ },
+ {
+  "item_id": "p051-m1",
+  "place_id": "p051",
+  "name": "Vé 1 lượt",
+  "kind": "ticket",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p051-m2",
+  "place_id": "p051",
+  "name": "Vé khứ hồi",
+  "kind": "ticket",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p051-m3",
+  "place_id": "p051",
+  "name": "Người từ 70 tuổi, trẻ dưới 1 tuổi, người khuyết tật, thương binh",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p052-m1",
+  "place_id": "p052",
+  "name": "Vé 2D người lớn – ngày thường (T2, T3, T5)",
+  "kind": "ticket",
+  "price_vnd": 115000
+ },
+ {
+  "item_id": "p052-m2",
+  "place_id": "p052",
+  "name": "Vé 2D người lớn – cuối tuần/lễ",
+  "kind": "ticket",
+  "price_vnd": 135000
+ },
+ {
+  "item_id": "p052-m3",
+  "place_id": "p052",
+  "name": "Vé U22 (từ)",
+  "kind": "ticket",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p052-m4",
+  "place_id": "p052",
+  "name": "Vé 2D – Thứ Tư Vui Vẻ (theo bảng MoMo)",
+  "kind": "ticket",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p053-m1",
+  "place_id": "p053",
+  "name": "Vé 2D người lớn – T2/T4/T6 trước 17h",
+  "kind": "ticket",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p053-m2",
+  "place_id": "p053",
+  "name": "Vé 2D người lớn – T2/T4/T6 sau 17h",
+  "kind": "ticket",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p053-m3",
+  "place_id": "p053",
+  "name": "Vé 2D người lớn – cuối tuần sau 17h",
+  "kind": "ticket",
+  "price_vnd": 90000
+ },
+ {
+  "item_id": "p053-m4",
+  "place_id": "p053",
+  "name": "Vé 2D người lớn – ngày lễ",
+  "kind": "ticket",
+  "price_vnd": 95000
+ },
+ {
+  "item_id": "p053-m5",
+  "place_id": "p053",
+  "name": "Vé U22 – ngày thường trước 17h",
+  "kind": "ticket",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p054-m1",
+  "place_id": "p054",
+  "name": "Vé 1 tiếng (trước 19:00, T2–T6)",
+  "kind": "ticket",
+  "price_vnd": 169000
+ },
+ {
+  "item_id": "p054-m2",
+  "place_id": "p054",
+  "name": "Vé 1 tiếng (sau 19:00 & cuối tuần)",
+  "kind": "ticket",
+  "price_vnd": 189000
+ },
+ {
+  "item_id": "p054-m3",
+  "place_id": "p054",
+  "name": "Vé 1 tiếng (ngày lễ)",
+  "kind": "ticket",
+  "price_vnd": 199000
+ },
+ {
+  "item_id": "p054-m4",
+  "place_id": "p054",
+  "name": "Combo 2 tiếng, nhóm từ 4 người (trước 19:00, T2–T6)",
+  "kind": "ticket",
+  "price_vnd": 249000
+ },
+ {
+  "item_id": "p054-m5",
+  "place_id": "p054",
+  "name": "Combo 2 tiếng, nhóm từ 4 người (sau 19:00 & cuối tuần)",
+  "kind": "ticket",
+  "price_vnd": 269000
+ },
+ {
+  "item_id": "p054-m6",
+  "place_id": "p054",
+  "name": "Combo 2 tiếng, nhóm từ 4 người (ngày lễ)",
+  "kind": "ticket",
+  "price_vnd": 289000
+ },
+ {
+  "item_id": "p055-m1",
+  "place_id": "p055",
+  "name": "Vé vào cổng (đường bộ, gồm xe điện)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p055-m2",
+  "place_id": "p055",
+  "name": "Tham quan đầm cá sấu (khứ hồi)",
+  "kind": "ticket",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p055-m3",
+  "place_id": "p055",
+  "name": "Câu cá sấu (thuyền lồng sắt)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p055-m4",
+  "place_id": "p055",
+  "name": "Chèo xuồng đến Đầm Dơi",
+  "kind": "ticket",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p055-m5",
+  "place_id": "p055",
+  "name": "Ca nô từ trung tâm đến Đầm Dơi (khứ hồi)",
+  "kind": "ticket",
+  "price_vnd": 185000
+ },
+ {
+  "item_id": "p055-m6",
+  "place_id": "p055",
+  "name": "Thuê xe đạp (30 phút)",
+  "kind": "service",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p056-m1",
+  "place_id": "p056",
+  "name": "Set menu 2026 người lớn (3/4/5 món, từ)",
+  "kind": "ticket",
+  "price_vnd": 980000
+ },
+ {
+  "item_id": "p056-m2",
+  "place_id": "p056",
+  "name": "Set menu chay người lớn (4/5 món, từ)",
+  "kind": "ticket",
+  "price_vnd": 950000
+ },
+ {
+  "item_id": "p056-m3",
+  "place_id": "p056",
+  "name": "Set menu trẻ em 6–11 tuổi (4 món, từ)",
+  "kind": "ticket",
+  "price_vnd": 850000
+ },
+ {
+  "item_id": "p057-m1",
+  "place_id": "p057",
+  "name": "Vé người lớn",
+  "kind": "ticket",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p057-m2",
+  "place_id": "p057",
+  "name": "Vé trẻ em",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p058-m1",
+  "place_id": "p058",
+  "name": "Hạng AAH (cuối khán phòng tầng trệt)",
+  "kind": "ticket",
+  "price_vnd": 800000
+ },
+ {
+  "item_id": "p058-m2",
+  "place_id": "p058",
+  "name": "Hạng OOH (giữa khán phòng)",
+  "kind": "ticket",
+  "price_vnd": 1250000
+ },
+ {
+  "item_id": "p058-m3",
+  "place_id": "p058",
+  "name": "Hạng WOW (hàng đầu trung tâm, kèm đồ uống chào mừng)",
+  "kind": "ticket",
+  "price_vnd": 1750000
+ },
+ {
+  "item_id": "p059-m1",
+  "place_id": "p059",
+  "name": "5 pin cài áo gốm",
+  "kind": "service",
+  "price_vnd": 350000
+ },
+ {
+  "item_id": "p059-m2",
+  "place_id": "p059",
+  "name": "5 gác đũa gốm",
+  "kind": "service",
+  "price_vnd": 350000
+ },
+ {
+  "item_id": "p059-m3",
+  "place_id": "p059",
+  "name": "1 ly gốm cỡ thông thường",
+  "kind": "service",
+  "price_vnd": 480000
+ },
+ {
+  "item_id": "p059-m4",
+  "place_id": "p059",
+  "name": "Freestyle (tự chọn sản phẩm)",
+  "kind": "service",
+  "price_vnd": 580000
+ },
+ {
+  "item_id": "p059-m5",
+  "place_id": "p059",
+  "name": "Combo 2 sản phẩm",
+  "kind": "service",
+  "price_vnd": 900000
+ },
+ {
+  "item_id": "p059-m6",
+  "place_id": "p059",
+  "name": "Lớp cho trẻ em",
+  "kind": "service",
+  "price_vnd": 580000
+ },
+ {
+  "item_id": "p060-m1",
+  "place_id": "p060",
+  "name": "Workshop nặn gốm (1 buổi, gồm nguyên liệu, nung, tráng men, giao hàng)",
+  "kind": "service",
+  "price_vnd": 450000
+ },
+ {
+  "item_id": "p061-m1",
+  "place_id": "p061",
+  "name": "Workshop gốm/gỗ (1 người)",
+  "kind": "service",
+  "price_vnd": 450000
+ },
+ {
+  "item_id": "p061-m2",
+  "place_id": "p061",
+  "name": "Sản phẩm gốm size S",
+  "kind": "service",
+  "price_vnd": 400000
+ },
+ {
+  "item_id": "p062-m1",
+  "place_id": "p062",
+  "name": "Workshop gốm 3 giờ (1 người, gồm nung và tráng men 1 sản phẩm)",
+  "kind": "service",
+  "price_vnd": 400000
+ },
+ {
+  "item_id": "p063-m1",
+  "place_id": "p063",
+  "name": "Vào cửa (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p064-m1",
+  "place_id": "p064",
+  "name": "Vé người lớn",
+  "kind": "ticket",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p064-m2",
+  "place_id": "p064",
+  "name": "Vé HSSV (có thẻ)",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p064-m3",
+  "place_id": "p064",
+  "name": "Vé họa sĩ & nhà nghiên cứu nghệ thuật",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p064-m4",
+  "place_id": "p064",
+  "name": "Vé trẻ em 7–12 tuổi",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p064-m5",
+  "place_id": "p064",
+  "name": "Trẻ em 0–6 tuổi, người khuyết tật",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p064-m6",
+  "place_id": "p064",
+  "name": "Gửi xe máy/ô tô",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p065-m1",
+  "place_id": "p065",
+  "name": "Vé hạng 1.600.000đ (show kèm thực đơn)",
+  "kind": "ticket",
+  "price_vnd": 1600000
+ },
+ {
+  "item_id": "p065-m2",
+  "place_id": "p065",
+  "name": "Vé hạng 1.800.000đ",
+  "kind": "ticket",
+  "price_vnd": 1800000
+ },
+ {
+  "item_id": "p065-m3",
+  "place_id": "p065",
+  "name": "Phục trang hóa thân",
+  "kind": "service",
+  "price_vnd": 300000
+ },
+ {
+  "item_id": "p066-m1",
+  "place_id": "p066",
+  "name": "Vé 1 tiếng (T2–T5)",
+  "kind": "ticket",
+  "price_vnd": 169000
+ },
+ {
+  "item_id": "p066-m2",
+  "place_id": "p066",
+  "name": "Vé 1 tiếng (T6–CN)",
+  "kind": "ticket",
+  "price_vnd": 189000
+ },
+ {
+  "item_id": "p066-m3",
+  "place_id": "p066",
+  "name": "Vé 1 tiếng (ngày lễ)",
+  "kind": "ticket",
+  "price_vnd": 199000
+ },
+ {
+  "item_id": "p066-m4",
+  "place_id": "p066",
+  "name": "Combo 2 tiếng (T2–CN)",
+  "kind": "ticket",
+  "price_vnd": 269000
+ },
+ {
+  "item_id": "p066-m5",
+  "place_id": "p066",
+  "name": "Combo 2 tiếng (ngày lễ)",
+  "kind": "ticket",
+  "price_vnd": 289000
+ },
+ {
+  "item_id": "p067-m1",
+  "place_id": "p067",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p067-m2",
+  "place_id": "p067",
+  "name": "Gửi xe máy (2 giờ đầu, 05:00–23:59)",
+  "kind": "service",
+  "price_vnd": 8000
+ },
+ {
+  "item_id": "p067-m3",
+  "place_id": "p067",
+  "name": "Gửi xe máy thêm mỗi giờ",
+  "kind": "service",
+  "price_vnd": 1000
+ },
+ {
+  "item_id": "p067-m4",
+  "place_id": "p067",
+  "name": "Gửi xe máy qua đêm (00:00–04:59)",
+  "kind": "service",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p068-m1",
+  "place_id": "p068",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p068-m2",
+  "place_id": "p068",
+  "name": "Gửi xe máy ban ngày (06:00–18:00)",
+  "kind": "service",
+  "price_vnd": 6000
+ },
+ {
+  "item_id": "p068-m3",
+  "place_id": "p068",
+  "name": "Gửi xe máy ban đêm (18:00–06:00)",
+  "kind": "service",
+  "price_vnd": 9000
+ },
+ {
+  "item_id": "p069-m1",
+  "place_id": "p069",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p069-m2",
+  "place_id": "p069",
+  "name": "Vé trượt băng Vincom Ice Rink",
+  "kind": "ticket",
+  "price_vnd": 220000
+ },
+ {
+  "item_id": "p069-m3",
+  "place_id": "p069",
+  "name": "Thuê giày trượt băng (1 lượt)",
+  "kind": "service",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p069-m4",
+  "place_id": "p069",
+  "name": "Vé CGV 2D người lớn (T2, T3, T5)",
+  "kind": "ticket",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p069-m5",
+  "place_id": "p069",
+  "name": "Vé CGV 2D người lớn (T6–CN, lễ)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p070-m1",
+  "place_id": "p070",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p070-m2",
+  "place_id": "p070",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p070-m3",
+  "place_id": "p070",
+  "name": "Vé CGV 2D người lớn (T2, T3, T5 sau 12:00)",
+  "kind": "ticket",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p070-m4",
+  "place_id": "p070",
+  "name": "Vé CGV 2D người lớn (T6–CN, lễ)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p071-m1",
+  "place_id": "p071",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p071-m2",
+  "place_id": "p071",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p071-m3",
+  "place_id": "p071",
+  "name": "Vé CGV 2D người lớn (T2, T3, T5)",
+  "kind": "ticket",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p071-m4",
+  "place_id": "p071",
+  "name": "Vé CGV 2D người lớn (T6–CN, lễ)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p072-m1",
+  "place_id": "p072",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p072-m2",
+  "place_id": "p072",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p072-m3",
+  "place_id": "p072",
+  "name": "Vé CGV 2D người lớn (ngày thường)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p072-m4",
+  "place_id": "p072",
+  "name": "Vé CGV 2D người lớn (cuối tuần, lễ)",
+  "kind": "ticket",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p072-m5",
+  "place_id": "p072",
+  "name": "Vé CGV 2D người lớn (Thứ Tư)",
+  "kind": "ticket",
+  "price_vnd": 79000
+ },
+ {
+  "item_id": "p073-m1",
+  "place_id": "p073",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p073-m2",
+  "place_id": "p073",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p073-m3",
+  "place_id": "p073",
+  "name": "Vé CGV 2D người lớn (ngày thường)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p073-m4",
+  "place_id": "p073",
+  "name": "Vé CGV 2D người lớn (cuối tuần, lễ)",
+  "kind": "ticket",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p073-m5",
+  "place_id": "p073",
+  "name": "Vé CGV 2D người lớn (Thứ Tư)",
+  "kind": "ticket",
+  "price_vnd": 79000
+ },
+ {
+  "item_id": "p074-m1",
+  "place_id": "p074",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p074-m2",
+  "place_id": "p074",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p074-m3",
+  "place_id": "p074",
+  "name": "Thuê giày bowling Power Bowl",
+  "kind": "service",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p074-m4",
+  "place_id": "p074",
+  "name": "Vé CGV 2D người lớn (ngày thường)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p074-m5",
+  "place_id": "p074",
+  "name": "Vé CGV 2D người lớn (cuối tuần)",
+  "kind": "ticket",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p074-m6",
+  "place_id": "p074",
+  "name": "Buffet Joopii (từ, mỗi người)",
+  "kind": "food",
+  "price_vnd": 159000
+ },
+ {
+  "item_id": "p074-m7",
+  "place_id": "p074",
+  "name": "Spicy Box người lớn",
+  "kind": "food",
+  "price_vnd": 159000
+ },
+ {
+  "item_id": "p075-m1",
+  "place_id": "p075",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p075-m2",
+  "place_id": "p075",
+  "name": "Vé BHD Star 2D người lớn (Thứ Hai)",
+  "kind": "ticket",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p075-m3",
+  "place_id": "p075",
+  "name": "Vé BHD Star 2D người lớn (T3–T5 sau 17:00)",
+  "kind": "ticket",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p075-m4",
+  "place_id": "p075",
+  "name": "Vé BHD Star 2D người lớn (T6 sau 17:00)",
+  "kind": "ticket",
+  "price_vnd": 90000
+ },
+ {
+  "item_id": "p076-m1",
+  "place_id": "p076",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p076-m2",
+  "place_id": "p076",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 3000
+ },
+ {
+  "item_id": "p076-m3",
+  "place_id": "p076",
+  "name": "Vé CGV 2D người lớn (T2, T3, T5 sau 12:00)",
+  "kind": "ticket",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p076-m4",
+  "place_id": "p076",
+  "name": "Vé CGV 2D người lớn (T6–CN, lễ)",
+  "kind": "ticket",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p077-m1",
+  "place_id": "p077",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p078-m1",
+  "place_id": "p078",
+  "name": "Vào cửa trung tâm thương mại",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p078-m2",
+  "place_id": "p078",
+  "name": "Gửi xe máy (hầm)",
+  "kind": "service",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p078-m3",
+  "place_id": "p078",
+  "name": "Vé Galaxy 2D người lớn (Thứ Ba)",
+  "kind": "ticket",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p078-m4",
+  "place_id": "p078",
+  "name": "Vé Galaxy 2D người lớn (T2, T4, T5 sau 17:00)",
+  "kind": "ticket",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p078-m5",
+  "place_id": "p078",
+  "name": "Vé Galaxy 2D người lớn (T6–CN sau 17:00)",
+  "kind": "ticket",
+  "price_vnd": 90000
+ },
+ {
+  "item_id": "p079-m1",
+  "place_id": "p079",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p080-m1",
+  "place_id": "p080",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p081-m1",
+  "place_id": "p081",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p082-m1",
+  "place_id": "p082",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p083-m1",
+  "place_id": "p083",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p084-m1",
+  "place_id": "p084",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p084-m2",
+  "place_id": "p084",
+  "name": "Bún / hủ tiếu / bánh canh (từ)",
+  "kind": "food",
+  "price_vnd": 25000
+ },
+ {
+  "item_id": "p084-m3",
+  "place_id": "p084",
+  "name": "Nem bò nướng sả cây (1 xiên)",
+  "kind": "food",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p085-m1",
+  "place_id": "p085",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p085-m2",
+  "place_id": "p085",
+  "name": "Phá lấu chiên Vũ Tùng (từ, gần chợ)",
+  "kind": "food",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p086-m1",
+  "place_id": "p086",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p087-m1",
+  "place_id": "p087",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p088-m1",
+  "place_id": "p088",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p089-m1",
+  "place_id": "p089",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p090-m1",
+  "place_id": "p090",
+  "name": "Vào chợ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p090-m2",
+  "place_id": "p090",
+  "name": "Cháo sườn Ông Tạ (tô)",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p090-m3",
+  "place_id": "p090",
+  "name": "Bánh xèo Cô Sáu (chiếc)",
+  "kind": "food",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p090-m4",
+  "place_id": "p090",
+  "name": "Canh bún Cô Út (tô)",
+  "kind": "food",
+  "price_vnd": 25000
+ },
+ {
+  "item_id": "p090-m5",
+  "place_id": "p090",
+  "name": "Huyết chưng (phần)",
+  "kind": "food",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p090-m6",
+  "place_id": "p090",
+  "name": "Quần áo đồng giá (sản phẩm cơ bản)",
+  "kind": "service",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p091-m1",
+  "place_id": "p091",
+  "name": "Bánh mì Huynh Hoa trứ danh",
+  "kind": "food",
+  "price_vnd": 78000
+ },
+ {
+  "item_id": "p091-m2",
+  "place_id": "p091",
+  "name": "Bánh bao",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p091-m3",
+  "place_id": "p091",
+  "name": "Cơm cháy chà bông",
+  "kind": "food",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p091-m4",
+  "place_id": "p091",
+  "name": "Cơm cháy mắm",
+  "kind": "food",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p091-m5",
+  "place_id": "p091",
+  "name": "Chả lụa Huynh Hoa (500g)",
+  "kind": "food",
+  "price_vnd": 145000
+ },
+ {
+  "item_id": "p092-m1",
+  "place_id": "p092",
+  "name": "Bánh mì thập cẩm (ổ)",
+  "kind": "food",
+  "price_vnd": 24000
+ },
+ {
+  "item_id": "p092-m2",
+  "place_id": "p092",
+  "name": "Bánh mì đầy đủ (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 27000
+ },
+ {
+  "item_id": "p092-m3",
+  "place_id": "p092",
+  "name": "Bánh mì chả lụa (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 27000
+ },
+ {
+  "item_id": "p092-m4",
+  "place_id": "p092",
+  "name": "Bánh mì xíu mại (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 27000
+ },
+ {
+  "item_id": "p092-m5",
+  "place_id": "p092",
+  "name": "Bánh mì trứng ốp la (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p092-m6",
+  "place_id": "p092",
+  "name": "Combo bánh mì + trà tắc (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p093-m1",
+  "place_id": "p093",
+  "name": "Bánh xèo (thường)",
+  "kind": "food",
+  "price_vnd": 110000
+ },
+ {
+  "item_id": "p093-m2",
+  "place_id": "p093",
+  "name": "Bánh xèo đặc biệt",
+  "kind": "food",
+  "price_vnd": 180000
+ },
+ {
+  "item_id": "p093-m3",
+  "place_id": "p093",
+  "name": "Chả đùm",
+  "kind": "food",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p093-m4",
+  "place_id": "p093",
+  "name": "Trà đá",
+  "kind": "drink",
+  "price_vnd": 8000
+ },
+ {
+  "item_id": "p094-m1",
+  "place_id": "p094",
+  "name": "Cơm tấm sườn (phần)",
+  "kind": "food",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p094-m2",
+  "place_id": "p094",
+  "name": "Cơm sườn (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 112000
+ },
+ {
+  "item_id": "p094-m3",
+  "place_id": "p094",
+  "name": "Cơm sườn bì chả (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 136000
+ },
+ {
+  "item_id": "p094-m4",
+  "place_id": "p094",
+  "name": "Cơm sườn bì chả ốp la (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 148000
+ },
+ {
+  "item_id": "p094-m5",
+  "place_id": "p094",
+  "name": "Cơm bì chả (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 83000
+ },
+ {
+  "item_id": "p094-m6",
+  "place_id": "p094",
+  "name": "Canh khổ qua (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p095-m1",
+  "place_id": "p095",
+  "name": "Phở bò tô nhỏ",
+  "kind": "food",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p095-m2",
+  "place_id": "p095",
+  "name": "Phở bò tô lớn",
+  "kind": "food",
+  "price_vnd": 95000
+ },
+ {
+  "item_id": "p095-m3",
+  "place_id": "p095",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p096-m1",
+  "place_id": "p096",
+  "name": "Phở tái gân",
+  "kind": "food",
+  "price_vnd": 115000
+ },
+ {
+  "item_id": "p096-m2",
+  "place_id": "p096",
+  "name": "Phở nạm gân",
+  "kind": "food",
+  "price_vnd": 115000
+ },
+ {
+  "item_id": "p096-m3",
+  "place_id": "p096",
+  "name": "Phở thập cẩm",
+  "kind": "food",
+  "price_vnd": 130000
+ },
+ {
+  "item_id": "p096-m4",
+  "place_id": "p096",
+  "name": "Phở tái nạm gân",
+  "kind": "food",
+  "price_vnd": 130000
+ },
+ {
+  "item_id": "p096-m5",
+  "place_id": "p096",
+  "name": "Cà phê sữa đá",
+  "kind": "drink",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p096-m6",
+  "place_id": "p096",
+  "name": "Trà Ô Long",
+  "kind": "drink",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p097-m1",
+  "place_id": "p097",
+  "name": "Phở/miến gà tô nhỏ",
+  "kind": "food",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p097-m2",
+  "place_id": "p097",
+  "name": "Phở/miến gà tô lớn",
+  "kind": "food",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p097-m3",
+  "place_id": "p097",
+  "name": "Gỏi gà (dĩa)",
+  "kind": "food",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p098-m1",
+  "place_id": "p098",
+  "name": "Ốc hương rang muối (phần nhỏ)",
+  "kind": "food",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p098-m2",
+  "place_id": "p098",
+  "name": "Càng ghẹ rang muối (phần nhỏ)",
+  "kind": "food",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p098-m3",
+  "place_id": "p098",
+  "name": "Ốc len xào dừa",
+  "kind": "food",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p098-m4",
+  "place_id": "p098",
+  "name": "Ốc mỡ xào bơ",
+  "kind": "food",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p098-m5",
+  "place_id": "p098",
+  "name": "Móng tay xào rau muống",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p098-m6",
+  "place_id": "p098",
+  "name": "Ốc tỏi nướng mỡ hành (1 con)",
+  "kind": "food",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p099-m1",
+  "place_id": "p099",
+  "name": "Vào phố (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p099-m2",
+  "place_id": "p099",
+  "name": "Dĩa ốc (giá khởi điểm)",
+  "kind": "food",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p099-m3",
+  "place_id": "p099",
+  "name": "Càng cua nướng (giá thấp nhất)",
+  "kind": "food",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p100-m1",
+  "place_id": "p100",
+  "name": "Ốc hương rang muối ớt",
+  "kind": "food",
+  "price_vnd": 110000
+ },
+ {
+  "item_id": "p100-m2",
+  "place_id": "p100",
+  "name": "Ốc hương xào bơ",
+  "kind": "food",
+  "price_vnd": 110000
+ },
+ {
+  "item_id": "p100-m3",
+  "place_id": "p100",
+  "name": "Răng mực xào bơ",
+  "kind": "food",
+  "price_vnd": 110000
+ },
+ {
+  "item_id": "p100-m4",
+  "place_id": "p100",
+  "name": "Ốc len xào dừa",
+  "kind": "food",
+  "price_vnd": 110000
+ },
+ {
+  "item_id": "p100-m5",
+  "place_id": "p100",
+  "name": "Ốc móng tay xào rau muống",
+  "kind": "food",
+  "price_vnd": 79000
+ },
+ {
+  "item_id": "p100-m6",
+  "place_id": "p100",
+  "name": "Ốc cà na rang muối",
+  "kind": "food",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p101-m1",
+  "place_id": "p101",
+  "name": "Hủ tiếu Nam Vang (tô đặc trưng)",
+  "kind": "food",
+  "price_vnd": 118000
+ },
+ {
+  "item_id": "p101-m2",
+  "place_id": "p101",
+  "name": "Hủ tiếu Nam Vang (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 155000
+ },
+ {
+  "item_id": "p101-m3",
+  "place_id": "p101",
+  "name": "Hủ tiếu Nam Vang không tôm (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 144000
+ },
+ {
+  "item_id": "p101-m4",
+  "place_id": "p101",
+  "name": "Hủ tiếu đồ biển (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 224000
+ },
+ {
+  "item_id": "p101-m5",
+  "place_id": "p101",
+  "name": "Bò kho (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 194000
+ },
+ {
+  "item_id": "p101-m6",
+  "place_id": "p101",
+  "name": "Pate chaud (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 47000
+ },
+ {
+  "item_id": "p101-m7",
+  "place_id": "p101",
+  "name": "Bánh quẩy (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p102-m1",
+  "place_id": "p102",
+  "name": "Bột chiên (phần)",
+  "kind": "food",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p102-m2",
+  "place_id": "p102",
+  "name": "Há cảo (dĩa)",
+  "kind": "food",
+  "price_vnd": 25000
+ },
+ {
+  "item_id": "p102-m3",
+  "place_id": "p102",
+  "name": "Gỏi cuốn (cuốn)",
+  "kind": "food",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p102-m4",
+  "place_id": "p102",
+  "name": "Bì cuốn (cuốn)",
+  "kind": "food",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p103-m1",
+  "place_id": "p103",
+  "name": "Súp Cua (cỡ M)",
+  "kind": "food",
+  "price_vnd": 32000
+ },
+ {
+  "item_id": "p103-m2",
+  "place_id": "p103",
+  "name": "Súp Cua (cỡ XL)",
+  "kind": "food",
+  "price_vnd": 47000
+ },
+ {
+  "item_id": "p103-m3",
+  "place_id": "p103",
+  "name": "Súp Óc Heo (cỡ nhỏ nhất)",
+  "kind": "food",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p103-m4",
+  "place_id": "p103",
+  "name": "Súp Tôm (cỡ nhỏ nhất)",
+  "kind": "food",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p103-m5",
+  "place_id": "p103",
+  "name": "Súp Trứng Bắc Thảo (cỡ nhỏ nhất)",
+  "kind": "food",
+  "price_vnd": 28000
+ },
+ {
+  "item_id": "p103-m6",
+  "place_id": "p103",
+  "name": "Súp Đặc Biệt",
+  "kind": "food",
+  "price_vnd": 62000
+ },
+ {
+  "item_id": "p104-m1",
+  "place_id": "p104",
+  "name": "Phá lấu bò + bánh mì",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p104-m2",
+  "place_id": "p104",
+  "name": "Mì phá lấu",
+  "kind": "food",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p104-m3",
+  "place_id": "p104",
+  "name": "Phá lấu bò (phần)",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p104-m4",
+  "place_id": "p104",
+  "name": "Phá lấu bò (phần lớn)",
+  "kind": "food",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p104-m5",
+  "place_id": "p104",
+  "name": "Phá lấu chiên",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p104-m6",
+  "place_id": "p104",
+  "name": "Gỏi khô bò",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p104-m7",
+  "place_id": "p104",
+  "name": "Bánh mì ăn kèm",
+  "kind": "food",
+  "price_vnd": 4000
+ },
+ {
+  "item_id": "p104-m8",
+  "place_id": "p104",
+  "name": "Nước sâm (chai)",
+  "kind": "drink",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p105-m1",
+  "place_id": "p105",
+  "name": "Bánh canh cua thập cẩm",
+  "kind": "food",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p105-m2",
+  "place_id": "p105",
+  "name": "Bánh canh đầy đủ (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 66000
+ },
+ {
+  "item_id": "p105-m3",
+  "place_id": "p105",
+  "name": "Bánh canh cua + chả (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 66000
+ },
+ {
+  "item_id": "p105-m4",
+  "place_id": "p105",
+  "name": "Bánh canh hải sản (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 66000
+ },
+ {
+  "item_id": "p105-m5",
+  "place_id": "p105",
+  "name": "Cua thêm (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 36000
+ },
+ {
+  "item_id": "p105-m6",
+  "place_id": "p105",
+  "name": "Quẩy thêm (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 4000
+ },
+ {
+  "item_id": "p106-m1",
+  "place_id": "p106",
+  "name": "Bún thịt nướng chả giò (tô)",
+  "kind": "food",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p106-m2",
+  "place_id": "p106",
+  "name": "Bún thịt nướng (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p106-m3",
+  "place_id": "p106",
+  "name": "Bún chả giò + thịt nướng (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p106-m4",
+  "place_id": "p106",
+  "name": "Bún thịt thập cẩm (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p106-m5",
+  "place_id": "p106",
+  "name": "Bánh hỏi thịt nướng (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p106-m6",
+  "place_id": "p106",
+  "name": "Combo bún thịt nướng + Sting (giá ShopeeFood)",
+  "kind": "food",
+  "price_vnd": 83000
+ },
+ {
+  "item_id": "p107-m1",
+  "place_id": "p107",
+  "name": "Chè hột gà trà",
+  "kind": "food",
+  "price_vnd": 38000
+ },
+ {
+  "item_id": "p107-m2",
+  "place_id": "p107",
+  "name": "Chè mè đen",
+  "kind": "food",
+  "price_vnd": 33000
+ },
+ {
+  "item_id": "p107-m3",
+  "place_id": "p107",
+  "name": "Chè đậu đỏ",
+  "kind": "food",
+  "price_vnd": 33000
+ },
+ {
+  "item_id": "p107-m4",
+  "place_id": "p107",
+  "name": "Chè nếp than",
+  "kind": "food",
+  "price_vnd": 38000
+ },
+ {
+  "item_id": "p107-m5",
+  "place_id": "p107",
+  "name": "Sâm bửu lượng",
+  "kind": "food",
+  "price_vnd": 43000
+ },
+ {
+  "item_id": "p107-m6",
+  "place_id": "p107",
+  "name": "Chè khúc bạch",
+  "kind": "food",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p107-m7",
+  "place_id": "p107",
+  "name": "Đậu hủ hạnh nhân",
+  "kind": "food",
+  "price_vnd": 28000
+ },
+ {
+  "item_id": "p108-m1",
+  "place_id": "p108",
+  "name": "Vào khu ẩm thực (miễn phí)",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p108-m2",
+  "place_id": "p108",
+  "name": "Thịt xiên nướng (xiên)",
+  "kind": "food",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p108-m3",
+  "place_id": "p108",
+  "name": "Nem nướng bò sả (giá từ)",
+  "kind": "food",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p108-m4",
+  "place_id": "p108",
+  "name": "Mực giòn vị Thái (10 xiên)",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p108-m5",
+  "place_id": "p108",
+  "name": "Gà rán (giá từ)",
+  "kind": "food",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p108-m6",
+  "place_id": "p108",
+  "name": "Gửi xe máy (bãi hẻm 382 Lê Hồng Phong)",
+  "kind": "service",
+  "price_vnd": 5000
+ },
+ {
+  "item_id": "p109-m1",
+  "place_id": "p109",
+  "name": "Bún riêu đầy đủ (cua, huyết, đậu hũ)",
+  "kind": "food",
+  "price_vnd": 72000
+ },
+ {
+  "item_id": "p109-m2",
+  "place_id": "p109",
+  "name": "Chả cây thêm",
+  "kind": "food",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p109-m3",
+  "place_id": "p109",
+  "name": "Combo 2 cuốn",
+  "kind": "food",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p109-m4",
+  "place_id": "p109",
+  "name": "Đậu hũ ăn thêm (nhỏ)",
+  "kind": "food",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p109-m5",
+  "place_id": "p109",
+  "name": "Rau thêm",
+  "kind": "food",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p110-m1",
+  "place_id": "p110",
+  "name": "Cơm gà luộc",
+  "kind": "food",
+  "price_vnd": 78000
+ },
+ {
+  "item_id": "p110-m2",
+  "place_id": "p110",
+  "name": "Cơm đùi gà luộc",
+  "kind": "food",
+  "price_vnd": 83000
+ },
+ {
+  "item_id": "p110-m3",
+  "place_id": "p110",
+  "name": "Cơm gà luộc + xá xíu",
+  "kind": "food",
+  "price_vnd": 88000
+ },
+ {
+  "item_id": "p110-m4",
+  "place_id": "p110",
+  "name": "Cơm vịt quay",
+  "kind": "food",
+  "price_vnd": 78000
+ },
+ {
+  "item_id": "p110-m5",
+  "place_id": "p110",
+  "name": "Cơm heo quay",
+  "kind": "food",
+  "price_vnd": 73000
+ },
+ {
+  "item_id": "p110-m6",
+  "place_id": "p110",
+  "name": "Trà tắc",
+  "kind": "drink",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p111-m1",
+  "place_id": "p111",
+  "name": "Các món bún (bún thịt nướng...)",
+  "kind": "food",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p111-m2",
+  "place_id": "p111",
+  "name": "Sinh tố",
+  "kind": "drink",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p111-m3",
+  "place_id": "p111",
+  "name": "Trà đá (ly)",
+  "kind": "drink",
+  "price_vnd": 25000
+ },
+ {
+  "item_id": "p111-m4",
+  "place_id": "p111",
+  "name": "Gửi xe máy",
+  "kind": "service",
+  "price_vnd": 10000
+ },
+ {
+  "item_id": "p112-m1",
+  "place_id": "p112",
+  "name": "Đậu hũ chiên sả ớt",
+  "kind": "food",
+  "price_vnd": 130000
+ },
+ {
+  "item_id": "p112-m2",
+  "place_id": "p112",
+  "name": "Nem rán thịt và tôm",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p112-m3",
+  "place_id": "p112",
+  "name": "Thịt kho trứng",
+  "kind": "food",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p112-m4",
+  "place_id": "p112",
+  "name": "Cơm chiên hải sản",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p112-m5",
+  "place_id": "p112",
+  "name": "Cua lột rang muối tỏi",
+  "kind": "food",
+  "price_vnd": 390000
+ },
+ {
+  "item_id": "p113-m1",
+  "place_id": "p113",
+  "name": "Bánh xèo tôm thịt",
+  "kind": "food",
+  "price_vnd": 139000
+ },
+ {
+  "item_id": "p113-m2",
+  "place_id": "p113",
+  "name": "Bánh xèo hải sản",
+  "kind": "food",
+  "price_vnd": 239000
+ },
+ {
+  "item_id": "p113-m3",
+  "place_id": "p113",
+  "name": "Cơm chiên dừa tôm & trứng",
+  "kind": "food",
+  "price_vnd": 149000
+ },
+ {
+  "item_id": "p113-m4",
+  "place_id": "p113",
+  "name": "Chân gà nướng muối ớt",
+  "kind": "food",
+  "price_vnd": 129000
+ },
+ {
+  "item_id": "p113-m5",
+  "place_id": "p113",
+  "name": "Đậu hũ nấm sốt xì dầu",
+  "kind": "food",
+  "price_vnd": 99000
+ },
+ {
+  "item_id": "p114-m1",
+  "place_id": "p114",
+  "name": "Bò lúc lắc",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p114-m2",
+  "place_id": "p114",
+  "name": "Rau muống xào tỏi",
+  "kind": "food",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p114-m3",
+  "place_id": "p114",
+  "name": "Cơm chiên hải sản",
+  "kind": "food",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p114-m4",
+  "place_id": "p114",
+  "name": "Gỏi ngó sen tôm thịt",
+  "kind": "food",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p114-m5",
+  "place_id": "p114",
+  "name": "Cơm trắng",
+  "kind": "food",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p114-m6",
+  "place_id": "p114",
+  "name": "Nước ép (xoài xanh, ổi, thơm...)",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p114-m7",
+  "place_id": "p114",
+  "name": "Bia Saigon",
+  "kind": "drink",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p115-m1",
+  "place_id": "p115",
+  "name": "Burrata Parma Ham Pizza",
+  "kind": "food",
+  "price_vnd": 298000
+ },
+ {
+  "item_id": "p115-m2",
+  "place_id": "p115",
+  "name": "Margherita Pizza",
+  "kind": "food",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p115-m3",
+  "place_id": "p115",
+  "name": "Spicy Garlic Shrimp Pizza",
+  "kind": "food",
+  "price_vnd": 254000
+ },
+ {
+  "item_id": "p115-m4",
+  "place_id": "p115",
+  "name": "Signature Burrata with Rocket and Tomato Salad",
+  "kind": "food",
+  "price_vnd": 185000
+ },
+ {
+  "item_id": "p115-m5",
+  "place_id": "p115",
+  "name": "Crab Cream Spaghetti with Tomato Sauce",
+  "kind": "food",
+  "price_vnd": 254000
+ },
+ {
+  "item_id": "p115-m6",
+  "place_id": "p115",
+  "name": "Tiramisu with Mascarpone",
+  "kind": "food",
+  "price_vnd": 92000
+ },
+ {
+  "item_id": "p115-m7",
+  "place_id": "p115",
+  "name": "Craft beer 4P's (Yuzu Wheat)",
+  "kind": "drink",
+  "price_vnd": 98000
+ },
+ {
+  "item_id": "p116-m1",
+  "place_id": "p116",
+  "name": "Chả giò Sài Gòn",
+  "kind": "food",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p116-m2",
+  "place_id": "p116",
+  "name": "Gỏi cuốn tôm thịt chấm tương đậu",
+  "kind": "food",
+  "price_vnd": 135000
+ },
+ {
+  "item_id": "p116-m3",
+  "place_id": "p116",
+  "name": "Bánh xèo tôm thịt",
+  "kind": "food",
+  "price_vnd": 155000
+ },
+ {
+  "item_id": "p116-m4",
+  "place_id": "p116",
+  "name": "Cuốn diếp tôm mực",
+  "kind": "food",
+  "price_vnd": 185000
+ },
+ {
+  "item_id": "p116-m5",
+  "place_id": "p116",
+  "name": "Set Lunch (cơm, món chính, rau, canh, tráng miệng)",
+  "kind": "food",
+  "price_vnd": 165000
+ },
+ {
+  "item_id": "p116-m6",
+  "place_id": "p116",
+  "name": "Bia Saigon Special",
+  "kind": "drink",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p117-m1",
+  "place_id": "p117",
+  "name": "Bánh xèo tôm thịt",
+  "kind": "food",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p117-m2",
+  "place_id": "p117",
+  "name": "Chả giò tôm cua đặc biệt",
+  "kind": "food",
+  "price_vnd": 95000
+ },
+ {
+  "item_id": "p117-m3",
+  "place_id": "p117",
+  "name": "Cua lột sốt me",
+  "kind": "food",
+  "price_vnd": 145000
+ },
+ {
+  "item_id": "p117-m4",
+  "place_id": "p117",
+  "name": "Bò Mỹ lúc lắc",
+  "kind": "food",
+  "price_vnd": 155000
+ },
+ {
+  "item_id": "p117-m5",
+  "place_id": "p117",
+  "name": "Bún chả Hà Nội",
+  "kind": "food",
+  "price_vnd": 135000
+ },
+ {
+  "item_id": "p117-m6",
+  "place_id": "p117",
+  "name": "Rau muống xào tỏi",
+  "kind": "food",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p117-m7",
+  "place_id": "p117",
+  "name": "Canh chua cá",
+  "kind": "food",
+  "price_vnd": 99000
+ },
+ {
+  "item_id": "p118-m1",
+  "place_id": "p118",
+  "name": "Lẩu cá kèo (nhỏ)",
+  "kind": "food",
+  "price_vnd": 300000
+ },
+ {
+  "item_id": "p118-m2",
+  "place_id": "p118",
+  "name": "Lẩu cá kèo (lớn)",
+  "kind": "food",
+  "price_vnd": 460000
+ },
+ {
+  "item_id": "p118-m3",
+  "place_id": "p118",
+  "name": "Cá kèo chiên (nhỏ)",
+  "kind": "food",
+  "price_vnd": 165000
+ },
+ {
+  "item_id": "p118-m4",
+  "place_id": "p118",
+  "name": "Lẩu Thái",
+  "kind": "food",
+  "price_vnd": 370000
+ },
+ {
+  "item_id": "p118-m5",
+  "place_id": "p118",
+  "name": "Đậu hũ lướt ván",
+  "kind": "food",
+  "price_vnd": 82000
+ },
+ {
+  "item_id": "p118-m6",
+  "place_id": "p118",
+  "name": "Combo lẩu cá kèo + 1 nước ngọt",
+  "kind": "food",
+  "price_vnd": 325000
+ },
+ {
+  "item_id": "p119-m1",
+  "place_id": "p119",
+  "name": "Gỏi ngó sen tôm thịt (giá ShopeeFood, CN Central)",
+  "kind": "food",
+  "price_vnd": 193320
+ },
+ {
+  "item_id": "p119-m2",
+  "place_id": "p119",
+  "name": "Gỏi bưởi tôm thịt (giá ShopeeFood, CN Central)",
+  "kind": "food",
+  "price_vnd": 193320
+ },
+ {
+  "item_id": "p119-m3",
+  "place_id": "p119",
+  "name": "Rau muống xào tỏi (giá ShopeeFood, CN Central)",
+  "kind": "food",
+  "price_vnd": 85320
+ },
+ {
+  "item_id": "p119-m4",
+  "place_id": "p119",
+  "name": "Khổ qua xào trứng (giá ShopeeFood, CN Central)",
+  "kind": "food",
+  "price_vnd": 106920
+ },
+ {
+  "item_id": "p119-m5",
+  "place_id": "p119",
+  "name": "Mắm kho quẹt (giá ShopeeFood, CN Central)",
+  "kind": "food",
+  "price_vnd": 59400
+ },
+ {
+  "item_id": "p119-m6",
+  "place_id": "p119",
+  "name": "Coke (giá ShopeeFood, CN Central)",
+  "kind": "drink",
+  "price_vnd": 63720
+ },
+ {
+  "item_id": "p120-m1",
+  "place_id": "p120",
+  "name": "Gỏi bưởi chanh dây Tây Bắc",
+  "kind": "food",
+  "price_vnd": 140000
+ },
+ {
+  "item_id": "p120-m2",
+  "place_id": "p120",
+  "name": "Súp dưa tươi Thuận Nam",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p120-m3",
+  "place_id": "p120",
+  "name": "Canh chua nhà Hum",
+  "kind": "food",
+  "price_vnd": 240000
+ },
+ {
+  "item_id": "p120-m4",
+  "place_id": "p120",
+  "name": "Cà-ri xanh",
+  "kind": "food",
+  "price_vnd": 240000
+ },
+ {
+  "item_id": "p120-m5",
+  "place_id": "p120",
+  "name": "Chè trôi nước mè đen, nước đường hoa dừa Trà Vinh",
+  "kind": "food",
+  "price_vnd": 140000
+ },
+ {
+  "item_id": "p121-m1",
+  "place_id": "p121",
+  "name": "Gỏi cuốn heo nướng (10 cuốn)",
+  "kind": "food",
+  "price_vnd": 110000
+ },
+ {
+  "item_id": "p121-m2",
+  "place_id": "p121",
+  "name": "Bánh xèo tôm thịt",
+  "kind": "food",
+  "price_vnd": 195000
+ },
+ {
+  "item_id": "p121-m3",
+  "place_id": "p121",
+  "name": "Bò lúc lắc khoai lang chiên",
+  "kind": "food",
+  "price_vnd": 275000
+ },
+ {
+  "item_id": "p121-m4",
+  "place_id": "p121",
+  "name": "Cơm tấm sườn nướng mật ong",
+  "kind": "food",
+  "price_vnd": 195000
+ },
+ {
+  "item_id": "p121-m5",
+  "place_id": "p121",
+  "name": "Cà phê sữa đá",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p121-m6",
+  "place_id": "p121",
+  "name": "Trà đá",
+  "kind": "drink",
+  "price_vnd": 15000
+ },
+ {
+  "item_id": "p122-m1",
+  "place_id": "p122",
+  "name": "Miến xào cua (phần)",
+  "kind": "food",
+  "price_vnd": 310000
+ },
+ {
+  "item_id": "p122-m2",
+  "place_id": "p122",
+  "name": "Miến cua nước",
+  "kind": "food",
+  "price_vnd": 210000
+ },
+ {
+  "item_id": "p122-m3",
+  "place_id": "p122",
+  "name": "Chả giò cua biển (phần)",
+  "kind": "food",
+  "price_vnd": 280000
+ },
+ {
+  "item_id": "p122-m4",
+  "place_id": "p122",
+  "name": "Cua lột chiên bột",
+  "kind": "food",
+  "price_vnd": 390000
+ },
+ {
+  "item_id": "p122-m5",
+  "place_id": "p122",
+  "name": "Bánh canh cua",
+  "kind": "food",
+  "price_vnd": 210000
+ },
+ {
+  "item_id": "p122-m6",
+  "place_id": "p122",
+  "name": "Súp cua",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p122-m7",
+  "place_id": "p122",
+  "name": "Rau muống xào tỏi",
+  "kind": "food",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p123-m1",
+  "place_id": "p123",
+  "name": "Set Lẩu bò tươi riêu cua",
+  "kind": "food",
+  "price_vnd": 455000
+ },
+ {
+  "item_id": "p123-m2",
+  "place_id": "p123",
+  "name": "Set Lẩu bò nấm rừng",
+  "kind": "food",
+  "price_vnd": 425000
+ },
+ {
+  "item_id": "p123-m3",
+  "place_id": "p123",
+  "name": "Thịt bò tươi nhúng",
+  "kind": "food",
+  "price_vnd": 99000
+ },
+ {
+  "item_id": "p123-m4",
+  "place_id": "p123",
+  "name": "Bò tươi nướng tảng",
+  "kind": "food",
+  "price_vnd": 199000
+ },
+ {
+  "item_id": "p123-m5",
+  "place_id": "p123",
+  "name": "Bò tơ cuốn bánh tráng",
+  "kind": "food",
+  "price_vnd": 199000
+ },
+ {
+  "item_id": "p123-m6",
+  "place_id": "p123",
+  "name": "Lẩu riêu cua",
+  "kind": "food",
+  "price_vnd": 135000
+ },
+ {
+  "item_id": "p124-m1",
+  "place_id": "p124",
+  "name": "Gỏi nấm khoai môn sốt chanh dây",
+  "kind": "food",
+  "price_vnd": 169000
+ },
+ {
+  "item_id": "p124-m2",
+  "place_id": "p124",
+  "name": "Gỏi bưởi",
+  "kind": "food",
+  "price_vnd": 169000
+ },
+ {
+  "item_id": "p124-m3",
+  "place_id": "p124",
+  "name": "Salad Sớm Mai",
+  "kind": "food",
+  "price_vnd": 179000
+ },
+ {
+  "item_id": "p124-m4",
+  "place_id": "p124",
+  "name": "Củ hủ dừa và đậu hũ kho tương đậu",
+  "kind": "food",
+  "price_vnd": 109000
+ },
+ {
+  "item_id": "p124-m5",
+  "place_id": "p124",
+  "name": "Đậu hũ sốt Tứ Xuyên",
+  "kind": "food",
+  "price_vnd": 159000
+ },
+ {
+  "item_id": "p124-m6",
+  "place_id": "p124",
+  "name": "Cà om chuối đậu",
+  "kind": "food",
+  "price_vnd": 159000
+ },
+ {
+  "item_id": "p124-m7",
+  "place_id": "p124",
+  "name": "Kho quẹt rau đồng quê",
+  "kind": "food",
+  "price_vnd": 159000
+ },
+ {
+  "item_id": "p125-m1",
+  "place_id": "p125",
+  "name": "Buffet U22 (/người, chưa VAT)",
+  "kind": "food",
+  "price_vnd": 199000
+ },
+ {
+  "item_id": "p125-m2",
+  "place_id": "p125",
+  "name": "Buffet Quốc Dân (/người, chưa VAT)",
+  "kind": "food",
+  "price_vnd": 319000
+ },
+ {
+  "item_id": "p125-m3",
+  "place_id": "p125",
+  "name": "Buffet Xèo Xèo (/người, chưa VAT)",
+  "kind": "food",
+  "price_vnd": 399000
+ },
+ {
+  "item_id": "p125-m4",
+  "place_id": "p125",
+  "name": "Buffet Xèo Xèo Classic (/người, chưa VAT)",
+  "kind": "food",
+  "price_vnd": 529000
+ },
+ {
+  "item_id": "p126-m1",
+  "place_id": "p126",
+  "name": "Cà phê đen nóng (ly lớn)",
+  "kind": "drink",
+  "price_vnd": 27000
+ },
+ {
+  "item_id": "p126-m2",
+  "place_id": "p126",
+  "name": "Cà phê đá",
+  "kind": "drink",
+  "price_vnd": 28000
+ },
+ {
+  "item_id": "p126-m3",
+  "place_id": "p126",
+  "name": "Cà phê sữa nóng (ly lớn)",
+  "kind": "drink",
+  "price_vnd": 28000
+ },
+ {
+  "item_id": "p126-m4",
+  "place_id": "p126",
+  "name": "Cà phê sữa đá",
+  "kind": "drink",
+  "price_vnd": 33000
+ },
+ {
+  "item_id": "p126-m5",
+  "place_id": "p126",
+  "name": "Bạc xỉu đá",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p126-m6",
+  "place_id": "p126",
+  "name": "Trà đường nóng/đá",
+  "kind": "drink",
+  "price_vnd": 24000
+ },
+ {
+  "item_id": "p126-m7",
+  "place_id": "p126",
+  "name": "Lipton chanh nóng/đá",
+  "kind": "drink",
+  "price_vnd": 27000
+ },
+ {
+  "item_id": "p127-m1",
+  "place_id": "p127",
+  "name": "Cà Phê Sữa Pha Phin",
+  "kind": "drink",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p127-m2",
+  "place_id": "p127",
+  "name": "Cà Phê Vị Phở",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p127-m3",
+  "place_id": "p127",
+  "name": "Robusta Colada",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p127-m4",
+  "place_id": "p127",
+  "name": "Cà Phê Sữa Yến Mạch",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p127-m5",
+  "place_id": "p127",
+  "name": "Latte Hạnh Nhân",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p127-m6",
+  "place_id": "p127",
+  "name": "Bơ Nữ Hoàng Cà Phê Sữa",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p128-m1",
+  "place_id": "p128",
+  "name": "Cà phê nâu đá (8oz)",
+  "kind": "drink",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p128-m2",
+  "place_id": "p128",
+  "name": "Cà phê nâu đá (12oz)",
+  "kind": "drink",
+  "price_vnd": 39000
+ },
+ {
+  "item_id": "p128-m3",
+  "place_id": "p128",
+  "name": "Bạc xỉu đá (12oz)",
+  "kind": "drink",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p128-m4",
+  "place_id": "p128",
+  "name": "Bạc xỉu nóng",
+  "kind": "drink",
+  "price_vnd": 49000
+ },
+ {
+  "item_id": "p128-m5",
+  "place_id": "p128",
+  "name": "Cốt dừa cà phê",
+  "kind": "drink",
+  "price_vnd": 59000
+ },
+ {
+  "item_id": "p129-m1",
+  "place_id": "p129",
+  "name": "Espresso",
+  "kind": "drink",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p129-m2",
+  "place_id": "p129",
+  "name": "Americano (nóng)",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p129-m3",
+  "place_id": "p129",
+  "name": "Cappuccino",
+  "kind": "drink",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p129-m4",
+  "place_id": "p129",
+  "name": "Latte (nóng)",
+  "kind": "drink",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p129-m5",
+  "place_id": "p129",
+  "name": "Iced Latte",
+  "kind": "drink",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p129-m6",
+  "place_id": "p129",
+  "name": "Cold Brew",
+  "kind": "drink",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p129-m7",
+  "place_id": "p129",
+  "name": "Iced Roasted Almond Latte",
+  "kind": "drink",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p130-m1",
+  "place_id": "p130",
+  "name": "Sài Gòn Cafe sữa đá anh ơi",
+  "kind": "drink",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p130-m2",
+  "place_id": "p130",
+  "name": "Sài Gòn Cafe (cà phê đen)",
+  "kind": "drink",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p130-m3",
+  "place_id": "p130",
+  "name": "Latte",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p130-m4",
+  "place_id": "p130",
+  "name": "Trà Đào Cam Sả",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p130-m5",
+  "place_id": "p130",
+  "name": "Matcha Latte",
+  "kind": "drink",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p130-m6",
+  "place_id": "p130",
+  "name": "Bánh ngọt (cake)",
+  "kind": "food",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p130-m7",
+  "place_id": "p130",
+  "name": "Xôi xà xíu + chà bông",
+  "kind": "food",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p131-m1",
+  "place_id": "p131",
+  "name": "Vietnamese Black Coffee",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p131-m2",
+  "place_id": "p131",
+  "name": "Vietnamese Milk Coffee",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p131-m3",
+  "place_id": "p131",
+  "name": "Cappuccino / Flat White / Latte",
+  "kind": "drink",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p131-m4",
+  "place_id": "p131",
+  "name": "Tiramisu Iced Coffee",
+  "kind": "drink",
+  "price_vnd": 95000
+ },
+ {
+  "item_id": "p131-m5",
+  "place_id": "p131",
+  "name": "Lemongrass Peach Iced Tea",
+  "kind": "drink",
+  "price_vnd": 85000
+ },
+ {
+  "item_id": "p131-m6",
+  "place_id": "p131",
+  "name": "Coconut Matcha Cloud",
+  "kind": "drink",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p131-m7",
+  "place_id": "p131",
+  "name": "Salmon Royale Croissant",
+  "kind": "food",
+  "price_vnd": 220000
+ },
+ {
+  "item_id": "p132-m1",
+  "place_id": "p132",
+  "name": "Bạc xỉu",
+  "kind": "drink",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p132-m2",
+  "place_id": "p132",
+  "name": "Trà Oolong Nướng Sữa (size S)",
+  "kind": "drink",
+  "price_vnd": 42000
+ },
+ {
+  "item_id": "p132-m3",
+  "place_id": "p132",
+  "name": "Oolong Ba Lá",
+  "kind": "drink",
+  "price_vnd": 42000
+ },
+ {
+  "item_id": "p132-m4",
+  "place_id": "p132",
+  "name": "Matcha dừa (Matcha coconut)",
+  "kind": "drink",
+  "price_vnd": 59000
+ },
+ {
+  "item_id": "p133-m1",
+  "place_id": "p133",
+  "name": "Cà phê đen",
+  "kind": "drink",
+  "price_vnd": 115000
+ },
+ {
+  "item_id": "p133-m2",
+  "place_id": "p133",
+  "name": "Cà phê sữa",
+  "kind": "drink",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p133-m3",
+  "place_id": "p133",
+  "name": "Bạc xỉu",
+  "kind": "drink",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p133-m4",
+  "place_id": "p133",
+  "name": "Cà phê trứng",
+  "kind": "drink",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p133-m5",
+  "place_id": "p133",
+  "name": "Cà phê muối",
+  "kind": "drink",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p133-m6",
+  "place_id": "p133",
+  "name": "Cold brew truyền thống",
+  "kind": "drink",
+  "price_vnd": 135000
+ },
+ {
+  "item_id": "p133-m7",
+  "place_id": "p133",
+  "name": "Chả giò",
+  "kind": "food",
+  "price_vnd": 220000
+ },
+ {
+  "item_id": "p134-m1",
+  "place_id": "p134",
+  "name": "Signature Marou",
+  "kind": "drink",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p134-m2",
+  "place_id": "p134",
+  "name": "Marou Signature Pearl Ice",
+  "kind": "drink",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p134-m3",
+  "place_id": "p134",
+  "name": "Coconut Cappuccino (Vegan)",
+  "kind": "drink",
+  "price_vnd": 95000
+ },
+ {
+  "item_id": "p134-m4",
+  "place_id": "p134",
+  "name": "Coconut Milk (Vegan)",
+  "kind": "drink",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p134-m5",
+  "place_id": "p134",
+  "name": "Croissant",
+  "kind": "food",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p134-m6",
+  "place_id": "p134",
+  "name": "Pain Au Chocolat",
+  "kind": "food",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p134-m7",
+  "place_id": "p134",
+  "name": "Chocolate Flan Mini",
+  "kind": "food",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p135-m1",
+  "place_id": "p135",
+  "name": "Kem Trái Dừa",
+  "kind": "food",
+  "price_vnd": 165000
+ },
+ {
+  "item_id": "p135-m2",
+  "place_id": "p135",
+  "name": "Kem Bạch Đằng (2 viên kem dừa, sốt chocolate, trái cây)",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p135-m3",
+  "place_id": "p135",
+  "name": "Kem Cà Phê",
+  "kind": "food",
+  "price_vnd": 115000
+ },
+ {
+  "item_id": "p135-m4",
+  "place_id": "p135",
+  "name": "Kem Bốn Mùi",
+  "kind": "food",
+  "price_vnd": 130000
+ },
+ {
+  "item_id": "p135-m5",
+  "place_id": "p135",
+  "name": "Kem Sầu Riêng",
+  "kind": "food",
+  "price_vnd": 125000
+ },
+ {
+  "item_id": "p135-m6",
+  "place_id": "p135",
+  "name": "Nước cam tươi",
+  "kind": "drink",
+  "price_vnd": 90000
+ },
+ {
+  "item_id": "p135-m7",
+  "place_id": "p135",
+  "name": "Táo ép",
+  "kind": "drink",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p136-m1",
+  "place_id": "p136",
+  "name": "Cà phê sữa",
+  "kind": "drink",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p136-m2",
+  "place_id": "p136",
+  "name": "Bạc xỉu",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p136-m3",
+  "place_id": "p136",
+  "name": "Americano",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p136-m4",
+  "place_id": "p136",
+  "name": "Latte (sữa Meiji)",
+  "kind": "drink",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p136-m5",
+  "place_id": "p136",
+  "name": "Nitro Coldbrew",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p136-m6",
+  "place_id": "p136",
+  "name": "Matcha Latte (sữa Meiji)",
+  "kind": "drink",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p136-m7",
+  "place_id": "p136",
+  "name": "Bánh Cinnamon Roll",
+  "kind": "food",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p137-m1",
+  "place_id": "p137",
+  "name": "Cà phê sữa",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p137-m2",
+  "place_id": "p137",
+  "name": "Bạc xỉu",
+  "kind": "drink",
+  "price_vnd": 53000
+ },
+ {
+  "item_id": "p137-m3",
+  "place_id": "p137",
+  "name": "Cà phê muối",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p137-m4",
+  "place_id": "p137",
+  "name": "Sữa tươi cà phê",
+  "kind": "drink",
+  "price_vnd": 52000
+ },
+ {
+  "item_id": "p137-m5",
+  "place_id": "p137",
+  "name": "Trà tắc xí muội",
+  "kind": "drink",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p137-m6",
+  "place_id": "p137",
+  "name": "Mì trộn trứng cá viên",
+  "kind": "food",
+  "price_vnd": 58000
+ },
+ {
+  "item_id": "p138-m1",
+  "place_id": "p138",
+  "name": "Milk Coffee",
+  "kind": "drink",
+  "price_vnd": 81000
+ },
+ {
+  "item_id": "p138-m2",
+  "place_id": "p138",
+  "name": "Black Coffee",
+  "kind": "drink",
+  "price_vnd": 70200
+ },
+ {
+  "item_id": "p138-m3",
+  "place_id": "p138",
+  "name": "Hot Egg Coffee",
+  "kind": "drink",
+  "price_vnd": 97200
+ },
+ {
+  "item_id": "p138-m4",
+  "place_id": "p138",
+  "name": "Latte (hot/iced)",
+  "kind": "drink",
+  "price_vnd": 91800
+ },
+ {
+  "item_id": "p138-m5",
+  "place_id": "p138",
+  "name": "Cappuccino (hot/iced)",
+  "kind": "drink",
+  "price_vnd": 86400
+ },
+ {
+  "item_id": "p138-m6",
+  "place_id": "p138",
+  "name": "Pulled Beef Benedict",
+  "kind": "food",
+  "price_vnd": 237600
+ },
+ {
+  "item_id": "p139-m1",
+  "place_id": "p139",
+  "name": "Egg coffee / Egg cacao / Egg matcha (nóng hoặc đá)",
+  "kind": "drink",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p139-m2",
+  "place_id": "p139",
+  "name": "Vietnamese milk coffee",
+  "kind": "drink",
+  "price_vnd": 40000
+ },
+ {
+  "item_id": "p139-m3",
+  "place_id": "p139",
+  "name": "Salt coffee",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p139-m4",
+  "place_id": "p139",
+  "name": "Coconut coffee",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p139-m5",
+  "place_id": "p139",
+  "name": "Kumquat ginger lemongrass tea",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p139-m6",
+  "place_id": "p139",
+  "name": "Mango smoothie",
+  "kind": "drink",
+  "price_vnd": 75000
+ },
+ {
+  "item_id": "p139-m7",
+  "place_id": "p139",
+  "name": "Egg benedict chicken benny",
+  "kind": "food",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p140-m1",
+  "place_id": "p140",
+  "name": "Trà Sữa Phúc Long (L)",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p140-m2",
+  "place_id": "p140",
+  "name": "Trà Vải Lài (L)",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p140-m3",
+  "place_id": "p140",
+  "name": "Trà Nhãn Sen (L)",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p140-m4",
+  "place_id": "p140",
+  "name": "Trà Ô Long Sữa (L)",
+  "kind": "drink",
+  "price_vnd": 60000
+ },
+ {
+  "item_id": "p140-m5",
+  "place_id": "p140",
+  "name": "Phin Sữa Đá (M)",
+  "kind": "drink",
+  "price_vnd": 39000
+ },
+ {
+  "item_id": "p140-m6",
+  "place_id": "p140",
+  "name": "Bạc Xỉu (L)",
+  "kind": "drink",
+  "price_vnd": 45000
+ },
+ {
+  "item_id": "p140-m7",
+  "place_id": "p140",
+  "name": "Cà phê Cappuccino (L)",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p141-m1",
+  "place_id": "p141",
+  "name": "Cà phê sữa đá",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p141-m2",
+  "place_id": "p141",
+  "name": "Cà phê đen",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p141-m3",
+  "place_id": "p141",
+  "name": "Cà phê trứng",
+  "kind": "drink",
+  "price_vnd": 35000
+ },
+ {
+  "item_id": "p141-m4",
+  "place_id": "p141",
+  "name": "Trà sữa",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p141-m5",
+  "place_id": "p141",
+  "name": "Chanh muối",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p141-m6",
+  "place_id": "p141",
+  "name": "Xí muội",
+  "kind": "drink",
+  "price_vnd": 30000
+ },
+ {
+  "item_id": "p142-m1",
+  "place_id": "p142",
+  "name": "Cà Phê Muối (nhỏ)",
+  "kind": "drink",
+  "price_vnd": 22000
+ },
+ {
+  "item_id": "p142-m2",
+  "place_id": "p142",
+  "name": "Cà Phê Muối (lớn)",
+  "kind": "drink",
+  "price_vnd": 29000
+ },
+ {
+  "item_id": "p142-m3",
+  "place_id": "p142",
+  "name": "Cà Phê Muối Chai",
+  "kind": "drink",
+  "price_vnd": 65000
+ },
+ {
+  "item_id": "p142-m4",
+  "place_id": "p142",
+  "name": "Combo 1: Cà Phê Muối + Ca Cao Sữa",
+  "kind": "drink",
+  "price_vnd": 47000
+ },
+ {
+  "item_id": "p143-m1",
+  "place_id": "p143",
+  "name": "Ô Long Sữa Phê La",
+  "kind": "drink",
+  "price_vnd": 54000
+ },
+ {
+  "item_id": "p143-m2",
+  "place_id": "p143",
+  "name": "Ô Long Sữa Phê La (size La)",
+  "kind": "drink",
+  "price_vnd": 69000
+ },
+ {
+  "item_id": "p143-m3",
+  "place_id": "p143",
+  "name": "Lụa Đào (size Phê)",
+  "kind": "drink",
+  "price_vnd": 54000
+ },
+ {
+  "item_id": "p143-m4",
+  "place_id": "p143",
+  "name": "Lang Biang",
+  "kind": "drink",
+  "price_vnd": 54000
+ },
+ {
+  "item_id": "p143-m5",
+  "place_id": "p143",
+  "name": "Trà Vỏ Cà Phê",
+  "kind": "drink",
+  "price_vnd": 54000
+ },
+ {
+  "item_id": "p143-m6",
+  "place_id": "p143",
+  "name": "Matcha Coco Latte",
+  "kind": "drink",
+  "price_vnd": 59000
+ },
+ {
+  "item_id": "p143-m7",
+  "place_id": "p143",
+  "name": "Phê Nâu",
+  "kind": "drink",
+  "price_vnd": 39000
+ },
+ {
+  "item_id": "p144-m1",
+  "place_id": "p144",
+  "name": "Vào cửa phố đi bộ",
+  "kind": "ticket",
+  "price_vnd": 0
+ },
+ {
+  "item_id": "p144-m2",
+  "place_id": "p144",
+  "name": "Bia (lon/ly, mức thấp nhất của khoảng 20.000–50.000)",
+  "kind": "drink",
+  "price_vnd": 20000
+ },
+ {
+  "item_id": "p144-m3",
+  "place_id": "p144",
+  "name": "Cocktail tại quán bar (giá từ)",
+  "kind": "drink",
+  "price_vnd": 80000
+ },
+ {
+  "item_id": "p144-m4",
+  "place_id": "p144",
+  "name": "Món ăn đường phố (giá từ)",
+  "kind": "food",
+  "price_vnd": 50000
+ },
+ {
+  "item_id": "p144-m5",
+  "place_id": "p144",
+  "name": "Massage chân (giá từ)",
+  "kind": "service",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p145-m1",
+  "place_id": "p145",
+  "name": "Signature cocktail (vd. Mojito Royal, Uncanny Touch)",
+  "kind": "drink",
+  "price_vnd": 350000
+ },
+ {
+  "item_id": "p145-m2",
+  "place_id": "p145",
+  "name": "Classic cocktail (Margarita, Whiskey Sour, Cosmopolitan...)",
+  "kind": "drink",
+  "price_vnd": 350000
+ },
+ {
+  "item_id": "p145-m3",
+  "place_id": "p145",
+  "name": "Happy hour Duo Combo (2 cocktail + 1 snack, 17:30–20:00)",
+  "kind": "drink",
+  "price_vnd": 590000
+ },
+ {
+  "item_id": "p145-m4",
+  "place_id": "p145",
+  "name": "Happy hour Circle Combo (4 cocktail + 1 snack, 17:30–20:00)",
+  "kind": "drink",
+  "price_vnd": 950000
+ },
+ {
+  "item_id": "p146-m1",
+  "place_id": "p146",
+  "name": "Cocktail The Ritual Collection - Drip (Coffee Culture)",
+  "kind": "drink",
+  "price_vnd": 280000
+ },
+ {
+  "item_id": "p146-m2",
+  "place_id": "p146",
+  "name": "Cocktail The Ritual Collection - Bloom (Flower Vendor Culture)",
+  "kind": "drink",
+  "price_vnd": 280000
+ },
+ {
+  "item_id": "p146-m3",
+  "place_id": "p146",
+  "name": "Cocktail Miss Saigon",
+  "kind": "drink",
+  "price_vnd": 280000
+ },
+ {
+  "item_id": "p146-m4",
+  "place_id": "p146",
+  "name": "Cocktail The Heritage collection",
+  "kind": "drink",
+  "price_vnd": 280000
+ },
+ {
+  "item_id": "p147-m1",
+  "place_id": "p147",
+  "name": "Signature cocktail (Negroni, Aperol Spritz, Espresso Martini...)",
+  "kind": "drink",
+  "price_vnd": 220000
+ },
+ {
+  "item_id": "p147-m2",
+  "place_id": "p147",
+  "name": "Vang đỏ theo ly - Princess des Sables Syrah",
+  "kind": "drink",
+  "price_vnd": 200000
+ },
+ {
+  "item_id": "p147-m3",
+  "place_id": "p147",
+  "name": "Prosecco theo ly - Cavalieri Reali",
+  "kind": "drink",
+  "price_vnd": 260000
+ },
+ {
+  "item_id": "p147-m4",
+  "place_id": "p147",
+  "name": "Bia Belgo Blond (Việt Nam)",
+  "kind": "drink",
+  "price_vnd": 150000
+ },
+ {
+  "item_id": "p147-m5",
+  "place_id": "p147",
+  "name": "Bia Việt",
+  "kind": "drink",
+  "price_vnd": 130000
+ },
+ {
+  "item_id": "p147-m6",
+  "place_id": "p147",
+  "name": "Cà phê / trà Dilmah",
+  "kind": "drink",
+  "price_vnd": 120000
+ },
+ {
+  "item_id": "p148-m1",
+  "place_id": "p148",
+  "name": "Kurtz's Insane IPA (pint)",
+  "kind": "drink",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p148-m2",
+  "place_id": "p148",
+  "name": "Kurtz's Insane IPA (small)",
+  "kind": "drink",
+  "price_vnd": 55000
+ },
+ {
+  "item_id": "p148-m3",
+  "place_id": "p148",
+  "name": "Dream Alone Pale Ale (pint)",
+  "kind": "drink",
+  "price_vnd": 160000
+ },
+ {
+  "item_id": "p148-m4",
+  "place_id": "p148",
+  "name": "Quietest Creature Lemongrass Wit (medium)",
+  "kind": "drink",
+  "price_vnd": 105000
+ },
+ {
+  "item_id": "p148-m5",
+  "place_id": "p148",
+  "name": "Excited Magpie Dry Irish Stout Nitro (pint)",
+  "kind": "drink",
+  "price_vnd": 145000
+ },
+ {
+  "item_id": "p148-m6",
+  "place_id": "p148",
+  "name": "Loose Rivet New England IPA (pint)",
+  "kind": "drink",
+  "price_vnd": 185000
+ },
+ {
+  "item_id": "p148-m7",
+  "place_id": "p148",
+  "name": "Tháp bia 3 lít (Pale Ale / IPA)",
+  "kind": "drink",
+  "price_vnd": 875000
+ },
+ {
+  "item_id": "p149-m1",
+  "place_id": "p149",
+  "name": "Jasmine IPA",
+  "kind": "drink",
+  "price_vnd": 115000
+ },
+ {
+  "item_id": "p149-m2",
+  "place_id": "p149",
+  "name": "Session IPA",
+  "kind": "drink",
+  "price_vnd": 99000
+ },
+ {
+  "item_id": "p149-m3",
+  "place_id": "p149",
+  "name": "Irish Stout",
+  "kind": "drink",
+  "price_vnd": 99000
+ },
+ {
+  "item_id": "p149-m4",
+  "place_id": "p149",
+  "name": "Cyclo Stout",
+  "kind": "drink",
+  "price_vnd": 165000
+ },
+ {
+  "item_id": "p150-m1",
+  "place_id": "p150",
+  "name": "Phí cover (một số ngày có nhạc)",
+  "kind": "service",
+  "price_vnd": 70000
+ },
+ {
+  "item_id": "p150-m2",
+  "place_id": "p150",
+  "name": "Vé show tribute band (đặt trước)",
+  "kind": "ticket",
+  "price_vnd": 100000
+ },
+ {
+  "item_id": "p150-m3",
+  "place_id": "p150",
+  "name": "Vé show tribute band (mua tại cửa)",
+  "kind": "ticket",
+  "price_vnd": 150000
+ }
+]

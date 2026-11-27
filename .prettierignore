@@ -7,3 +7,4 @@ apps/api/target/
 .claude/
 .mcp.json
 skills-lock.json
+data/
