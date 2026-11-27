@@ -65,6 +65,21 @@ Api nối thẳng vào Postgres bằng `sqlx`; web dùng `@supabase/supabase-js`
   áp dụng local bằng `supabase db reset`, lên cloud bằng `supabase db push` (sau khi `supabase link`).
   Bảng nào web đọc trực tiếp thì phải bật Row Level Security.
 
+### Đăng nhập (Supabase Auth)
+
+Web đăng nhập bằng email/mật khẩu hoặc Google; phiên lưu trong cookie (`@supabase/ssr`).
+
+- Trang: `/sign-in`, `/sign-up`. Supabase gọi lại `/auth/callback` (Google, link xác nhận email); đăng xuất là `POST /auth/sign-out`.
+- `src/middleware.ts` làm mới phiên mỗi request và chặn route cần đăng nhập
+  (danh sách `PROTECTED_PREFIXES` trong `src/lib/auth/routes.ts`; thêm tiền tố khi làm trang mới).
+- Trong Server Component/Action: `currentUser()` hoặc `supabaseServer()` ở `src/lib/supabase/server.ts`;
+  trong Client Component: `supabaseBrowser()` ở `src/lib/supabase/client.ts`.
+- **Cloud:** Authentication → URL Configuration: Site URL = domain web, Redirect URLs thêm
+  `http://localhost:3000/auth/callback` và `https://<domain>/auth/callback`.
+  Bật Google ở Authentication → Providers (OAuth client từ Google Cloud Console, redirect URI
+  `https://<project-ref>.supabase.co/auth/v1/callback`). Đặt mật khẩu tối thiểu 8 ký tự cho khớp form.
+- **Local:** `cp supabase/.env.example supabase/.env`, điền client id/secret Google rồi `supabase start`.
+
 ## Lệnh
 
 Mỗi lệnh kiểm tra chạy cả phần TypeScript lẫn Rust.
