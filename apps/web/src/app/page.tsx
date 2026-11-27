@@ -1,4 +1,7 @@
+import Link from 'next/link';
 import { Feature } from '@/components/Feature';
+import { SIGN_IN_PATH } from '@/lib/auth/routes';
+import { currentUser } from '@/lib/supabase/server';
 
 const FEATURES = [
   {
@@ -19,9 +22,26 @@ const FEATURES = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+
   return (
     <main>
+      <nav className="topbar" aria-label="Tài khoản">
+        {user ? (
+          <form action="/auth/sign-out" method="post" className="account">
+            <span className="muted">{user.email}</span>
+            <button type="submit" className="btn">
+              Đăng xuất
+            </button>
+          </form>
+        ) : (
+          <Link className="btn" href={SIGN_IN_PATH}>
+            Đăng nhập
+          </Link>
+        )}
+      </nav>
+
       <section className="hero">
         <p className="eyebrow">TP.HCM · cuối tuần · nhóm bạn</p>
         <h1>Lên lịch đi chơi Sài Gòn trong vài phút, không phải cả buổi tối.</h1>
