@@ -50,9 +50,9 @@ export default async function Home() {
           Không đến nơi đang đóng cửa, không chạy vòng giữa các quận, không tiêu lố ngân sách.
         </p>
         <div className="actions">
-          <a className="btn primary" href="#">
-            Sắp ra mắt
-          </a>
+          <Link className="btn primary" href="/explore">
+            Khám phá 150 địa điểm
+          </Link>
           <a className="btn" href="https://github.com/DuyITLOR/ai-travel-planner">
             Xem trên GitHub
           </a>
